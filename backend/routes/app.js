@@ -9,11 +9,13 @@ app.use(express.json());
 app.use(cors());
 
 const usersRoutes = require("./users");
-const inventoryRoutes = require("./interests.js")
-const profileRoutes = require("./profile.js"); 
+const interestRoutes = require("./interests.js");
+const profileRoutes = require("./profile.js");
+const userInterestsRoutes = require("./user_interests");
 
 app.use("/users", usersRoutes);
-app.use("/interests", inventoryRoutes);
-app.use("/profile", profileRoutes); 
+app.use("/interests", interestRoutes);
+app.use("/profile", profileRoutes);
+app.use("/user-interests", userInterestsRoutes);
 
 app.listen(PORT, () => console.log(`listening on port ${PORT}`));
