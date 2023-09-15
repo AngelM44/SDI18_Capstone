@@ -7,7 +7,7 @@ exports.up = function(knex) {
       table.increments('id')
       table.string('first_name', 255).notNullable()
       table.string('last_name', 255).notNullable()
-      table.string('dodID', 10).notNullable()
+      table.string('dod_id', 10).notNullable()
       table.string('username', 255).notNullable()
       table.string('password', 225).notNullable()
       table.string('email', 255).notNullable()
@@ -20,5 +20,5 @@ exports.up = function(knex) {
  * @returns { Promise<void> }
  */
 exports.down = function(knex) {
-  return knex.schem.dropTableIfExists('users')
-};
+  return knex.schema.dropTableIfExists('users')
+}
