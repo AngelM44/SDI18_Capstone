@@ -8,7 +8,7 @@ module.exports = {
 
   development: {
     client: 'pg',
-    connection: "postgres://postgres:docker@localhost/dogs"
+    connection: "postgres://postgres:docker@localhost/fitness"
   },
 
 
