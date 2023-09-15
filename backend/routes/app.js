@@ -6,7 +6,7 @@ const knex = require("knex")(
   require("../knexfile.js")[process.env.NODE_ENV || "development"]
 );
 app.use(express.json());
-app.use(cors);
+app.use(cors());
 
 const usersRoutes = require("./users");
 
