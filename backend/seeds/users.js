@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker';
+const faker = require('faker');
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
@@ -6,9 +6,21 @@ import { faker } from '@faker-js/faker';
 exports.seed = async function(knex) {
   // Deletes ALL existing entries
   await knex('users').del()
-  await knex('users').insert([
-    {id: 1, first_name: faker.person.firstName()},
-    {id: 2, last_name: faker.person.lastName()},
-    {id: 3, dod_id: 'rowValue3'}
-  ]);
+
+  const users = []
+
+  for (let i = 1; i<= 20; i++){
+    users.push({
+      id: i,
+      first_name: faker.name.firstName(),
+      last_name: faker.name.lastName(),
+      dod_id: faker.datatype.number({ min: 1000000000, max: 2147483647 }),
+      username: faker.internet.userName(),
+      password: faker.internet.password(),
+      email: faker.internet.email(),
+      location: 'Peterson Space Force Base',
+    })
+  }
+
+  await knex('users').insert(users)
 };
