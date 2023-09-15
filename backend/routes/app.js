@@ -12,10 +12,12 @@ const usersRoutes = require("./users");
 const interestRoutes = require("./interests.js");
 const profileRoutes = require("./profile.js");
 const userInterestsRoutes = require("./user_interests");
+const postsRoutes = require("./posts"); 
 
 app.use("/users", usersRoutes);
 app.use("/interests", interestRoutes);
 app.use("/profile", profileRoutes);
 app.use("/user-interests", userInterestsRoutes);
+app.use("/posts", postsRoutes);
 
 app.listen(PORT, () => console.log(`listening on port ${PORT}`));
