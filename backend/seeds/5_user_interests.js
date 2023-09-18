@@ -23,9 +23,8 @@ exports.seed = async function(knex) {
     }
 
     interests.push({
-      id: i,
       user_id: i,
-      interest_id: entries,
+      interest_id: i,
       profile_id: i,
     })
   }

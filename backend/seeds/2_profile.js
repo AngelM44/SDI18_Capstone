@@ -11,7 +11,6 @@ exports.seed = async function(knex) {
 
   for (let i = 1; i <= 20; i++){
     profiles.push({
-      id: i,
       profile_pic: `../frontend/public/profile_pics/profile-pic${i}.png`,
       user_id: i,
       availability: faker.random.arrayElement(["Days", "Afternoons", "Nights", "Weekends Only"]),
