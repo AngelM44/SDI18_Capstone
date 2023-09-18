@@ -14,7 +14,7 @@ const profileRoutes = require("./profile.js");
 const userInterestsRoutes = require("./user_interests");
 const postsRoutes = require("./posts"); 
 
-app.use("/users", usersRoutes);
+app.use("/", usersRoutes);
 app.use("/interests", interestRoutes);
 app.use("/profile", profileRoutes);
 app.use("/user-interests", userInterestsRoutes);
