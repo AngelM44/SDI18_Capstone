@@ -1,5 +1,4 @@
 import React from "react";
-
 import { EuiCard, EuiIcon, EuiDescriptionList } from "@elastic/eui";
 
 const data = [
@@ -29,7 +28,7 @@ const cardFooterContent = (
   />
 );
 
-const ProfilePic = () => (
+const UserProfilePanel = () => (
   <EuiCard
     style={{ marginTop: "10px" }}
     textAlign="left"
@@ -41,4 +40,4 @@ const ProfilePic = () => (
   />
 );
 
-export default ProfilePic;
+export default UserProfilePanel;

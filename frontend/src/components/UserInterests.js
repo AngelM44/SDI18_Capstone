@@ -3,7 +3,7 @@ import React from "react";
 import { EuiBadge, EuiFlexGroup, EuiFlexItem } from "@elastic/eui";
 
 const UserInterests = () => (
-  <div>
+  <div textAlign="left">
     <h1>#Interests</h1>
     <EuiFlexGroup wrap responsive={false} gutterSize="xs">
       <EuiFlexItem grow={false}>

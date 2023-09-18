@@ -1,4 +1,4 @@
-import { EuiText, EuiSpacer, EuiCard, EuiHorizontalRule } from "@elastic/eui";
+import { EuiText, EuiSpacer, EuiHorizontalRule } from "@elastic/eui";
 import React from "react";
 import UserInterests from "./UserInterests";
 import UserPosts from "./UserPosts";
