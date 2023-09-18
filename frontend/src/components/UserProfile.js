@@ -1,14 +1,14 @@
 import React from "react";
-import { EuiFlexGroup, EuiFlexItem, EuiFlexGrid } from "@elastic/eui";
-import ProfilePic from "./ProfilePic";
+import { EuiFlexGroup } from "@elastic/eui";
+import UserProfilePanel from "./UserProfilePanel";
 import UserInfo from "./UserInfo";
-import ProfileLoader from "./ProfileLoader";
+import UserProfileLoader from "./UserProfileLoader";
 
 const UserProfile = () => {
   return (
-    <EuiFlexGroup>
+    <EuiFlexGroup style={{ margin: "5px" }}>
       <div style={{ width: "30%" }}>
-        <ProfilePic />
+        <UserProfilePanel />
       </div>
       <div style={{ width: "70%" }}>
         <UserInfo />
