@@ -7,6 +7,7 @@ import Cardio from "./ListComponent";
 import Home from "./Home";
 import Register from "./components/Register";
 import Login from "./components/Login";
+import UserProfile from "./components/UserProfile";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
 
       <Router>
         <Navbar />
+        <UserProfile />
         <Routes>
           <Route path="/" exact component={<Home />} />
           <Route path="/register" element={<Register />} />
