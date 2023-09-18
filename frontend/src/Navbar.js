@@ -1,13 +1,17 @@
 import React, { useState, Fragment } from 'react';
 import { EuiIcon, EuiTabs, EuiTab, EuiSpacer } from '@elastic/eui';
 import { Link } from 'react-router-dom';
+import logo from "./logo.png";
 
 
 const tabs = [
     {
         id: 'home',
-        name: 'Home',
+
+        name: (<img src={logo} className="App-logo" alt="logo"
+        />),
         href: '/home',
+
     },
     {
         id: 'cardio',
