@@ -115,22 +115,38 @@ const tabs = [
     },
     {
         id: 'cardio',
-        name: 'Cardio',
+        name: (
+            <Link to="/cardio">
+                Cardio
+            </Link>
+        ),
         disabled: false,
     },
     {
         id: 'strength',
-        name: 'Strength',
+        name: (
+            <Link to="/strength">
+                Strength
+            </Link>
+        ),
         disabled: false,
     },
     {
         id: 'nutrition',
-        name: 'Nutrition',
+        name: (
+            <Link to="/nutrition">
+                Nutrition
+            </Link>
+        ),
         disabled: false,
     },
     {
         id: 'wellness',
-        name: 'Wellness',
+        name: (
+            <Link to="/wellness">
+                Wellness
+            </Link>
+        ),
         disabled: false,
     },
 ];
