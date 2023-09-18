@@ -1,16 +1,16 @@
-
 import React from "react";
 import logo from "./logo.png";
 import "./App.css";
 import Navbar from "./Navbar";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Cardio from "./ListComponent";
 import Home from "./Home";
+import Register from "./components/Register";
+import Login from "./components/Login";
 
 function App() {
   return (
     <div className="App">
-
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <a
@@ -27,6 +27,9 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" exact component={<Home />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+
           <Route path="/cardio" element={<Cardio />} />
           {/* <Route path="/strength" element={<Strength />} />
           <Route path="/nutrition" element={<Nutrition />} />
@@ -38,4 +41,3 @@ function App() {
 }
 
 export default App;
-
