@@ -5,7 +5,8 @@
 exports.up = function(knex) {
   return knex.schema.createTable('posts', table => {
     table.increments('id')
-    table.string('profile_id', 255).notNullable()
+    table.integer('profile_id', 255).notNullable()
+    table.foreign('profile_id').references('profile.id')
     table.date('date_created').notNullable()
     table.string('body').notNullable()
   })
@@ -16,5 +17,9 @@ exports.up = function(knex) {
  * @returns { Promise<void> }
  */
 exports.down = function(knex) {
-  return knex.schema.dropTableIfExists('posts')
+  return(
+  knex.schema
+    .alterTable('posts', table => {table.dropForeign('profile_id')})
+    .dropTableIfExists('posts')
+  )
 };
