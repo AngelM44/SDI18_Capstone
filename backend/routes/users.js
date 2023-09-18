@@ -47,7 +47,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/users", async (req, res) => {
   try {
     const users = await knex("users").select();
     res.json(users);
@@ -57,7 +57,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:userId", async (req, res) => {
+router.get("/users/:userId", async (req, res) => {
   try {
     const user = await knex("users").where({ id: req.params.userId }).select();
     if (user.length) {
@@ -71,7 +71,7 @@ router.get("/:userId", async (req, res) => {
   }
 });
 
-router.patch("/:userId", async (req, res) => {
+router.patch("/users/:userId", async (req, res) => {
   try {
     const updatedUser = await knex("users")
       .where({ id: req.params.userId })
@@ -88,7 +88,7 @@ router.patch("/:userId", async (req, res) => {
   }
 });
 
-router.delete("/:userId", async (req, res) => {
+router.delete("/users/:userId", async (req, res) => {
   try {
     const deletedCount = await knex("users")
       .where({ id: req.params.userId })
