@@ -45,7 +45,6 @@ function Register() {
     } catch (err) {
       if (err.response) {
         if (err.response.status === 400) {
-          // Check for specific error message from backend (assuming "duplicate username" is the error message for duplicate usernames)
           if (err.response.data === "duplicate username") {
             setError("Username already exists. Choose a different one.");
           } else {
