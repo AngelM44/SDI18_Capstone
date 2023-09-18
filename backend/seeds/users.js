@@ -11,7 +11,6 @@ exports.seed = async function(knex) {
 
   for (let i = 1; i<= 20; i++){
     users.push({
-      id: i,
       first_name: faker.name.firstName(),
       last_name: faker.name.lastName(),
       dod_id: faker.datatype.number({ min: 1000000000, max: 2147483647 }),
