@@ -6,7 +6,7 @@ import UserProfileLoader from "./UserProfileLoader";
 
 const UserProfile = () => {
   return (
-    <EuiFlexGroup style={{ margin: "5px" }}>
+    <EuiFlexGroup style={{ marginLeft: "5px", marginRight: "5px" }}>
       <div style={{ width: "30%" }}>
         <UserProfilePanel />
       </div>

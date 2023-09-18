@@ -1,5 +1,5 @@
 import React from "react";
-import { EuiCard, EuiIcon, EuiDescriptionList } from "@elastic/eui";
+import { EuiCard, EuiDescriptionList } from "@elastic/eui";
 
 const data = [
   {
@@ -34,7 +34,7 @@ const UserProfilePanel = () => (
     textAlign="left"
     // href="https://elastic.github.io/eui/"
     image="https://source.unsplash.com/532x532/?City"
-    icon={<EuiIcon size="xxl" type="logoBeats" />}
+    // icon={<EuiIcon size="xxl" type="logoBeats" />}
     title={"First Name Last Name"}
     footer={cardFooterContent}
   />
