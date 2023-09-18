@@ -4,7 +4,7 @@
  */
 exports.up = function(knex) {
   return knex.schema.createTable('profile', table => {
-    table.increments('id')
+    table.increments('id').primary()
     table.string('profile_pic').notNullable()
     table.string('user_id').notNullable()
     table.string('availability').notNullable()
