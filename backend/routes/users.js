@@ -32,13 +32,13 @@ router.post("/register", async (req, res) => {
 
 
 router.post("/login", async (req, res) => {
-  const { username, password } = req.body; 
+  const { username, password } = req.body;
 
   try {
     const user = await knex("users").where({ username }).first();
 
     if (user && (await bcrypt.compare(password, user.password))) {
-      res.json({ id: user.id, username: user.username }); 
+      res.json({ id: user.id, username: user.username });
     } else {
       res.status(401).json("Invalid credentials");
     }
@@ -48,6 +48,15 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.get("/", async (req, res) => {
+  try {
+    const users = await knex("users").select();
+    res.json(users);
+  } catch (err) {
+    console.error("Error fetching users:", err.message);
+    res.status(400).json("Error fetching users.");
+  }
+});
 
 router.get("/:userId", async (req, res) => {
   try {
