@@ -10,7 +10,16 @@ Problem Statement: Maintaining fitness routines and wellness practices while on 
 This problem affects individuals who are on TDY or PCS and are looking for ways to maintain their fitness routines and wellness practices. The lack of support from like-minded individuals can lead to a decline in motivation and difficulty in achieving fitness goals.
 To address this issue, we propose creating a platform that connects individuals on TDY or PCS with similar fitness and wellness interests. This platform will provide a space for individuals to share their experiences, challenges, and successes with others who are going through similar situations. By connecting with like-minded individuals, individuals on TDY or PCS can maintain their fitness routines and wellness practices while also building a supportive community.
 
+root directory
+docker compose up
+
 backend
 npm install
 npx knex migrate:latest
 npx knex seed:run
+npm start
+
+frontend
+npm install
+npm install cors
+npm start

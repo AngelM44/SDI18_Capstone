@@ -11,7 +11,7 @@ exports.seed = async function(knex) {
 
   for (let i = 1; i <= 20; i++){
     profiles.push({
-      profile_pic: `../frontend/public/profile_pics/profile-pic${i}.png`,
+      profile_pic: `../profile_pics/profile-pic${i}.png`,
       user_id: i,
       availability: faker.random.arrayElement(["Days", "Afternoons", "Nights", "Weekends Only"]),
       info: faker.random.arrayElement(["I have always wanted to learn how to deadlift, looking for a gym partner to help me learn safely", "I enjoy weightlifting", "I need help preparing for the PT test.", "I enjoy running."]),

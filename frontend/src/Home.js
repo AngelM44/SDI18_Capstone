@@ -1,4 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import {
+  EuiButton,
+  EuiCard,
+  EuiFlexGroup,
+  EuiFlexItem,
+  EuiIcon,
+} from '@elastic/eui';
 
 function Home() {
     const [users, setUsers] = useState([]);
@@ -36,6 +43,8 @@ function Home() {
     }, [users, interests, userInterests]);
 
     return (
+        <>
+
         <div>
             <h1>Users</h1>
             <ul>
@@ -49,6 +58,7 @@ function Home() {
                 ))}
             </ul>
         </div>
+        </>
     );
 }
 
