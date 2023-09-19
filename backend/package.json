@@ -19,7 +19,7 @@
   "version": "1.0.0",
   "main": "knexfile.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon routes/app.js"
   },
   "author": "",
   "license": "ISC",
