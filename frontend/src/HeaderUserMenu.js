@@ -5,12 +5,26 @@ import {
     EuiContextMenuPanel,
     EuiContextMenuItem,
     EuiIcon,
+    EuiAvatar,
 } from '@elastic/eui';
 import HeaderUserButton from './HeaderUserButton';
 
 function HeaderUserMenu() {
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [profilePicUrl, setProfilePicUrl] = useState("/profile_pics/profile-pic3.png");
+
+    // New function:
+    const handleImageUpload = (event) => {
+        const file = event.target.files[0];
+        setSelectedFile(file);
+
+        // For image preview
+        const imageUrl = URL.createObjectURL(file);
+        setProfilePicUrl(imageUrl);
+    };
 
     const navigate = useNavigate();
 
@@ -73,14 +87,31 @@ function HeaderUserMenu() {
                 closePopover={closePopover}
                 panelPaddingSize="none"
                 anchorPosition="downLeft">
+                <input type="file" onChange={handleImageUpload} style={{ display: 'none' }} id="profilePicInput" />
+                <label htmlFor="profilePicInput" style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
+                    <EuiAvatar size="s" name="User" imageUrl={profilePicUrl} />
+                    <span style={{ marginLeft: '8px' }}>Change Profile Picture</span>
+                </label>
                 <EuiContextMenuPanel
-                    style={{ display: 'flex', flexDirection: 'column', width: 'auto' }}
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        width: 'auto'
+                    }}
                     items={userMenuItems.map(item => (
                         <EuiContextMenuItem
                             key={item.label}
                             icon={item.icon}
                             onClick={item.onClick}
-                            style={{ display: 'block', padding: '8px 16px', textAlign: 'left', background: 'none', border: 'none', color: 'inherit', cursor: 'pointer' }}
+                            style={{
+                                display: 'block',
+                                padding: '8px 16px',
+                                textAlign: 'left',
+                                background: 'none',
+                                border: 'none',
+                                color: 'inherit',
+                                cursor: 'pointer'
+                            }}
                             className="menu-item-hover">
                             {item.label}
                         </EuiContextMenuItem>
