@@ -26,12 +26,12 @@ function App() {
 
       <Router>
         <Navbar />
-        <UserProfile />
+        {/* <UserProfile /> */}
         <Routes>
           <Route path="/" exact component={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-
+          <Route path="/user_profile" element={<UserProfile />} />
           <Route path="/cardio" element={<Cardio />} />
           {/* <Route path="/strength" element={<Strength />} />
           <Route path="/nutrition" element={<Nutrition />} />
