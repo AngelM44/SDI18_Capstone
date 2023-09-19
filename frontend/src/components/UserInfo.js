@@ -1,10 +1,15 @@
-import { EuiText, EuiSpacer, EuiHorizontalRule } from "@elastic/eui";
+import {
+  EuiText,
+  EuiSpacer,
+  EuiHorizontalRule,
+  EuiPageBody,
+} from "@elastic/eui";
 import React from "react";
 import UserInterests from "./UserInterests";
 import UserPosts from "./UserPosts";
 
 const UserInfo = ({ data }) => (
-  <div>
+  <EuiPageBody>
     <EuiText>
       <h1>#About Me</h1>
       <p>{data.info}</p>
@@ -17,7 +22,7 @@ const UserInfo = ({ data }) => (
     <EuiHorizontalRule margin="m" />
     <UserPosts data={data} />
     <EuiSpacer />
-  </div>
+  </EuiPageBody>
 );
 
 export default UserInfo;

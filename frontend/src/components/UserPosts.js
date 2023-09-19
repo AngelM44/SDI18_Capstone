@@ -7,9 +7,9 @@ const UserPosts = ({ data }) => (
     <EuiComment
       username={`${data.first_name} ${data.last_name}`}
       event="posted at"
-      timestamp={`${data.date_created}`}
+      timestamp={data.date_created}
     >
-      {`${data.body}`}
+      {data.body}
     </EuiComment>
   </Fragment>
 );

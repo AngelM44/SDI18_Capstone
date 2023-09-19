@@ -1,11 +1,9 @@
 import { EuiCard, EuiDescriptionList } from "@elastic/eui";
 
 const UserProfilePanel = ({ data }) => {
-  // const [profileData, setProfileData] = useState(props);
-
   const cardFooterContent = (
     <EuiDescriptionList
-      type="column"
+      type="row"
       listItems={[
         {
           title: "Location:",
@@ -24,17 +22,22 @@ const UserProfilePanel = ({ data }) => {
         //   description: "Filler links/Icons",
         // },
       ]}
-      // style={{ maxWidth: "420px" }}
     />
   );
 
   return (
     <>
       <EuiCard
-        style={{ marginTop: "10px" }}
+        style={{
+          marginTop: "10px",
+          minWidth: "300px",
+          maxWidth: "500px",
+          maxHeight: "60%",
+          minHeight: "650px",
+        }}
         textAlign="left"
         // href="https://elastic.github.io/eui/"
-        image="../profile_pics/profile-pic5.png"
+        image={`${data.profile_pic}`}
         title={`${data.first_name} ${data.last_name}`}
         footer={cardFooterContent}
       />

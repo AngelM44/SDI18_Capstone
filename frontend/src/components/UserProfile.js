@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { EuiFlexGroup } from "@elastic/eui";
+import { EuiFlexGroup, EuiPage } from "@elastic/eui";
 import UserProfilePanel from "./UserProfilePanel";
 import UserInfo from "./UserInfo";
 import UserProfileLoader from "./UserProfileLoader";
@@ -22,15 +22,14 @@ const UserProfile = () => {
     return <UserProfileLoader />;
   } else {
     return (
-      <EuiFlexGroup style={{ marginLeft: "5px", marginRight: "5px" }}>
-        {/* {console.log(profileData)} */}
-        <div style={{ width: "30%" }}>
+      <EuiPage
+        style={{ height: "100vh", paddingLeft: "5px", paddingRight: "5px" }}
+      >
+        <EuiFlexGroup>
           <UserProfilePanel data={profileData} />
-        </div>
-        <div style={{ width: "70%" }}>
           <UserInfo data={profileData} />
-        </div>
-      </EuiFlexGroup>
+        </EuiFlexGroup>
+      </EuiPage>
     );
   }
 };
