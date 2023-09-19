@@ -4,6 +4,16 @@ const knex = require("knex")(
   require("../knexfile.js")[process.env.NODE_ENV || "development"]
 );
 
+router.get("/", async (req, res) => {
+  try {
+    const userInterest = await knex("user_interests").select();
+    res.json(userInterest);
+  } catch (err) {
+    console.error("Error fetching user interest:", err.message);
+    res.status(400).json("Error fetching user interest.");
+  }
+});
+
 router.get("/:userInterestId", async (req, res) => {
   try {
     const userInterest = await knex("user_interests")
