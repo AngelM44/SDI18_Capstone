@@ -1,12 +1,4 @@
-// import React, { useState, useEffect } from "react";
-// const Cardio = () => {
-//     return (
-//         <div>
-//             <h2>Users Interested in Cardio</h2>
-//         </div>
-//     )
-// };
-// export default Cardio;
+
 
 import React, { useState, useEffect } from 'react';
 
@@ -17,7 +9,7 @@ function ListComponent({ category }) {
     const [combinedData, setCombinedData] = useState([]);
 
     useEffect(() => {
-        // Fetch all required data in parallel using Promise.all
+
         Promise.all([
             fetch('http://localhost:8080/users').then(response => response.json()),
             fetch('http://localhost:8080/interests').then(response => response.json()),
@@ -27,7 +19,7 @@ function ListComponent({ category }) {
             setInterests(interestsData);
             setUserInterests(userInterestsData);
 
-            // Now, combine the data
+
             const combined = usersData.map(user => {
                 const userInterestsForUser = userInterestsData.filter(ui => ui.user_id === user.id);
                 const interestsForUser = userInterestsForUser.map(ui => interestsData.find(interest => interest.id === ui.interest_id));
