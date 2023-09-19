@@ -31,7 +31,7 @@ function App() {
           <Route path="/home" exact element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/user_profile" element={<UserProfile />} />
+          <Route path="/profile/:id" element={<UserProfile />} />
           <Route path="/cardio" element={<Cardio />} />
           {/* <Route path="/strength" element={<Strength />} />
           <Route path="/nutrition" element={<Nutrition />} />
