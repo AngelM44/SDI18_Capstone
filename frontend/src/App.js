@@ -3,7 +3,7 @@ import logo from "./logo.png";
 import "./App.css";
 import Navbar from "./Navbar";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Cardio from "./ListComponent";
+import ListComponent from "./ListComponent";
 import Home from "./Home";
 import Register from "./components/Register";
 import Login from "./components/Login";
@@ -32,10 +32,10 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile/:id" element={<UserProfile />} />
-          <Route path="/cardio" element={<Cardio />} />
-          {/* <Route path="/strength" element={<Strength />} />
-          <Route path="/nutrition" element={<Nutrition />} />
-          <Route path="/wellness" element={<Wellness />} /> */}
+          <Route path="/cardio" element={<ListComponent category="Cardio" />} />
+          <Route path="/strength" element={<ListComponent category="Strength" />} />
+          <Route path="/nutrition" element={<ListComponent category="Nutrition" />} />
+          <Route path="/wellness" element={<ListComponent category="Wellness" />} />
         </Routes>
       </Router>
     </div>
