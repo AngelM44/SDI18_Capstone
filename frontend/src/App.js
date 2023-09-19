@@ -28,7 +28,7 @@ function App() {
         <Navbar />
         {/* <UserProfile /> */}
         <Routes>
-          <Route path="/" exact component={<Home />} />
+          <Route path="/home" exact element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/user_profile" element={<UserProfile />} />
