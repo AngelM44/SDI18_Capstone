@@ -96,7 +96,7 @@ function Home() {
             <EuiCard
               key={user.id}
               textAlign="left"
-              href={`http://localhost:8080/${user.id}`}
+              href={`http://localhost:8080/users/${user.id}`}
               image={`${user.image}`}
               icon={<EuiIcon size="xxl" type="logoBeats" />}
               title={user.first_name}
