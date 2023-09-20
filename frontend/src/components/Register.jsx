@@ -58,8 +58,8 @@ function Register() {
   };
 
   return (
-    <EuiPage style={styles.page}>
-      <EuiPageBody style={styles.container}>
+    <EuiPage style={{ ...styles.page, backgroundColor: "transparent" }}>
+      <EuiPageBody style={{ ...styles.page, backgroundColor: "transparent" }}>
         <div style={styles.formContainer}>
           <EuiTitle size="l">
             <h2>Register</h2>
@@ -148,7 +148,7 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    background: "#f3f3f3",
+    // background: "#f3f3f3",
     marginTop: "60px",
   },
   container: {
@@ -162,7 +162,7 @@ const styles = {
     padding: "20px",
     borderRadius: "10px",
     boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)",
-    background: "white",
+    // background: "white",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",

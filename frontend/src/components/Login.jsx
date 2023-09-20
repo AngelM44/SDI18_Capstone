@@ -43,41 +43,80 @@ function Login() {
   };
 
   return (
-    <EuiPage>
-      <EuiPageBody>
-        <EuiTitle size="l">
-          <h2>Login</h2>
-        </EuiTitle>
-        <EuiSpacer size="l" />
-        <EuiForm component="form" onSubmit={handleSubmit}>
-          <EuiFormRow label="Username">
-            <EuiFieldText
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
-              required
-            />
-          </EuiFormRow>
-          <EuiFormRow label="Password">
-            <EuiFieldText
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </EuiFormRow>
-          <EuiSpacer />
-          <EuiButton type="submit">Login</EuiButton>
-          {error && (
-            <EuiCallOut title="Error" color="danger">
-              {error}
-            </EuiCallOut>
-          )}
-        </EuiForm>
+    <EuiPage style={{ ...styles.page, backgroundColor: "transparent" }}>
+      <EuiPageBody style={{ ...styles.page, backgroundColor: "transparent" }}>
+        <div style={styles.formContainer}>
+          <EuiTitle size="l">
+            <h2>Login</h2>
+          </EuiTitle>
+          <EuiSpacer size="l" />
+          <EuiForm component="form" onSubmit={handleSubmit} style={styles.form}>
+            <EuiFormRow style={styles.formRow} label="Username">
+              <EuiFieldText
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+                required
+              />
+            </EuiFormRow>
+            <EuiFormRow style={styles.formRow} label="Password">
+              <EuiFieldText
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+            </EuiFormRow>
+            <EuiSpacer />
+            <div style={styles.buttonContainer}>
+              <EuiButton type="submit">Login</EuiButton>
+            </div>
+            {error && (
+              <EuiCallOut title="Error" color="danger">
+                {error}
+              </EuiCallOut>
+            )}
+          </EuiForm>
+        </div>
       </EuiPageBody>
     </EuiPage>
   );
 }
+
+const styles = {
+  page: {
+    height: "100vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "60px",
+  },
+  formContainer: {
+    width: "80%",
+    maxWidth: "600px",
+    padding: "20px",
+    borderRadius: "10px",
+    boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  form: {
+    width: "100%",
+  },
+  formRow: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    width: "100%",
+  },
+  buttonContainer: {
+    display: "flex",
+    justifyContent: "center",
+    width: "100%",
+    marginTop: "20px",
+  },
+};
 
 export default Login;
