@@ -8,11 +8,13 @@ import Home from "./Home";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import UserProfile from "./components/UserProfile";
+import { UserProvider } from "./components/UserContext";
 
 function App() {
   return (
-    <div className="App">
-      {/* <header className="App-header">
+    <UserProvider>
+      <div className="App">
+        {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <a
         // className="App-link"
@@ -24,21 +26,34 @@ function App() {
         </a>
       </header> */}
 
-      <Router>
-        <Navbar />
-        {/* <UserProfile /> */}
-        <Routes>
-          <Route path="/home" exact element={<Home />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/profile/:id" element={<UserProfile />} />
-          <Route path="/cardio" element={<ListComponent category="Cardio" />} />
-          <Route path="/strength" element={<ListComponent category="Strength" />} />
-          <Route path="/nutrition" element={<ListComponent category="Nutrition" />} />
-          <Route path="/wellness" element={<ListComponent category="Wellness" />} />
-        </Routes>
-      </Router>
-    </div>
+        <Router>
+          <Navbar />
+          {/* <UserProfile /> */}
+          <Routes>
+            <Route path="/home" exact element={<Home />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/profile/:id" element={<UserProfile />} />
+            <Route
+              path="/cardio"
+              element={<ListComponent category="Cardio" />}
+            />
+            <Route
+              path="/strength"
+              element={<ListComponent category="Strength" />}
+            />
+            <Route
+              path="/nutrition"
+              element={<ListComponent category="Nutrition" />}
+            />
+            <Route
+              path="/wellness"
+              element={<ListComponent category="Wellness" />}
+            />
+          </Routes>
+        </Router>
+      </div>
+    </UserProvider>
   );
 }
 

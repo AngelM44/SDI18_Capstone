@@ -11,8 +11,13 @@ import {
   EuiPageBody,
   EuiTitle,
 } from "@elastic/eui";
+import { useUser } from "./UserContext";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
+  const { login } = useUser();
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -40,8 +45,13 @@ function Register() {
     }
 
     try {
-      await axios.post("http://localhost:8080/register", formData);
+      const response = await axios.post(
+        "http://localhost:8080/register",
+        formData
+      );
       setSuccessMessage("Successfully registered!");
+      login(response.data);
+      navigate("/home");
     } catch (err) {
       if (err.response) {
         if (err.response.status === 400) {

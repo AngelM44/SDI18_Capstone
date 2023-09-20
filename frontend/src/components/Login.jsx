@@ -11,8 +11,13 @@ import {
   EuiPage,
   EuiPageBody,
 } from "@elastic/eui";
+import { useUser } from "./UserContext";
+import { useNavigate } from "react-router";
 
 function Login() {
+  const { login } = useUser();
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -33,6 +38,8 @@ function Login() {
         formData
       );
       console.log("Logged in:", response.data);
+      login(response.data);
+      navigate("/home");
     } catch (err) {
       if (err.response && err.response.status === 401) {
         setError("Invalid credentials");
