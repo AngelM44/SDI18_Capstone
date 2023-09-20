@@ -1,4 +1,4 @@
-import { EuiCard, EuiDescriptionList } from "@elastic/eui";
+import { EuiCard, EuiDescriptionList, EuiIcon } from "@elastic/eui";
 
 const UserProfilePanel = ({ data }) => {
   const cardFooterContent = (
@@ -13,13 +13,9 @@ const UserProfilePanel = ({ data }) => {
           title: "Availibility:",
           description: `${data.availability}`,
         },
-        {
-          title: "Contact Info:",
-          description: `${data.email}`,
-        },
         // {
-        //   title: "Social Media:",
-        //   description: "Filler links/Icons",
+        //   title: "Contact Info:",
+        //   description: `${data.email}`,
         // },
       ]}
     />
@@ -38,8 +34,29 @@ const UserProfilePanel = ({ data }) => {
         textAlign="left"
         // href="https://elastic.github.io/eui/"
         image={`${data.profile_pic}`}
+        paddingSize="l"
         title={`${data.first_name} ${data.last_name}`}
-        footer={cardFooterContent}
+        titleElement="h2"
+        footer={
+          <div style={{}}>
+            {cardFooterContent}
+            <div
+              style={{
+                display: "flex",
+                gap: "10px",
+                paddingTop: "20px",
+              }}
+            >
+              <a href={`mailto:${data.email}`}>
+                <EuiIcon type="logoGmail" size="xl" />
+              </a>
+              <span>
+                <EuiIcon type="logoSlack" size="xl" />
+              </span>
+            </div>
+          </div>
+        }
+        // description={cardFooterContent}
       />
     </>
   );

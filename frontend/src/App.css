@@ -44,3 +44,10 @@
 .logo-container {
   padding: 32px;
 }
+
+.euiCard__content {
+  display: flex;
+  max-height: min-content;
+  align-items: center;
+  max-height: 50px;
+}
