@@ -1,0 +1,22 @@
+.navbar {
+  background-color: #202226; /* Dark background */
+  color: #fff; /* White text color */
+}
+
+.navbar-button {
+  background-color: #2E3338; /* Darker gray background */
+  border: none;
+  border-radius: 15px; /* Rounded corners */
+  color: #fff; /* White text color */
+  font-weight: bold;
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.navbar-button:hover {
+  background-color: #3A4045; /* Even darker gray on hover */
+}
+
+.App-logo {
+  height: 40px; /* Adjust based on your logo's size */
+  margin-right: 10px; /* Space between logo and text */
+}
