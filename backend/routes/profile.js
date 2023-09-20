@@ -29,7 +29,7 @@ router.get("/:profileId", async (req, res) => {
       .from("profile AS p")
       .leftJoin("users AS u", "p.user_id", "u.id")
       .leftJoin("posts", "posts.profile_id", "p.id")
-      .leftJoin("user_interests AS ui", "ui.user_id", "u.id")
+      // .leftJoin("user_interests AS ui", "ui.user_id", "u.id")
       .where("u.id", "=", req.params.profileId)
       .first();
     if (profile) {
