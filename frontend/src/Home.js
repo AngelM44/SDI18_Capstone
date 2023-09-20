@@ -1,4 +1,6 @@
+
 import React, { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
 import {
   EuiButton,
   EuiCard,
@@ -10,119 +12,73 @@ import {
 
 function Home() {
   const [users, setUsers] = useState([]);
+  const [profiles, setProfiles] = useState([]);
   const [interests, setInterests] = useState([]);
-  const [userInterests, setUserInterests] = useState([]);
   const [combinedData, setCombinedData] = useState([]);
 
   useEffect(() => {
+    // Fetch users
     fetch("http://localhost:8080/users")
-      .then((response) => response.json())
-      .then((data) => setUsers(data))
-      .catch((error) => console.error("Error fetching users:", error));
-
+      .then(response => response.json())
+      .then(data => {
+        setUsers(data);
+        // Fetch profiles for all users
+        return Promise.all(data.map(user =>
+          fetch(`http://localhost:8080/profile/${user.id}`)
+            .then(response => response.json())));
+      })
+      .then(profileData => setProfiles(profileData))
+      .catch(error => console.error("Error fetching users and profiles:", error));
+    // Fetch interests
     fetch("http://localhost:8080/interests")
-      .then((response) => response.json())
-      .then((data) => setInterests(data))
-      .catch((error) => console.error("Error fetching interests:", error));
-
-    fetch("http://localhost:8080/user-interests")
-      .then((response) => response.json())
-      .then((data) => setUserInterests(data))
-      .catch((error) => console.error("Error fetching user-interests:", error));
+      .then(response => response.json())
+      .then(data => setInterests(data))
+      .catch(error => console.error("Error fetching interests:", error));
   }, []);
 
   useEffect(() => {
-    const data = users.map((user) => {
-      const userInterestsForUser = userInterests.filter(
-        (ui) => ui.user_id === user.id
-      );
-      const interestsForUser = userInterestsForUser.map((ui) =>
-        interests.find((interest) => interest.id === ui.interest_id)
-      );
+    const data = users.map(user => {
+
+      const userProfile = profiles.find(profile => profile.user_id === user.id);
       return {
         ...user,
-        interests: interestsForUser,
+        interests: ['basketball'], // For now since we can't fetch user_interests
+        profile_pic: userProfile ? userProfile.profile_pic : null // Set default image if not found
       };
     });
     setCombinedData(data);
-  }, [users, interests, userInterests]);
+  }, [users, profiles, interests]);
 
   return (
     <>
+      <h1>Users</h1>
       <EuiFlexGrid columns={4}>
-        <EuiFlexItem>
-          <EuiCard
-            textAlign="left"
-            image={
-              <div>
-                <img
-                  src="https://source.unsplash.com/400x200/?Nature"
-                  alt="Nature"
-                />
-              </div>
-            }
-            title="Elastic in Nature"
-            description="Example of a card's description. Stick to one or two sentences."
-            footer={
-              <EuiFlexGroup justifyContent="flexEnd">
-                <EuiFlexItem grow={false}>
-                  <EuiButton>Go for it</EuiButton>
-                </EuiFlexItem>
-              </EuiFlexGroup>
-            }
-          />
-        </EuiFlexItem>
-        <EuiFlexItem>
-          <EuiCard
-            textAlign="left"
-            image="https://source.unsplash.com/400x200/?Water"
-            title="Elastic in Water"
-            description="Example of a card's description. Stick to one or two sentences."
-            isDisabled
-          />
-        </EuiFlexItem>
-        <EuiFlexItem>
-          <EuiCard
-            textAlign="left"
-            href="https://elastic.github.io/eui/"
-            image="https://source.unsplash.com/400x200/?City"
-            icon={<EuiIcon size="xxl" type="logoBeats" />}
-            title={"Beats in the City"}
-            description="This card has an href and should be a link."
-          />
-        </EuiFlexItem>
-        {combinedData.map((user) => (
-          <EuiFlexItem>
+        {combinedData.map(user => (
+          <EuiFlexItem key={user.id}>
             <EuiCard
-              key={user.id}
               textAlign="left"
-              href={`http://localhost:8080/users/${user.id}`}
-              image={`${user.image}`}
-              icon={<EuiIcon size="xxl" type="logoBeats" />}
-              title={user.first_name}
-              description={user.last_name}
+              image={user.profile_pic ? user.profile_pic : "https://source.unsplash.com/400x200/?User"} // Use profile picture if available
+              title={`${user.first_name} ${user.last_name}`}
+              description={
+                <>
+                  Email: {user.email} <br />
+                  Location: {user.location} <br />
+                  Interests: {user.interests.join(", ")} {/* Hard Coded for now */}
+                </>
+              }
+              footer={
+                <EuiFlexGroup justifyContent="flexEnd">
+                  <EuiFlexItem grow={false}>
+                    <Link to={`/profile/${user.id}`}>
+                      <EuiButton>View Profile</EuiButton>
+                    </Link>
+                  </EuiFlexItem>
+                </EuiFlexGroup>
+              }
             />
-            {console.log(user)}
           </EuiFlexItem>
         ))}
       </EuiFlexGrid>
-      <div>
-        <h1>Users</h1>
-        <ul>
-          {combinedData.map((user) => (
-            <li key={user.id}>
-              <strong>
-                {user.first_name} {user.last_name}
-              </strong>{" "}
-              <br />
-              Email: {user.email} <br />
-              Location: {user.location} <br />
-              Interests:{" "}
-              {user.interests.map((interest) => interest.name).join(", ")}
-            </li>
-          ))}
-        </ul>
-      </div>
     </>
   );
 }
