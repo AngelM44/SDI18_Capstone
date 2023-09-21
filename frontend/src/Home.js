@@ -50,8 +50,8 @@ function Home() {
               userProfile.interests || []
             );
             return {
-              id: user.id, 
-              profile_id: userProfile.id, 
+              id: user.id,
+              profile_id: userProfile.id,
               ...user,
               ...userProfile,
               interests: userInterests,
@@ -88,7 +88,7 @@ function Home() {
         {combinedData.map((user) => (
           <EuiFlexItem
             className="custom-flex-item"
-            key={user.id}
+            key={`${user.id}-${user.profile_id}`} // Using a combination of id and profile_id for a unique key
             style={{ padding: "5px" }}
           >
             <Link
