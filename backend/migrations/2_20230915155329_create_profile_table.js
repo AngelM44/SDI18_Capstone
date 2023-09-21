@@ -11,7 +11,7 @@ exports.up = function(knex) {
     table.string('availability').notNullable()
     table.string('info').notNullable()
     table.string('goals').notNullable()
-    table.specificType('interests', 'integer[]')
+    table.specificType('interests', 'text[]')
   })
 };
 
