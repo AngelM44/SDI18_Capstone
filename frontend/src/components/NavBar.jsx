@@ -13,10 +13,12 @@ import {
   EuiFieldSearch,
 } from "@elastic/eui";
 import logo from "../logo.png";
+import { useUser } from "./UserContext";
 
 export const NavBar = () => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const { isAuthenticated } = useUser(); // Use the hook to get the authentication status
 
   const togglePopover = () => {
     setIsPopoverOpen(!isPopoverOpen);
@@ -48,10 +50,18 @@ export const NavBar = () => {
       <EuiHeaderSection>
         <EuiHeaderSectionItem>{renderLogo()}</EuiHeaderSectionItem>
       </EuiHeaderSection>
-      <EuiHeaderBreadcrumbs
-        breadcrumbs={breadcrumbs}
-        style={{ alignItems: "center", padding: "8px 0" }}
-      />
+      <div
+        style={
+          {
+            // paddingTop: "16px",
+            // paddingBottom: 300,
+            // paddingRight: "50px",
+            // textAlign: "center"
+          }
+        }
+      >
+        <EuiHeaderBreadcrumbs breadcrumbs={breadcrumbs} />
+      </div>
       <EuiHeaderSection side="right">
         {isSearchOpen && (
           <EuiFieldSearch
@@ -60,7 +70,7 @@ export const NavBar = () => {
             onClick={toggleSearch}
           />
         )}
-        <EuiHeaderSectionItem>
+        <EuiHeaderSectionItem style={{ marginRight: "16px" }}>
           <EuiHeaderSectionItemButton
             aria-label="Toggle search"
             onClick={toggleSearch}
