@@ -14,6 +14,7 @@ import {
 } from "@elastic/eui";
 import logo from "../logo.png";
 import { useUser } from "./UserContext";
+import InterestMenu from "../InterestMenu";
 
 export const NavBar = () => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
@@ -47,8 +48,9 @@ export const NavBar = () => {
 
   return (
     <EuiHeader>
-      <EuiHeaderSection>
+      <EuiHeaderSection style={{ alignItems: 'center' }}>
         <EuiHeaderSectionItem>{renderLogo()}</EuiHeaderSectionItem>
+        <InterestMenu />
       </EuiHeaderSection>
       <div
         style={
