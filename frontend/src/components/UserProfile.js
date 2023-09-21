@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { EuiFlexGroup, EuiPage } from "@elastic/eui";
+import { EuiFlexGroup, EuiPage, EuiButton } from "@elastic/eui";
 import UserProfilePanel from "./UserProfilePanel";
 import UserInfo from "./UserInfo";
 import UserProfileLoader from "./UserProfileLoader";
 import UserInterests from "./UserInterests";
+import UpdateProfile from "./UpdateProfile";
 
 const UserProfile = () => {
   const { id } = useParams();
   const [profileData, setProfileData] = useState([]);
-  // const [selected, setSelected] = useState(false);
-  // const { reservation, setReservation } = useVehicleContext();
+  const [openUpdate, setOpenUpdate] = useState(false);
 
   useEffect(() => {
     fetch(`http://localhost:8080/profile/${id}`)
@@ -29,7 +29,19 @@ const UserProfile = () => {
         <EuiFlexGroup>
           <UserProfilePanel data={profileData} />
           <UserInfo data={profileData} />
+          <EuiButton
+            color="secondary"
+            size="xs"
+            paddingSize="m"
+            onClick={() => setOpenUpdate(true)}
+            iconType="documentEdit"
+          >
+            Update
+          </EuiButton>
           {/* <UserInterests data={profileData} /> */}
+          {openUpdate && (
+            <UpdateProfile setOpenUpdate={setOpenUpdate} user={profileData} />
+          )}
         </EuiFlexGroup>
       </EuiPage>
     );
