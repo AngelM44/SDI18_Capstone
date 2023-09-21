@@ -11,6 +11,8 @@ import UserProfile from "./components/UserProfile";
 import { UserProvider } from "./components/UserContext";
 import { SearchProvider } from "./components/SearchContext";
 import { EuiThemeProvider } from "@elastic/eui";
+import InterestMenu from './InterestMenu';
+// import InterestPage from './InterestPage';
 
 function App() {
   return (
