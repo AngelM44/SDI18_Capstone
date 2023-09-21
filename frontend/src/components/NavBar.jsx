@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   EuiHeader,
-  EuiHeaderLogo,
   EuiHeaderSection,
   EuiHeaderSectionItem,
   EuiHeaderSectionItemButton,
@@ -13,15 +12,15 @@ import {
   EuiFieldSearch,
 } from "@elastic/eui";
 import logo from "../logo.png";
-import { useSearchContext } from './SearchContext'
 import { useUser } from "./UserContext";
 import InterestMenu from "../InterestMenu";
-
+import { useNavigate } from "react-router-dom";
 
 export const NavBar = () => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const { isAuthenticated } = useUser(); // Use the hook to get the authentication status
+  const { isAuthenticated, logout } = useUser(); // Use the hook to get the authentication status and logout function
+  const navigate = useNavigate();
 
   const togglePopover = () => {
     setIsPopoverOpen(!isPopoverOpen);
@@ -33,6 +32,11 @@ export const NavBar = () => {
 
   const closePopover = () => {
     setIsPopoverOpen(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
   };
 
   const renderLogo = () => (
@@ -48,29 +52,13 @@ export const NavBar = () => {
     { text: "Wellness", href: "#", onClick: (e) => e.preventDefault() },
   ];
 
-  const {searchValue, setSearch } = useSearchContext();
-
-  const handleSearchInputChange = (e) => {
-    setSearch(e.target.value)
-    console.log('changed value: ', e.target.value)
-  }
-
   return (
     <EuiHeader>
-      <EuiHeaderSection style={{ alignItems: 'center' }}>
+      <EuiHeaderSection style={{ alignItems: "center" }}>
         <EuiHeaderSectionItem>{renderLogo()}</EuiHeaderSectionItem>
         <InterestMenu />
       </EuiHeaderSection>
-      <div
-        style={
-          {
-            // paddingTop: "16px",
-            // paddingBottom: 300,
-            // paddingRight: "50px",
-            // textAlign: "center"
-          }
-        }
-      >
+      <div>
         <EuiHeaderBreadcrumbs breadcrumbs={breadcrumbs} />
       </div>
       <EuiHeaderSection side="right">
@@ -78,10 +66,7 @@ export const NavBar = () => {
           <EuiFieldSearch
             placeholder="Search..."
             compressed
-            //onClick={toggleSearch}
-            //updates the rendered page with searchValue
-            value = {searchValue}
-            onChange={handleSearchInputChange}
+            onClick={toggleSearch}
           />
         )}
         <EuiHeaderSectionItem style={{ marginRight: "16px" }}>
@@ -107,12 +92,20 @@ export const NavBar = () => {
             anchorPosition="downRight"
           >
             <EuiKeyPadMenu style={{ listStyleType: "none" }}>
-              <EuiKeyPadMenuItem label="Register" href="/register">
-                <EuiIcon type="notebookApp" size="l" />
-              </EuiKeyPadMenuItem>
-              <EuiKeyPadMenuItem label="Login" href="/login">
-                <EuiIcon type="agentApp" size="l" />
-              </EuiKeyPadMenuItem>
+              {!isAuthenticated ? (
+                <>
+                  <EuiKeyPadMenuItem label="Register" href="/register">
+                    <EuiIcon type="notebookApp" size="l" />
+                  </EuiKeyPadMenuItem>
+                  <EuiKeyPadMenuItem label="Login" href="/login">
+                    <EuiIcon type="agentApp" size="l" />
+                  </EuiKeyPadMenuItem>
+                </>
+              ) : (
+                <EuiKeyPadMenuItem label="Logout" onClick={handleLogout}>
+                  <EuiIcon type="exit" size="l" />
+                </EuiKeyPadMenuItem>
+              )}
             </EuiKeyPadMenu>
           </EuiPopover>
         </EuiHeaderSectionItem>

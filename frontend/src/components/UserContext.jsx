@@ -9,6 +9,7 @@ export const useUser = () => {
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
@@ -16,6 +17,7 @@ export const UserProvider = ({ children }) => {
       setUser(JSON.parse(savedUser));
       setIsAuthenticated(true);
     }
+    setIsLoading(false);
   }, []);
 
   const login = async (userData) => {
@@ -31,7 +33,9 @@ export const UserProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ user, isAuthenticated, login, logout }}>
+    <UserContext.Provider
+      value={{ user, isAuthenticated, login, logout, isLoading }}
+    >
       {children}
     </UserContext.Provider>
   );
