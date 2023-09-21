@@ -65,8 +65,8 @@ exports.seed = async function(knex) {
     ]
     for (let i = 0; i < howManyInterests; i++){
       const index = Math.floor(Math.random() * (10) + 1)
-      if (!insertInterests.includes(interests[index])){
-        insertInterests.push(interests)
+      if (!insertInterests.includes(index)){
+        insertInterests.push(index)
       }
     }
     return insertInterests
