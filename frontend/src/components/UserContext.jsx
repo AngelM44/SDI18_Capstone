@@ -21,13 +21,13 @@ export const UserProvider = ({ children }) => {
   const login = async (userData) => {
     setUser(userData);
     setIsAuthenticated(true);
-    localStorage.setItem("user", JSON.stringify(userData)); 
+    localStorage.setItem("user", JSON.stringify(userData));
   };
 
   const logout = () => {
     setUser(null);
     setIsAuthenticated(false);
-    localStorage.removeItem("user"); 
+    localStorage.removeItem("user");
   };
 
   return (

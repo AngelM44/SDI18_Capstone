@@ -9,11 +9,65 @@ exports.seed = async function(knex) {
 
   const profiles = []
   const makeRandomArray = () => {
-    const howManyInterests = Math.floor(Math.random() * 4)
+    const howManyInterests = Math.floor(Math.random() * 4) + 1;
     const insertInterests = []
+    const interests = [
+      {
+        name: 'Weightlifting',
+        skill_level: 'beginner',
+        category: 'Strength Training'
+      },
+      {
+        name: 'Crossfit',
+        skill_level: 'beginner',
+        category: 'Cardiovascular and Strength Training'
+      },
+      {
+        name: 'Running',
+        skill_level: 'intermediate',
+        category: 'Cardiovascualar Training'
+      },
+      {
+        name: 'Yoga',
+        skill_level: 'advanced',
+        category: 'Flexibility and Endurance'
+      },
+      {
+        name: 'High-Intensity Interval Training',
+        skill_level: 'intermediate',
+        category: 'Cardiovascular and Endurance'
+      },
+      {
+        name: 'Olympic Lifting',
+        skill_level: 'advanced',
+        category: 'Strength Training and Endurance'
+      },
+      {
+        name: 'Swimming',
+        skill_level: 'intermediate',
+        category: 'Cardiovascular and Endurance'
+      },
+      {
+        name: 'Dance Classes',
+        skill_level: 'advanced',
+        category: 'Cardiovascular and Endurance'
+      },
+      {
+        name: 'Squats',
+        skill_level: 'beginner',
+        category: 'Strength Training'
+      },
+      {
+        name: 'Deadlift',
+        skill_level: 'advanced',
+        category: 'Strength Training'
+      }
+    ]
     for (let i = 0; i < howManyInterests; i++){
-      const interests = Math.floor(Math.random() * (10) + 1)
-      insertInterests.push(interests)
+      const index = Math.floor(Math.random() * (10) + 1)
+      if (!insertInterests.includes(interests[index])){
+        insertInterests.push(interests)
+      }
     }
     return insertInterests
   }

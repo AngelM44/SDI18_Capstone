@@ -2,9 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { EuiCard, EuiFlexGroup, EuiFlexItem, EuiFlexGrid } from "@elastic/eui";
 import "./App.css";
+import { useSearchContext } from './components/SearchContext'
+
 
 function Home() {
   const [combinedData, setCombinedData] = useState([]);
+  const { searchValue } = useSearchContext();
 
   const fetchInterestsForUser = async (interestIds) => {
     try {
@@ -65,6 +68,18 @@ function Home() {
 
     fetchData();
   }, []);
+
+  //modify the combined data ONLY if the searchValue is not ''
+  if (searchValue !== ''){
+    let searchedProfiles = combinedData.filter(user => {
+      return (
+        user.first_name.includes(searchValue) ||
+        user.last_name.includes(searchValue) ||
+        user.interests.includes(searchValue)
+      )
+    })
+    //setCombinedData(searchedProfiles)
+  }
 
   return (
     <div style={{ height: "100vh", width: "100vw", minHeight: "100vh" }}>

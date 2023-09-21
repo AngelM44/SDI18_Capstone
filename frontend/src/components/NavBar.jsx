@@ -13,8 +13,10 @@ import {
   EuiFieldSearch,
 } from "@elastic/eui";
 import logo from "../logo.png";
+import { useSearchContext } from './SearchContext'
 import { useUser } from "./UserContext";
 import InterestMenu from "../InterestMenu";
+
 
 export const NavBar = () => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
@@ -46,6 +48,13 @@ export const NavBar = () => {
     { text: "Wellness", href: "#", onClick: (e) => e.preventDefault() },
   ];
 
+  const {searchValue, setSearch } = useSearchContext();
+
+  const handleSearchInputChange = (e) => {
+    setSearch(e.target.value)
+    console.log('changed value: ', e.target.value)
+  }
+
   return (
     <EuiHeader>
       <EuiHeaderSection style={{ alignItems: 'center' }}>
@@ -69,7 +78,10 @@ export const NavBar = () => {
           <EuiFieldSearch
             placeholder="Search..."
             compressed
-            onClick={toggleSearch}
+            //onClick={toggleSearch}
+            //updates the rendered page with searchValue
+            value = {searchValue}
+            onChange={handleSearchInputChange}
           />
         )}
         <EuiHeaderSectionItem style={{ marginRight: "16px" }}>
