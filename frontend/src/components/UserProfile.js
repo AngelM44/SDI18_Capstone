@@ -4,6 +4,7 @@ import { EuiFlexGroup, EuiPage } from "@elastic/eui";
 import UserProfilePanel from "./UserProfilePanel";
 import UserInfo from "./UserInfo";
 import UserProfileLoader from "./UserProfileLoader";
+import UserInterests from "./UserInterests";
 
 const UserProfile = () => {
   const { id } = useParams();
@@ -28,6 +29,7 @@ const UserProfile = () => {
         <EuiFlexGroup>
           <UserProfilePanel data={profileData} />
           <UserInfo data={profileData} />
+          {/* <UserInterests data={profileData} /> */}
         </EuiFlexGroup>
       </EuiPage>
     );
