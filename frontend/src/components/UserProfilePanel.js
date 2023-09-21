@@ -1,4 +1,6 @@
-import { EuiCard, EuiDescriptionList, EuiIcon } from "@elastic/eui";
+import { EuiCard, EuiDescriptionList, EuiIcon, EuiButton } from "@elastic/eui";
+import React, { useState } from "react";
+import UpdateProfile from "./UpdateProfile";
 
 const UserProfilePanel = ({ data }) => {
   const cardFooterContent = (
