@@ -88,7 +88,7 @@ function Home() {
         {combinedData.map((user) => (
           <EuiFlexItem
             className="custom-flex-item"
-            key={`${user.id}-${user.profile_id}`} // Using a combination of id and profile_id for a unique key
+            key={`${user.id}-${user.profile_id}`}
             style={{ padding: "5px" }}
           >
             <Link
