@@ -27,6 +27,7 @@ function Home() {
       try {
         const usersResponse = await fetch("http://localhost:8080/users");
         const users = await usersResponse.json();
+        console.log("Users:", users);
 
         const profilesResponse = await Promise.all(
           users.map((user) =>
@@ -35,20 +36,26 @@ function Home() {
             )
           )
         );
+        console.log("Profiles:", profilesResponse);
 
         const dataWithInterests = await Promise.all(
-          users.map(async (user, index) => {
-            const userProfile = profilesResponse[index];
+          users.map(async (user) => {
+            const userProfile =
+              profilesResponse.find((profile) => profile.user_id === user.id) ||
+              {};
             const userInterests = await fetchInterestsForUser(
               userProfile.interests || []
             );
             return {
+              id: user.id, 
+              profile_id: userProfile.id, 
               ...user,
               ...userProfile,
               interests: userInterests,
             };
           })
         );
+        console.log("Combined Data:", dataWithInterests);
 
         setCombinedData(dataWithInterests);
       } catch (error) {
@@ -70,7 +77,7 @@ function Home() {
             style={{ padding: "5px" }}
           >
             <Link
-              to={`/profile/${user.id}`}
+              to={`/profile/${user.user_id}`}
               style={{ textDecoration: "none", color: "inherit" }}
             >
               <EuiCard
