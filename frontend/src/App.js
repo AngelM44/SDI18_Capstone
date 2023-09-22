@@ -11,6 +11,7 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import UserProfile from "./components/UserProfile";
 import Strength from './Strength'
+import Cardio from './Cardio'
 import { UserProvider, useUser } from "./components/UserContext";
 import { SearchProvider } from "./components/SearchContext";
 import NavBar from "./components/NavBar";
@@ -44,9 +45,7 @@ function App() {
               <Route
                 path="/cardio"
                 element={
-                  <ProtectedElement>
-                    <ListComponent category="Cardio" />
-                  </ProtectedElement>
+                  <Cardio/>
                 }
               />
               <Route
