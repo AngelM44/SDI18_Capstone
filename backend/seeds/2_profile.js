@@ -9,7 +9,7 @@ exports.seed = async function(knex) {
 
   const profiles = []
   const makeRandomArray = () => {
-    const howManyInterests = Math.floor(Math.random() * 4) + 1;
+    const howManyInterests = Math.floor(Math.random() * 2) + 1;
     const insertInterests = []
     const interests = [
       {
