@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { EuiButton, EuiTextArea, EuiFormRow } from "@elastic/eui";
 
-const Post = ({ onNewPost }) => {
+
+const Post = ({ onNewPost, data }) => {
+    console.log("Info: ", data)
     const [newPostContent, setNewPostContent] = useState('');
 
     const handleNewPost = async () => {
@@ -13,7 +16,7 @@ const Post = ({ onNewPost }) => {
                 },
                 body: JSON.stringify({
                     body: newPostContent,
-                    profile_id: 1, // This is a placeholder. Will replace it with the actual user's profile_id
+                    profile_id: data.profile_id, // This is a placeholder. Will replace it with the actual user's profile_id
                     date_created: new Date().toISOString().slice(0, 10) // Current date in 'YYYY-MM-DD' format
                 }),
             });
@@ -34,15 +37,17 @@ const Post = ({ onNewPost }) => {
     };
 
     return (
-        <div>
+        <div className="post-container">
             <textarea
+                className="post-textarea"
                 value={newPostContent}
                 onChange={(e) => setNewPostContent(e.target.value)}
                 placeholder="What's on your mind?"
             />
-            <button onClick={handleNewPost}>Post</button>
+            <EuiButton className="post-button" onClick={handleNewPost}>Post</EuiButton>
         </div>
     );
+
 };
 
 export default Post;

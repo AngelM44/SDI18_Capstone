@@ -1,7 +1,8 @@
-import { EuiComment, EuiAvatar } from "@elastic/eui";
+import { EuiComment, EuiAvatar, EuiButton, EuiIcon } from "@elastic/eui";
 import React, { Fragment, useState, useEffect } from "react";
 import EditPost from '../EditPost';
 import Post from '../Post';
+import '../Post.css';
 
 const UserPosts = ({ data }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -22,29 +23,36 @@ const UserPosts = ({ data }) => {
     setPostData(newPost);
   };
 
+  const handleEditClick = (event) => {
+    event.preventDefault();
+    setIsEditing(true);
+  };
+
   return (
     <div>
       {/* New Post */}
-      <Post onNewPost={onNewPost} />
+      <h1>#What's on Your Mind</h1>
+      <Post data={data} onNewPost={onNewPost} />
 
-      {/* Existing Post */}
-      {
-        isEditing ? (
+      <h1>#My Posts</h1>
+      <div className={`custom-comment-container ${isEditing ? 'editing' : ''}`}>
+        {isEditing ? (
           <EditPost post={postData} onUpdate={handleUpdate} />
         ) : (
           <Fragment>
-            <h1>#Posts</h1>
             <EuiComment
               username={`${postData.first_name} ${postData.last_name}`}
               event="posted at"
               timestamp={postData.date_created}
             >
               {postData.body}
-              <button onClick={() => setIsEditing(true)}>Edit</button>
             </EuiComment>
+            <div className="edit-icon-container">
+              <EuiIcon type="pencil" onClick={handleEditClick} />
+            </div>
           </Fragment>
-        )
-      }
+        )}
+      </div>
     </div>
   );
 };
