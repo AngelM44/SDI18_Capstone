@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import {
   EuiForm,
@@ -6,156 +6,191 @@ import {
   EuiFlexGroup,
   EuiFlexItem,
   EuiButton,
+  EuiModalBody,
+  EuiModalFooter,
 } from "@elastic/eui";
+import UserProfile from "./UserProfile";
 
 const UpdateProfile = ({ setOpenUpdate, user }) => {
-  //   const [profile, setProfile] = useState(null);
-  const [texts, setTexts] = useState({
-    email: user.email,
-    password: user.password,
-    first_name: user.first_name,
-    last_name: user.last_name,
-    location: user.location,
+  const [profileUpdate, setProfileUpdate] = useState({
     interests: user.interests,
     availability: user.availability,
     info: user.info,
     goals: user.goals,
   });
 
-  //   const userUpdate = {
-  //     body: {
-  //       first_name: this.user.first_name,
-  //       last_name: user.last_name,
-  //       email: user.email,
-  //       location: user.location,
-  //     },
-  //   };
+  const [userUpdate, setUserUpdate] = useState({
+    password: user.password,
+    first_name: user.first_name,
+    last_name: user.last_name,
+    email: user.email,
+    location: user.location,
+  });
 
-  const userId = user.id;
+  const [error, setError] = useState(null);
 
-  //   useEffect(() => {
-  //     const patchUser = async () => {
-  //       try {
-  //         const response = await axios.patch(`/users/${userId}`, userUpdate.body);
-  //         if (response.status === 200) {
-  //           console.log("User updated:", response.data);
-  //         } else if (response.status === 404) {
-  //           console.log("User not found");
-  //         }
-  //       } catch (error) {
-  //         console.error("Error updating user:", error.message);
-  //       }
-  //     };
+  const handleUserChange = (e) => {
+    setUserUpdate((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));
+  };
 
-  //     patchUser();
-  //   }, [userId]);
-
-  const handleChange = (e) => {
-    setTexts((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));
+  const handleProfileChange = (e) => {
+    setProfileUpdate((prev) => ({
+      ...prev,
+      [e.target.name]: [e.target.value],
+    }));
   };
 
   const handleClick = async (e) => {
     e.preventDefault();
 
-    //this is where we would do the post/patch
+    try {
+      const res = await axios.patch(
+        `http://localhost:8080/users/${user.user_id}`,
+        {
+          location: `${userUpdate.location}`,
+          password: `${userUpdate.password}`,
+          first_name: `${userUpdate.first_name}`,
+          last_name: `${userUpdate.last_name}`,
+          email: `${userUpdate.email}`,
+        }
+      );
+    } catch (err) {
+      if (err.response && err.response.status === 401) {
+        setError("Unable to update profile");
+      } else {
+        setError("Error, please try again.");
+      }
+    }
+
+    try {
+      const res = axios.patch(`http://localhost:8080/profile/${user.user_id}`, {
+        availability: `${profileUpdate.availability}`,
+        interests: profileUpdate.interests,
+        info: `${profileUpdate.info}`,
+        goals: `${profileUpdate.goals}`,
+      });
+    } catch (err) {
+      if (err.res && err.res.status === 401) {
+        setError("Unable to update profile");
+      } else {
+        setError("Error, please try again.");
+      }
+    }
 
     setOpenUpdate(false);
+    window.location.reload();
   };
 
   return (
-    <EuiModal maxWidth="100%" onClose={() => setOpenUpdate(false)}>
-      <div
-        className="wrapper"
-        style={{
-          padding: "50px",
-          gap: "20px",
-        }}
-      >
-        <h1>Update Your Profile</h1>
-        <EuiForm>
-          <EuiFlexGroup gutterSize="m" direction="row">
-            <EuiFlexItem style={{ width: "50%", gap: "10px", padding: "10px" }}>
-              <label>Email</label>
-              <input
-                type="text"
-                value={texts.email}
-                name="email"
-                onChange={handleChange}
-              />
-              <label>First Name</label>
-              <input
-                type="text"
-                value={texts.first_name}
-                name="password"
-                onChange={handleChange}
-              />
-              <label>Last Name</label>
-              <input
-                type="text"
-                value={texts.last_name}
-                name="name"
-                onChange={handleChange}
-              />
-              <label>Location</label>
-              <input
-                type="text"
-                name="location"
-                value={texts.location}
-                onChange={handleChange}
-              />
-              <label>Interests</label>
-              <input
-                type="text"
-                name="interests"
-                value={texts.interests}
-                onChange={handleChange}
-              />
-            </EuiFlexItem>
-            <EuiFlexItem style={{ width: "50%", gap: "10px", padding: "10px" }}>
-              <label>Availibility</label>
-              <input
-                type="text"
-                name="availability"
-                value={texts.availability}
-                onChange={handleChange}
-              />
-              <label>About</label>
-              <textarea
-                type="text"
-                name="info"
-                rows="5"
-                cols="33"
-                value={texts.info}
-                onChange={handleChange}
-              />
-              <label>Goals</label>
-              <textarea
-                type="text"
-                name="goals"
-                rows="5"
-                cols="33"
-                value={texts.goals}
-                onChange={handleChange}
-              />
-            </EuiFlexItem>
-          </EuiFlexGroup>
-        </EuiForm>
-      </div>
-      <div
-        style={{
-          alignSelf: "center",
-          padding: "20px",
-        }}
-      >
-        <EuiButton
-          color="secondary"
-          size="s"
-          onClick={handleClick}
-          style={{ alignSelf: "center", width: "50%" }}
+    <EuiModal style={{}} onClose={() => setOpenUpdate(false)}>
+      {console.log(user)}
+      <EuiModalBody>
+        <div
+          className="wrapper"
+          style={{
+            padding: "20px",
+            gap: "20px",
+          }}
         >
-          Update
-        </EuiButton>
-      </div>
+          <h1>Update Your Profile</h1>
+          <EuiForm>
+            <EuiFlexGroup gutterSize="m" direction="row">
+              <EuiFlexItem
+                style={{
+                  height: "100%",
+                  width: "50%",
+                  gap: "10px",
+                  padding: "10px",
+                }}
+              >
+                <label>Email</label>
+                <input
+                  type="text"
+                  value={userUpdate.email}
+                  name="email"
+                  onChange={handleUserChange}
+                />
+                <label>First Name</label>
+                <input
+                  type="text"
+                  value={userUpdate.first_name}
+                  name="password"
+                  onChange={handleUserChange}
+                />
+                <label>Last Name</label>
+                <input
+                  type="text"
+                  value={userUpdate.last_name}
+                  name="name"
+                  onChange={handleUserChange}
+                />
+                <label>Location</label>
+                <input
+                  type="text"
+                  name="location"
+                  value={userUpdate.location}
+                  onChange={handleUserChange}
+                />
+                <label>Interests</label>
+                <input
+                  type="text"
+                  name="interests"
+                  value={profileUpdate.interests}
+                  onChange={handleProfileChange}
+                />
+              </EuiFlexItem>
+              <EuiFlexItem
+                style={{
+                  height: "100%",
+                  width: "50%",
+                  gap: "10px",
+                  padding: "10px",
+                }}
+              >
+                <label>Availibility</label>
+                <input
+                  type="text"
+                  name="availability"
+                  value={profileUpdate.availability}
+                  onChange={handleProfileChange}
+                />
+                <label>About</label>
+                <textarea
+                  type="text"
+                  name="info"
+                  rows="5"
+                  cols="33"
+                  value={profileUpdate.info}
+                  onChange={handleProfileChange}
+                />
+                <label>Goals</label>
+                <textarea
+                  type="text"
+                  name="goals"
+                  rows="5"
+                  cols="33"
+                  value={profileUpdate.goals}
+                  onChange={handleProfileChange}
+                />
+              </EuiFlexItem>
+            </EuiFlexGroup>
+          </EuiForm>
+          <EuiModalFooter
+            style={{
+              justifyContent: "center",
+            }}
+          >
+            <EuiButton
+              color="secondary"
+              size="s"
+              onClick={handleClick}
+              style={{ width: "20%" }}
+            >
+              Update
+            </EuiButton>
+          </EuiModalFooter>
+        </div>
+      </EuiModalBody>
     </EuiModal>
   );
 };
