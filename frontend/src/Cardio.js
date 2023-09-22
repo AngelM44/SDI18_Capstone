@@ -5,7 +5,7 @@ import "./App.css";
 import { useSearchContext } from './components/SearchContext'
 
 
-function Strength() {
+function Cardio() {
   const [combinedData, setCombinedData] = useState([]);
   const { searchValue } = useSearchContext();
 
@@ -60,12 +60,12 @@ function Strength() {
         );
         console.log("Combined Data:", dataWithInterests);
 
-        const StrengthPeople = dataWithInterests.filter(item => {
-          return ["Weightlifting", "Crossfit", "Olympic Lifting", "Squats", "Deadlift"].some(interest => item.interests.includes(interest));
+        const CardioPeople = dataWithInterests.filter(item => {
+          return ["Dance Classes", "Swimming", "Olympic Lifting", "High-Intensity Interval Training", "Running", "Crossfit"].some(interest => item.interests.includes(interest));
         });
 
-        console.log("Strength People: ", StrengthPeople)
-        setCombinedData(StrengthPeople);
+        console.log("Cardio People: ", CardioPeople)
+        setCombinedData(CardioPeople);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -150,4 +150,4 @@ function Strength() {
   );
 }
 
-export default Strength;
+export default Cardio;
