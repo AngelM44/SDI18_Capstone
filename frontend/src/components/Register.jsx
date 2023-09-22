@@ -4,6 +4,7 @@ import {
   EuiForm,
   EuiFormRow,
   EuiFieldText,
+  EuiFieldPassword,
   EuiButton,
   EuiSpacer,
   EuiCallOut,
@@ -29,6 +30,7 @@ function Register() {
   });
   const [successMessage, setSuccessMessage] = useState("");
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -38,9 +40,11 @@ function Register() {
     e.preventDefault();
     setError(null);
     setSuccessMessage("");
+    setIsLoading(true);
 
     if (formData.dod_id.length !== 10) {
       setError("DOD ID must be 10 characters long.");
+      setIsLoading(false);
       return;
     }
 
@@ -53,17 +57,9 @@ function Register() {
       login(response.data);
       navigate("/home");
     } catch (err) {
-      if (err.response) {
-        if (err.response.status === 400) {
-          if (err.response.data === "duplicate username") {
-            setError("Username already exists. Choose a different one.");
-          } else {
-            setError("Error registering. Please try again.");
-          }
-        }
-      } else {
-        setError("Error registering. Please try again.");
-      }
+      setError(err.response?.data || "Error registering. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -109,8 +105,7 @@ function Register() {
               />
             </EuiFormRow>
             <EuiFormRow style={styles.formRow} label="Password">
-              <EuiFieldText
-                type="password"
+              <EuiFieldPassword
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
@@ -135,7 +130,9 @@ function Register() {
             </EuiFormRow>
             <EuiSpacer />
             <div style={styles.buttonContainer}>
-              <EuiButton type="submit">Register</EuiButton>
+              <EuiButton type="submit" isLoading={isLoading}>
+                Register
+              </EuiButton>
             </div>
             {successMessage && (
               <EuiCallOut title={successMessage} color="success" />
@@ -158,13 +155,8 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    // background: "#f3f3f3",
+    backgroundColor: "transparent",
     marginTop: "60px",
-  },
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
   },
   formContainer: {
     width: "80%",
@@ -172,7 +164,7 @@ const styles = {
     padding: "20px",
     borderRadius: "10px",
     boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)",
-    // background: "white",
+    backgroundColor: "transparent",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",

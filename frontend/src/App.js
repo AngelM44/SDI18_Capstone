@@ -1,55 +1,93 @@
 import React from "react";
-import logo from "./logo.png";
-import "./App.css";
-import NavBar from "./components/NavBar";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import ListComponent from "./ListComponent";
 import Home from "./Home";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import UserProfile from "./components/UserProfile";
-import { UserProvider } from "./components/UserContext";
+import { UserProvider, useUser } from "./components/UserContext";
 import { SearchProvider } from "./components/SearchContext";
-import { EuiThemeProvider } from "@elastic/eui";
-import InterestMenu from "./InterestMenu";
-// import InterestPage from './InterestPage';
+import NavBar from "./components/NavBar";
 
 function App() {
   return (
-    // <EuiThemeProvider colorMode="dark">
     <UserProvider>
       <SearchProvider>
         <div className="App">
           <Router>
             <NavBar />
             <Routes>
-              <Route path="/home" exact element={<Home />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/profile/:id" element={<UserProfile />} />
+              <Route
+                path="/home"
+                element={
+                  <ProtectedElement>
+                    <Home />
+                  </ProtectedElement>
+                }
+              />
+              <Route
+                path="/profile/:id"
+                element={
+                  <ProtectedElement>
+                    <UserProfile />
+                  </ProtectedElement>
+                }
+              />
               <Route
                 path="/cardio"
-                element={<ListComponent category="Cardio" />}
+                element={
+                  <ProtectedElement>
+                    <ListComponent category="Cardio" />
+                  </ProtectedElement>
+                }
               />
               <Route
                 path="/strength"
-                element={<ListComponent category="Strength" />}
+                element={
+                  <ProtectedElement>
+                    <ListComponent category="Strength" />
+                  </ProtectedElement>
+                }
               />
               <Route
                 path="/nutrition"
-                element={<ListComponent category="Nutrition" />}
+                element={
+                  <ProtectedElement>
+                    <ListComponent category="Nutrition" />
+                  </ProtectedElement>
+                }
               />
               <Route
                 path="/wellness"
-                element={<ListComponent category="Wellness" />}
+                element={
+                  <ProtectedElement>
+                    <ListComponent category="Wellness" />
+                  </ProtectedElement>
+                }
               />
             </Routes>
           </Router>
         </div>
       </SearchProvider>
     </UserProvider>
-    // </EuiThemeProvider>
   );
+}
+
+function ProtectedElement({ children }) {
+  const { isAuthenticated, isLoading } = useUser();
+
+  if (isLoading) {
+    return null;
+  }
+
+  return isAuthenticated ? children : <Navigate to="/login" replace />;
 }
 
 export default App;

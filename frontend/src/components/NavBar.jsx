@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 export const NavBar = () => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const { isAuthenticated, logout } = useUser(); // Use the hook to get the authentication status and logout function
+  const { isAuthenticated, logout } = useUser();
   const navigate = useNavigate();
 
   const togglePopover = () => {
@@ -62,21 +62,23 @@ export const NavBar = () => {
         <EuiHeaderBreadcrumbs breadcrumbs={breadcrumbs} />
       </div>
       <EuiHeaderSection side="right">
-        {isSearchOpen && (
+        {isAuthenticated && isSearchOpen && (
           <EuiFieldSearch
             placeholder="Search..."
             compressed
             onClick={toggleSearch}
           />
         )}
-        <EuiHeaderSectionItem style={{ marginRight: "16px" }}>
-          <EuiHeaderSectionItemButton
-            aria-label="Toggle search"
-            onClick={toggleSearch}
-          >
-            <EuiIcon type="search" size="m" />
-          </EuiHeaderSectionItemButton>
-        </EuiHeaderSectionItem>
+        {isAuthenticated && (
+          <EuiHeaderSectionItem style={{ marginRight: "16px" }}>
+            <EuiHeaderSectionItemButton
+              aria-label="Toggle search"
+              onClick={toggleSearch}
+            >
+              <EuiIcon type="search" size="m" />
+            </EuiHeaderSectionItemButton>
+          </EuiHeaderSectionItem>
+        )}
         <EuiHeaderSectionItem>
           <EuiPopover
             button={
