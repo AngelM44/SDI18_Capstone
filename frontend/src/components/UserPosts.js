@@ -1,13 +1,12 @@
 import { EuiComment, EuiAvatar, EuiButton, EuiIcon } from "@elastic/eui";
 import React, { Fragment, useState, useEffect } from "react";
-import EditPost from '../EditPost';
-import Post from '../Post';
-import '../Post.css';
+import EditPost from "../EditPost";
+import Post from "../Post";
+import "../Post.css";
 
 const UserPosts = ({ data }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [postData, setPostData] = useState(data);
-
 
   useEffect(() => {
     setPostData(data);
@@ -35,7 +34,7 @@ const UserPosts = ({ data }) => {
       <Post data={data} onNewPost={onNewPost} />
 
       <h1>#My Posts</h1>
-      <div className={`custom-comment-container ${isEditing ? 'editing' : ''}`}>
+      <div className={`custom-comment-container ${isEditing ? "editing" : ""}`}>
         {isEditing ? (
           <EditPost post={postData} onUpdate={handleUpdate} />
         ) : (
@@ -48,7 +47,11 @@ const UserPosts = ({ data }) => {
               {postData.body}
             </EuiComment>
             <div className="edit-icon-container">
-              <EuiIcon type="pencil" onClick={handleEditClick} />
+              <EuiIcon
+                type="pencil"
+                onClick={handleEditClick}
+                style={{ cursor: "pointer" }}
+              />
             </div>
           </Fragment>
         )}

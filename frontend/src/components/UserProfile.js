@@ -29,11 +29,11 @@ const UserProfile = () => {
         <EuiFlexGroup>
           <UserProfilePanel data={profileData} />
           <UserInfo data={profileData} />
-          <div style={{ padding: "5px", cursor: "pointer" }}>
+          <div style={{ opacity: 0.5, padding: "5px", cursor: "pointer" }}>
             <EuiIcon
               color="secondary"
               type="documentEdit"
-              size="xl"
+              size="l"
               onClick={() => setOpenUpdate(true)}
             />
           </div>
