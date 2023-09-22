@@ -153,6 +153,11 @@ export const NavBar = () => {
     menuItem: {
       color: "black",
     },
+    logoutItem: {
+      color: "black",
+      border: "none",
+      backgroundColor: "transparent",
+    },
   };
 
   return (
@@ -218,13 +223,29 @@ export const NavBar = () => {
                   </EuiKeyPadMenuItem>
                 </>
               ) : (
-                <EuiKeyPadMenuItem
-                  label="Logout"
-                  onClick={handleLogout}
-                  style={customStyles.menuItem}
-                >
-                  <EuiIcon type="exit" size="l" />
-                </EuiKeyPadMenuItem>
+                <>
+                  <EuiKeyPadMenuItem
+                    label="Profile"
+                    href={user ? `/profile/${user.id}` : "#"}
+                    style={customStyles.menuItem}
+                  >
+                    <EuiIcon type="user" size="l" />
+                  </EuiKeyPadMenuItem>
+                  <EuiKeyPadMenuItem
+                    label="Home"
+                    href="/home"
+                    style={customStyles.menuItem}
+                  >
+                    <EuiIcon type="home" size="l" />
+                  </EuiKeyPadMenuItem>
+                  <EuiKeyPadMenuItem
+                    label="Logout"
+                    onClick={handleLogout}
+                    style={customStyles.menuItem}
+                  >
+                    <EuiIcon type="exit" size="l" />
+                  </EuiKeyPadMenuItem>
+                </>
               )}
             </EuiKeyPadMenu>
           </EuiPopover>
