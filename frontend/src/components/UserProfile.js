@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { EuiFlexGroup, EuiPage, EuiButton } from "@elastic/eui";
+import { EuiFlexGroup, EuiPage, EuiButton, EuiIcon } from "@elastic/eui";
 import UserProfilePanel from "./UserProfilePanel";
 import UserInfo from "./UserInfo";
 import UserProfileLoader from "./UserProfileLoader";
@@ -29,15 +29,14 @@ const UserProfile = () => {
         <EuiFlexGroup>
           <UserProfilePanel data={profileData} />
           <UserInfo data={profileData} />
-          <EuiButton
-            color="secondary"
-            size="xs"
-            paddingSize="m"
-            onClick={() => setOpenUpdate(true)}
-            iconType="documentEdit"
-          >
-            Update
-          </EuiButton>
+          <div style={{ padding: "5px", cursor: "pointer" }}>
+            <EuiIcon
+              color="secondary"
+              type="documentEdit"
+              size="xl"
+              onClick={() => setOpenUpdate(true)}
+            />
+          </div>
           {/* <UserInterests data={profileData} /> */}
           {openUpdate && (
             <UpdateProfile setOpenUpdate={setOpenUpdate} user={profileData} />
