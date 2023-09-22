@@ -82,7 +82,10 @@ const UpdateProfile = ({ setOpenUpdate, user }) => {
   };
 
   return (
-    <EuiModal style={{}} onClose={() => setOpenUpdate(false)}>
+    <EuiModal
+      style={{ fontFamily: "inherit", background: "#CCCCFF" }}
+      onClose={() => setOpenUpdate(false)}
+    >
       {console.log(user)}
       <EuiModalBody>
         <div
@@ -162,6 +165,7 @@ const UpdateProfile = ({ setOpenUpdate, user }) => {
                   cols="33"
                   value={profileUpdate.info}
                   onChange={handleProfileChange}
+                  style={{ fontFamily: "inherit", resize: "none" }}
                 />
                 <label>Goals</label>
                 <textarea
@@ -171,6 +175,7 @@ const UpdateProfile = ({ setOpenUpdate, user }) => {
                   cols="33"
                   value={profileUpdate.goals}
                   onChange={handleProfileChange}
+                  style={{ fontFamily: "inherit", resize: "none" }}
                 />
               </EuiFlexItem>
             </EuiFlexGroup>

@@ -96,3 +96,10 @@
   font-size: 50px;
   /* hovered size */
 }
+
+input,
+textarea {
+  border-radius: 3px;
+  border: lightgray solid 1px;
+  font-size: 1rem;
+}
