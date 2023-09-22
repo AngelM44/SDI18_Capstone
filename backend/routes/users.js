@@ -23,6 +23,16 @@ router.post("/register", async (req, res) => {
         location,
       })
       .returning("*");
+
+    const user_id = newUser[0].id; 
+    const defaultProfile = {
+      user_id,
+      availability: "Edit Availability", 
+      info: "Edit Info",
+      goals: "Edit Goals",
+    };
+    await knex("profile").insert(defaultProfile).returning("*");
+
     res.status(201).json(newUser[0]);
   } catch (err) {
     console.error("Error registering user:", err.message);

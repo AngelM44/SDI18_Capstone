@@ -5,7 +5,7 @@
 exports.up = function(knex) {
   return knex.schema.createTable('profile', table => {
     table.increments('id').primary()
-    table.string('profile_pic').notNullable()
+    table.string('profile_pic')
     table.integer('user_id').notNullable()
     table.foreign('user_id').references('id').inTable('users')
     table.string('availability').notNullable()
