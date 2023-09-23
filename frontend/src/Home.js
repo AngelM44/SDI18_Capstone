@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { EuiCard, EuiFlexGroup, EuiFlexItem, EuiFlexGrid } from "@elastic/eui";
-import "./App.css";
+
 import { useSearchContext } from "./components/SearchContext";
 import Banner from './Banner';
 import DescriptionBanner from './DescriptionBanner';
