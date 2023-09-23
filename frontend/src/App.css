@@ -44,3 +44,10 @@
 .logo-container {
   padding: 32px;
 }
+
+input,
+textarea {
+  border-radius: 3px;
+  border: lightgray solid 1px;
+  font-size: 1rem;
+}
