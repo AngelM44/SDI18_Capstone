@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import { EuiCard, EuiFlexGroup, EuiFlexItem, EuiFlexGrid } from "@elastic/eui";
 import "./App.css";
 import { useSearchContext } from "./components/SearchContext";
+import Banner from './Banner';
+import DescriptionBanner from './DescriptionBanner';
+
+
 
 function Home() {
   const [combinedData, setCombinedData] = useState([]);
@@ -82,74 +86,78 @@ function Home() {
 
   return (
     <div style={{ height: "100vh", width: "100vw", minHeight: "100vh" }}>
-      <h1>Users</h1>
-      <EuiFlexGrid className="custom-flex-grid" columns={4} gutterSize="s">
-        {combinedData.map((user) => (
-          <EuiFlexItem
-            className="custom-flex-item"
-            key={`${user.id}-${user.profile_id}`}
-            style={{ padding: "5px" }}
-          >
-            <Link
-              to={`/profile/${user.user_id}`}
-              style={{ textDecoration: "none", color: "inherit" }}
+
+      <Banner />
+      <DescriptionBanner />
+
+      <div className="cards-banner">
+        <EuiFlexGrid className="custom-flex-grid" columns={4} gutterSize="s">
+          {combinedData.map((user) => (
+            <EuiFlexItem
+              className="custom-flex-item"
+              key={`${user.id}-${user.profile_id}`}
+              style={{ padding: "5px" }}
             >
-              <EuiCard
-                className="euiCard"
-                style={{
-                  marginTop: "10px",
-                  minWidth: "300px",
-                  maxWidth: "400px",
-                  minHeight: "450px",
-                  backgroundColor: "#4267B2",
-                  color: "white",
-                  borderColor: "grey",
-                  borderWidth: "1px",
-                  borderStyle: "solid",
-                }}
-                textAlign="left"
-                image={
-                  <div
-                    style={{
-                      height: "300px",
-                      backgroundSize: "contain",
-                      backgroundImage: `url(${
-                        user.profile_pic ||
-                        `https://source.unsplash.com/400x200/?person,portrait&${user.id}`
-                      })`,
-                      backgroundPosition: "center center",
-                      backgroundRepeat: "no-repeat",
-                    }}
-                  ></div>
-                }
-                paddingSize="l"
+              <Link
+                to={`/profile/${user.user_id}`}
+                style={{ textDecoration: "none", color: "inherit" }}
               >
-                <div
+                <EuiCard
+                  className="euiCard"
                   style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    height: "100%",
-                    marginTop: "80px",
+                    marginTop: "10px",
+                    minWidth: "300px",
+                    maxWidth: "400px",
+                    minHeight: "450px",
+                    backgroundColor: "#4267B2",
+                    color: "white",
+                    borderColor: "grey",
+                    borderWidth: "1px",
+                    borderStyle: "solid",
                   }}
+                  textAlign="left"
+                  image={
+                    <div
+                      style={{
+                        height: "300px",
+                        backgroundSize: "contain",
+                        backgroundImage: `url(${user.profile_pic ||
+                          `https://source.unsplash.com/400x200/?person,portrait&${user.id}`
+                          })`,
+                        backgroundPosition: "center center",
+                        backgroundRepeat: "no-repeat",
+                      }}
+                    ></div>
+                  }
+                  paddingSize="l"
                 >
-                  <h2>{`${user.first_name} ${user.last_name}`}</h2>
                   <div
                     style={{
-                      textAlign: "left",
-                      flexGrow: 1,
-                      marginBottom: "15px",
+                      display: "flex",
+                      flexDirection: "column",
+                      height: "100%",
+                      marginTop: "80px",
                     }}
                   >
-                    <strong>Email:</strong> {user.email} <br />
-                    <strong>Location:</strong> {user.location} <br />
-                    <strong>Interests:</strong> {user.interests.join(", ")}
+                    <h2>{`${user.first_name} ${user.last_name}`}</h2>
+                    <div
+                      style={{
+                        textAlign: "left",
+                        flexGrow: 1,
+                        marginBottom: "15px",
+                      }}
+                    >
+                      <strong>Email:</strong> {user.email} <br />
+                      <strong>Location:</strong> {user.location} <br />
+                      <strong>Interests:</strong> {user.interests.join(", ")}
+                    </div>
                   </div>
-                </div>
-              </EuiCard>
-            </Link>
-          </EuiFlexItem>
-        ))}
-      </EuiFlexGrid>
+                </EuiCard>
+              </Link>
+            </EuiFlexItem>
+          ))}
+        </EuiFlexGrid>
+      </div>
     </div>
   );
 }
