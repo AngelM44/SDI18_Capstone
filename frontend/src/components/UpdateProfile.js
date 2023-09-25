@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
   EuiForm,
@@ -8,183 +8,199 @@ import {
   EuiButton,
   EuiModalBody,
   EuiModalFooter,
+  EuiFieldText,
+  EuiTextArea,
+  EuiSelect,
 } from "@elastic/eui";
-import UserProfile from "./UserProfile";
 
-const UpdateProfile = ({ setOpenUpdate, user }) => {
+const UpdateProfile = ({ setOpenUpdate, user, onUserUpdate }) => {
+  const [interests, setInterests] = useState([]);
+  const [selectedInterests, setSelectedInterests] = useState([]);
+  const [newInterest, setNewInterest] = useState({
+    name: "",
+    skill_level: "beginner",
+    category: "",
+  });
   const [profileUpdate, setProfileUpdate] = useState({
-    interests: user.interests,
     availability: user.availability,
     info: user.info,
     goals: user.goals,
   });
-
   const [userUpdate, setUserUpdate] = useState({
-    password: user.password,
     first_name: user.first_name,
     last_name: user.last_name,
-    email: user.email,
     location: user.location,
   });
-
   const [error, setError] = useState(null);
 
+  const skillLevels = [
+    { value: "beginner", text: "Beginner" },
+    { value: "intermediate", text: "Intermediate" },
+    { value: "advanced", text: "Advanced" },
+  ];
+
+  useEffect(() => {
+    const fetchInterests = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/interests");
+        setInterests(response.data);
+        const userInterests = response.data.filter((interest) =>
+          user.interests.includes(interest.id)
+        );
+        setSelectedInterests(userInterests);
+      } catch (err) {
+        console.error("Error fetching interests:", err);
+      }
+    };
+    fetchInterests();
+  }, [user.interests]);
+
   const handleUserChange = (e) => {
-    setUserUpdate((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));
+    setUserUpdate((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleProfileChange = (e) => {
-    setProfileUpdate((prev) => ({
-      ...prev,
-      [e.target.name]: [e.target.value],
-    }));
+    setProfileUpdate((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleNewInterestChange = (e) => {
+    setNewInterest((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleAddInterest = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/interests",
+        newInterest
+      );
+      const addedInterest = response.data;
+      setInterests([...interests, addedInterest]);
+      setSelectedInterests([...selectedInterests, addedInterest]);
+      setNewInterest({ name: "", skill_level: "beginner", category: "" });
+    } catch (err) {
+      console.error("Error adding new interest:", err);
+    }
   };
 
   const handleClick = async (e) => {
     e.preventDefault();
-
     try {
-      const res = await axios.patch(
+      const userResponse = await axios.patch(
         `http://localhost:8080/users/${user.user_id}`,
+        userUpdate
+      );
+      const profileResponse = await axios.patch(
+        `http://localhost:8080/profile/${user.user_id}`,
         {
-          location: `${userUpdate.location}`,
-          password: `${userUpdate.password}`,
-          first_name: `${userUpdate.first_name}`,
-          last_name: `${userUpdate.last_name}`,
-          email: `${userUpdate.email}`,
+          ...profileUpdate,
+          interests: selectedInterests.map((interest) => interest.id),
         }
       );
-    } catch (err) {
-      if (err.response && err.response.status === 401) {
-        setError("Unable to update profile");
-      } else {
-        setError("Error, please try again.");
-      }
-    }
 
-    try {
-      const res = axios.patch(`http://localhost:8080/profile/${user.user_id}`, {
-        availability: `${profileUpdate.availability}`,
-        interests: profileUpdate.interests,
-        info: `${profileUpdate.info}`,
-        goals: `${profileUpdate.goals}`,
-      });
-    } catch (err) {
-      if (err.res && err.res.status === 401) {
-        setError("Unable to update profile");
-      } else {
-        setError("Error, please try again.");
-      }
-    }
+      const updatedUserData = {
+        ...user,
+        ...userResponse.data,
+        ...profileResponse.data,
+      };
 
-    setOpenUpdate(false);
-    window.location.reload();
+      setOpenUpdate(false);
+      onUserUpdate(updatedUserData);
+    } catch (err) {
+      console.error("Error updating profile:", err);
+      setError("Error, please try again.");
+    }
   };
 
   return (
-    <EuiModal
-      style={{ fontFamily: "inherit", background: "#CCCCFF" }}
-      onClose={() => setOpenUpdate(false)}
-    >
-      {console.log(user)}
+    <EuiModal onClose={() => setOpenUpdate(false)}>
       <EuiModalBody>
-        <div
-          className="wrapper"
-          style={{
-            padding: "20px",
-            gap: "20px",
-          }}
-        >
+        <div style={{ padding: "20px", gap: "20px" }}>
           <h1>Update Your Profile</h1>
           <EuiForm>
             <EuiFlexGroup gutterSize="m" direction="row">
-              <EuiFlexItem
-                style={{
-                  height: "100%",
-                  width: "50%",
-                  gap: "10px",
-                  padding: "10px",
-                }}
-              >
-                <label>Email</label>
-                <input
-                  type="text"
-                  value={userUpdate.email}
-                  name="email"
-                  onChange={handleUserChange}
-                />
-                <label>First Name</label>
-                <input
-                  type="text"
+              <EuiFlexItem className="formSection">
+                <EuiFieldText
+                  label="First Name"
                   value={userUpdate.first_name}
-                  name="password"
+                  name="first_name"
                   onChange={handleUserChange}
+                  fullWidth={true}
                 />
-                <label>Last Name</label>
-                <input
-                  type="text"
+                <EuiFieldText
+                  label="Last Name"
                   value={userUpdate.last_name}
-                  name="name"
+                  name="last_name"
                   onChange={handleUserChange}
+                  fullWidth={true}
                 />
-                <label>Location</label>
-                <input
-                  type="text"
-                  name="location"
+                <EuiFieldText
+                  label="Location"
                   value={userUpdate.location}
+                  name="location"
                   onChange={handleUserChange}
+                  fullWidth={true}
                 />
-                <label>Interests</label>
-                <input
-                  type="text"
-                  name="interests"
-                  value={profileUpdate.interests}
-                  onChange={handleProfileChange}
+                <label>Current Interests</label>
+                <ul>
+                  {selectedInterests.map((interest) => (
+                    <li key={interest.id}>{interest.name}</li>
+                  ))}
+                </ul>
+                <label>Add New Interest</label>
+                <EuiFieldText
+                  placeholder="Enter a new interest"
+                  value={newInterest.name}
+                  name="name"
+                  onChange={handleNewInterestChange}
+                  fullWidth={true}
                 />
+                <EuiSelect
+                  label="Skill Level"
+                  options={skillLevels}
+                  value={newInterest.skill_level}
+                  onChange={(e) =>
+                    handleNewInterestChange({
+                      target: { name: "skill_level", value: e.target.value },
+                    })
+                  }
+                  fullWidth={true}
+                />
+                <EuiFieldText
+                  label="Category"
+                  placeholder="Enter a category"
+                  value={newInterest.category}
+                  name="category"
+                  onChange={handleNewInterestChange}
+                  fullWidth={true}
+                />
+                <EuiButton onClick={handleAddInterest}>Add Interest</EuiButton>
               </EuiFlexItem>
-              <EuiFlexItem
-                style={{
-                  height: "100%",
-                  width: "50%",
-                  gap: "10px",
-                  padding: "10px",
-                }}
-              >
-                <label>Availibility</label>
-                <input
-                  type="text"
-                  name="availability"
+              <EuiFlexItem className="formSection">
+                <EuiFieldText
+                  label="Availability"
                   value={profileUpdate.availability}
+                  name="availability"
                   onChange={handleProfileChange}
+                  fullWidth={true}
                 />
-                <label>About</label>
-                <textarea
-                  type="text"
-                  name="info"
-                  rows="5"
-                  cols="33"
+                <EuiTextArea
+                  label="About"
                   value={profileUpdate.info}
+                  name="info"
                   onChange={handleProfileChange}
-                  style={{ fontFamily: "inherit", resize: "none" }}
+                  fullWidth={true}
                 />
-                <label>Goals</label>
-                <textarea
-                  type="text"
-                  name="goals"
-                  rows="5"
-                  cols="33"
+                <EuiTextArea
+                  label="Goals"
                   value={profileUpdate.goals}
+                  name="goals"
                   onChange={handleProfileChange}
-                  style={{ fontFamily: "inherit", resize: "none" }}
+                  fullWidth={true}
                 />
               </EuiFlexItem>
             </EuiFlexGroup>
           </EuiForm>
-          <EuiModalFooter
-            style={{
-              justifyContent: "center",
-            }}
-          >
+          <EuiModalFooter style={{ justifyContent: "center" }}>
             <EuiButton
               color="secondary"
               size="s"

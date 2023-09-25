@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { EuiFlexGroup, EuiPage, EuiButton, EuiIcon } from "@elastic/eui";
+import { EuiFlexGroup, EuiPage, EuiButton } from "@elastic/eui";
 import UserProfilePanel from "./UserProfilePanel";
 import UserInfo from "./UserInfo";
 import UserProfileLoader from "./UserProfileLoader";
-import UserInterests from "./UserInterests";
 import UpdateProfile from "./UpdateProfile";
 
 const UserProfile = () => {
   const { id } = useParams();
   const [profileData, setProfileData] = useState([]);
   const [openUpdate, setOpenUpdate] = useState(false);
+
+  const handleUserUpdate = (updatedUserData) => {
+    setProfileData(updatedUserData);
+  };
 
   useEffect(() => {
     fetch(`http://localhost:8080/profile/${id}`)
@@ -29,17 +32,21 @@ const UserProfile = () => {
         <EuiFlexGroup>
           <UserProfilePanel data={profileData} />
           <UserInfo data={profileData} />
-          <div style={{ opacity: 0.5, padding: "5px", cursor: "pointer" }}>
-            <EuiIcon
-              color="secondary"
-              type="documentEdit"
-              size="l"
-              onClick={() => setOpenUpdate(true)}
-            />
-          </div>
-          {/* <UserInterests data={profileData} /> */}
+          <EuiButton
+            color="secondary"
+            size="xs"
+            paddingSize="m"
+            onClick={() => setOpenUpdate(true)}
+            iconType="documentEdit"
+          >
+            Update
+          </EuiButton>
           {openUpdate && (
-            <UpdateProfile setOpenUpdate={setOpenUpdate} user={profileData} />
+            <UpdateProfile
+              setOpenUpdate={setOpenUpdate}
+              user={profileData}
+              onUserUpdate={handleUserUpdate} 
+            />
           )}
         </EuiFlexGroup>
       </EuiPage>
