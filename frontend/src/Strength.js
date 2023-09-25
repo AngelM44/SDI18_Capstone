@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { EuiCard, EuiFlexGroup, EuiFlexItem, EuiFlexGrid } from "@elastic/eui";
 import "./App.css";
-import { useSearchContext } from './components/SearchContext'
+import { useSearchContext } from './components/SearchContext';
+import StrengthBanner from "./StrengthBanner";
+
 
 
 function Strength() {
@@ -78,7 +80,7 @@ function Strength() {
 
   return (
     <div style={{ height: "100vh", width: "100vw", minHeight: "100vh" }}>
-      <h1>Users</h1>
+      <StrengthBanner />
       <EuiFlexGrid className="custom-flex-grid" columns={4} gutterSize="s">
         {combinedData.map((user) => (
           <EuiFlexItem
@@ -109,10 +111,9 @@ function Strength() {
                     style={{
                       height: "300px",
                       backgroundSize: "contain",
-                      backgroundImage: `url(${
-                        user.profile_pic ||
+                      backgroundImage: `url(${user.profile_pic ||
                         `https://source.unsplash.com/400x200/?person,portrait&${user.id}`
-                      })`,
+                        })`,
                       backgroundPosition: "center center",
                       backgroundRepeat: "no-repeat",
                     }}
