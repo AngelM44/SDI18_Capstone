@@ -30,6 +30,7 @@ const UpdateProfile = ({ setOpenUpdate, user, onUserUpdate }) => {
     first_name: user.first_name,
     last_name: user.last_name,
     location: user.location,
+    email: user.email,
   });
   const [error, setError] = useState(null);
 
@@ -112,19 +113,46 @@ const UpdateProfile = ({ setOpenUpdate, user, onUserUpdate }) => {
   };
 
   return (
-    <EuiModal onClose={() => setOpenUpdate(false)}>
+    <EuiModal
+      style={{
+        minWidth: "800px",
+        display: "flex",
+        fontFamily: "inherit",
+        background: "#CCCCFF",
+        padding: "30px",
+        gap: "20px",
+      }}
+      onClose={() => setOpenUpdate(false)}
+    >
+      {console.log(user)}
       <EuiModalBody>
-        <div style={{ padding: "20px", gap: "20px" }}>
+        <div>
           <h1>Update Your Profile</h1>
           <EuiForm>
-            <EuiFlexGroup gutterSize="m" direction="row">
-              <EuiFlexItem className="formSection">
+            <EuiFlexGroup
+              gutterSize="xl"
+              direction="row"
+              style={{
+                width: "100%",
+              }}
+            >
+              <EuiFlexItem
+                className="formSection"
+                style={{
+                  display: "flex",
+                  gap: "20px",
+                  width: "50%",
+                }}
+              >
                 <EuiFieldText
                   label="First Name"
                   value={userUpdate.first_name}
                   name="first_name"
                   onChange={handleUserChange}
                   fullWidth={true}
+                  style={{
+                    width: "100%",
+                  }}
                 />
                 <EuiFieldText
                   label="Last Name"
@@ -132,6 +160,19 @@ const UpdateProfile = ({ setOpenUpdate, user, onUserUpdate }) => {
                   name="last_name"
                   onChange={handleUserChange}
                   fullWidth={true}
+                  style={{
+                    width: "100%",
+                  }}
+                />
+                <EuiFieldText
+                  label="Email"
+                  value={userUpdate.email}
+                  name="email"
+                  onChange={handleUserChange}
+                  fullWidth={true}
+                  style={{
+                    width: "100%",
+                  }}
                 />
                 <EuiFieldText
                   label="Location"
@@ -139,20 +180,53 @@ const UpdateProfile = ({ setOpenUpdate, user, onUserUpdate }) => {
                   name="location"
                   onChange={handleUserChange}
                   fullWidth={true}
+                  style={{
+                    width: "100%",
+                  }}
                 />
-                <label>Current Interests</label>
-                <ul>
-                  {selectedInterests.map((interest) => (
-                    <li key={interest.id}>{interest.name}</li>
-                  ))}
-                </ul>
-                <label>Add New Interest</label>
+                <EuiFieldText
+                  label="Availability"
+                  value={profileUpdate.availability}
+                  name="availability"
+                  onChange={handleProfileChange}
+                  fullWidth={true}
+                  style={{
+                    width: "100%",
+                  }}
+                />
+              </EuiFlexItem>
+              <EuiFlexItem
+                className="formSection"
+                style={{
+                  display: "flex",
+                  gap: "20px",
+                  width: "50%",
+                }}
+              >
+                <div
+                  style={{
+                    background: "white",
+                    borderRadius: "3px",
+                    width: "100%",
+                    padding: "2px",
+                  }}
+                >
+                  <label>Current Interests</label>
+                  <ul>
+                    {selectedInterests.map((interest) => (
+                      <li key={interest.id}>{interest.name}</li>
+                    ))}
+                  </ul>
+                </div>
                 <EuiFieldText
                   placeholder="Enter a new interest"
                   value={newInterest.name}
                   name="name"
                   onChange={handleNewInterestChange}
                   fullWidth={true}
+                  style={{
+                    width: "100%",
+                  }}
                 />
                 <EuiSelect
                   label="Skill Level"
@@ -172,35 +246,61 @@ const UpdateProfile = ({ setOpenUpdate, user, onUserUpdate }) => {
                   name="category"
                   onChange={handleNewInterestChange}
                   fullWidth={true}
+                  style={{
+                    width: "100%",
+                  }}
                 />
-                <EuiButton onClick={handleAddInterest}>Add Interest</EuiButton>
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <EuiButton
+                    color="secondary"
+                    size="xs"
+                    onClick={handleAddInterest}
+                    style={{ width: "20%" }}
+                  >
+                    Add Interest
+                  </EuiButton>
+                </div>
               </EuiFlexItem>
-              <EuiFlexItem className="formSection">
-                <EuiFieldText
-                  label="Availability"
-                  value={profileUpdate.availability}
-                  name="availability"
-                  onChange={handleProfileChange}
-                  fullWidth={true}
-                />
+              <EuiFlexItem
+                className="formSection"
+                style={{
+                  display: "flex",
+                  gap: "20px",
+                  width: "100%",
+                }}
+              >
                 <EuiTextArea
+                  id="euiTextArea"
                   label="About"
                   value={profileUpdate.info}
                   name="info"
                   onChange={handleProfileChange}
                   fullWidth={true}
+                  style={{
+                    width: "100%",
+                  }}
                 />
                 <EuiTextArea
+                  id="euiTextArea"
                   label="Goals"
                   value={profileUpdate.goals}
                   name="goals"
                   onChange={handleProfileChange}
                   fullWidth={true}
+                  style={{
+                    width: "100%",
+                  }}
                 />
               </EuiFlexItem>
             </EuiFlexGroup>
           </EuiForm>
-          <EuiModalFooter style={{ justifyContent: "center" }}>
+          <EuiModalFooter
+            style={{
+              justifyContent: "center",
+              paddingTop: "50px",
+              paddingBottom: "none",
+            }}
+          >
             <EuiButton
               color="secondary"
               size="s"

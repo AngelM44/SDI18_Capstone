@@ -46,8 +46,11 @@
 }
 
 input,
-textarea {
+textarea,
+#euiTextArea {
+  font-family: inherit;
   border-radius: 3px;
   border: lightgray solid 1px;
   font-size: 1rem;
+  resize: none;
 }

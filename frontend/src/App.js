@@ -43,18 +43,8 @@ function App() {
                   </ProtectedElement>
                 }
               />
-              <Route
-                path="/cardio"
-                element={
-                  <Cardio/>
-                }
-              />
-              <Route
-                path="/strength"
-                element={
-                  <Strength/>
-                }
-              />
+              <Route path="/cardio" element={<Cardio />} />
+              <Route path="/strength" element={<Strength />} />
               <Route
                 path="/nutrition"
                 element={
