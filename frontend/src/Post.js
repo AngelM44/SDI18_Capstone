@@ -16,7 +16,7 @@ const Post = ({ onNewPost, data }) => {
                 },
                 body: JSON.stringify({
                     body: newPostContent,
-                    profile_id: data.profile_id, // This is a placeholder. Will replace it with the actual user's profile_id
+                    profile_id: data.id, // This is a placeholder. Will replace it with the actual user's profile_id
                     date_created: new Date().toISOString().slice(0, 10) // Current date in 'YYYY-MM-DD' format
                 }),
             });
