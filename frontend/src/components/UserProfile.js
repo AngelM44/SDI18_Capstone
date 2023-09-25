@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { EuiFlexGroup, EuiPage, EuiButton } from "@elastic/eui";
+import { EuiFlexGroup, EuiPage, EuiIcon } from "@elastic/eui";
 import UserProfilePanel from "./UserProfilePanel";
 import UserInfo from "./UserInfo";
 import UserProfileLoader from "./UserProfileLoader";
@@ -27,25 +27,24 @@ const UserProfile = () => {
   } else {
     return (
       <EuiPage
-        style={{ height: "100vh", paddingLeft: "5px", paddingRight: "5px" }}
+        style={{ height: "100vh", paddingLeft: "30px", paddingRight: "30px" }}
       >
         <EuiFlexGroup>
           <UserProfilePanel data={profileData} />
           <UserInfo data={profileData} />
-          <EuiButton
-            color="secondary"
-            size="xs"
-            paddingSize="m"
-            onClick={() => setOpenUpdate(true)}
-            iconType="documentEdit"
-          >
-            Update
-          </EuiButton>
+          <div style={{ padding: "5px", opacity: ".6", cursor: "pointer" }}>
+            <EuiIcon
+              color="secondary"
+              type="documentEdit"
+              size="l"
+              onClick={() => setOpenUpdate(true)}
+            />
+          </div>
           {openUpdate && (
             <UpdateProfile
               setOpenUpdate={setOpenUpdate}
               user={profileData}
-              onUserUpdate={handleUserUpdate} 
+              onUserUpdate={handleUserUpdate}
             />
           )}
         </EuiFlexGroup>

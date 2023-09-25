@@ -10,8 +10,8 @@ import Home from "./Home";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import UserProfile from "./components/UserProfile";
-import Strength from './Strength'
-import Cardio from './Cardio'
+import Strength from "./Strength";
+import Cardio from "./Cardio";
 import { UserProvider, useUser } from "./components/UserContext";
 import { SearchProvider } from "./components/SearchContext";
 import NavBar from "./components/NavBar";
@@ -42,18 +42,8 @@ function App() {
                   </ProtectedElement>
                 }
               />
-              <Route
-                path="/cardio"
-                element={
-                  <Cardio/>
-                }
-              />
-              <Route
-                path="/strength"
-                element={
-                  <Strength/>
-                }
-              />
+              <Route path="/cardio" element={<Cardio />} />
+              <Route path="/strength" element={<Strength />} />
               <Route
                 path="/nutrition"
                 element={
