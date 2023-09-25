@@ -12,7 +12,7 @@ import Login from "./components/Login";
 import UserProfile from "./components/UserProfile";
 import Strength from './Strength'
 import Cardio from './Cardio'
-import Posts from './Weightlifting'
+import Posts from './Posts'
 import { UserProvider, useUser } from "./components/UserContext";
 import { SearchProvider } from "./components/SearchContext";
 import NavBar from "./components/NavBar";
@@ -62,7 +62,7 @@ function App() {
                 }
               />
               <Route
-                path="/interest/Weightlifting"
+                path="/posts"
                 element={
                   <Posts/>
                 }
