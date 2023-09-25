@@ -1,0 +1,28 @@
+.custom-search-bar .euiFormControlLayoutCustomIcon {
+  display: none;
+}
+
+.euiFormControlLayoutCustomIcon {
+  display: none !important;
+}
+
+/* Target the parent container of the search bar and clear button */
+.euiFormControlLayout {
+  display: flex; /* Use Flexbox layout */
+  align-items: center; /* Align items vertically in the center */
+  padding-right: 16px; /* Adjust the value as needed */
+}
+
+/* Target the clear button */
+.euiFormControlLayoutClearButton {
+  margin-left: 8px; /* Add some space between the search bar and clear button */
+  position: absolute;
+  right: 0; /* Adjust this value as needed */
+  top: 50%;
+  transform: translateY(-50%);
+    display: none;
+}
+
+.euiHeaderSectionItem {
+  margin-right: 32px; /* Adjust the value as needed */
+}

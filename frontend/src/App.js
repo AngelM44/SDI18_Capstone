@@ -16,7 +16,7 @@ import Posts from './Posts'
 import { UserProvider, useUser } from "./components/UserContext";
 import { SearchProvider } from "./components/SearchContext";
 import NavBar from "./components/NavBar";
-
+import './App.css'
 function App() {
   return (
     <UserProvider>

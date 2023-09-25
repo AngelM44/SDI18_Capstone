@@ -18,6 +18,7 @@ import { useUser } from "./UserContext";
 import InterestMenu from "../InterestMenu";
 import { useNavigate, Link } from "react-router-dom";
 import SearchResults from "./SearchResults";
+import "./NavBar.css";
 
 export const NavBar = (props) => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
@@ -28,7 +29,7 @@ export const NavBar = (props) => {
     users: [],
     interests: [],
   });
-  const [isResultsVisible, setIsResultsVisible] = useState(false); // New state variable to control visibility
+  const [isResultsVisible, setIsResultsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const { isAuthenticated, logout, user } = useUser();
@@ -51,7 +52,7 @@ export const NavBar = (props) => {
   const toggleSearch = () => {
     setIsSearchOpen((prevIsSearchOpen) => {
       const newIsSearchOpen = !prevIsSearchOpen;
-      setIsResultsVisible(newIsSearchOpen); 
+      setIsResultsVisible(newIsSearchOpen);
       return newIsSearchOpen;
     });
   };
@@ -82,7 +83,7 @@ export const NavBar = (props) => {
         users: response.data.users || [],
         interests: response.data.interests || [],
       });
-      setIsResultsVisible(true); 
+      setIsResultsVisible(true);
       props.onSearch(response.data);
       setIsSearchOpen(true);
     } catch (error) {
@@ -92,7 +93,6 @@ export const NavBar = (props) => {
       setIsLoading(false);
     }
   };
-
 
   const renderLogo = () => (
     <EuiToolTip position="bottom" content="Home">
@@ -226,15 +226,22 @@ export const NavBar = (props) => {
       <div>
         <EuiHeaderBreadcrumbs max={6} breadcrumbs={breadcrumbs} />
       </div>
-      <EuiHeaderSection side="right">
+      <EuiHeaderSection
+        style={{
+          alignItems: "center",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
         {isAuthenticated && isSearchOpen && (
-          <form onSubmit={handleSearchSubmit}>
+          <form onSubmit={handleSearchSubmit} style={{ marginLeft: "16px" }}>
             <EuiFieldSearch
+              className="custom-search-bar"
               placeholder="Search..."
               compressed
               value={searchQuery}
               onChange={handleSearchChange}
-              style={customStyles.searchInput}
+              style={{ ...customStyles.searchInput, paddingLeft: "32px" }}
             />
           </form>
         )}
