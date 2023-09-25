@@ -1,8 +1,9 @@
 import { EuiComment, EuiAvatar, EuiButton, EuiIcon } from "@elastic/eui";
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect, useContext } from "react";
 import EditPost from "../EditPost";
 import Post from "../Post";
 import "../Post.css";
+import { useUser } from "./UserContext";
 
 const UserPosts = ({ data }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -27,11 +28,17 @@ const UserPosts = ({ data }) => {
     setIsEditing(true);
   };
 
+  const { user } = useUser();
+
   return (
     <div>
-      {/* New Post */}
-      <h1>#What's on Your Mind</h1>
-      <Post data={data} onNewPost={onNewPost} />
+      {user.id === parseInt(data.id) && (
+        <>
+          {/* New Post */}
+          <h1>#What's on Your Mind</h1>
+          <Post data={data} onNewPost={onNewPost} />
+        </>
+      )}
 
       <h1>#My Posts</h1>
       <div className={`custom-comment-container ${isEditing ? "editing" : ""}`}>
@@ -46,13 +53,15 @@ const UserPosts = ({ data }) => {
             >
               {postData.body}
             </EuiComment>
-            <div className="edit-icon-container">
-              <EuiIcon
-                type="pencil"
-                onClick={handleEditClick}
-                style={{ cursor: "pointer" }}
-              />
-            </div>
+            {user.id === parseInt(data.id) && (
+              <div className="edit-icon-container">
+                <EuiIcon
+                  type="pencil"
+                  onClick={handleEditClick}
+                  style={{ cursor: "pointer" }}
+                />
+              </div>
+            )}
           </Fragment>
         )}
       </div>

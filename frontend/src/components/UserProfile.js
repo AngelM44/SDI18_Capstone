@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { EuiFlexGroup, EuiPage, EuiIcon } from "@elastic/eui";
 import UserProfilePanel from "./UserProfilePanel";
 import UserInfo from "./UserInfo";
 import UserProfileLoader from "./UserProfileLoader";
 import UpdateProfile from "./UpdateProfile";
+import { useUser } from "./UserContext";
 
 const UserProfile = () => {
   const { id } = useParams();
   const [profileData, setProfileData] = useState([]);
   const [openUpdate, setOpenUpdate] = useState(false);
+
+  const { user } = useUser();
 
   const handleUserUpdate = (updatedUserData) => {
     setProfileData(updatedUserData);
@@ -29,17 +32,27 @@ const UserProfile = () => {
       <EuiPage
         style={{ height: "100vh", paddingLeft: "30px", paddingRight: "30px" }}
       >
+        {console.log(parseInt(id))}
         <EuiFlexGroup>
           <UserProfilePanel data={profileData} />
           <UserInfo data={profileData} />
-          <div style={{ padding: "5px", opacity: ".6", cursor: "pointer" }}>
-            <EuiIcon
-              color="secondary"
-              type="documentEdit"
-              size="l"
-              onClick={() => setOpenUpdate(true)}
-            />
-          </div>
+          {user.id === parseInt(id) && (
+            <div
+              style={{
+                height: "fit-content",
+                padding: "5px",
+                opacity: ".6",
+                cursor: "pointer",
+              }}
+            >
+              <EuiIcon
+                color="secondary"
+                type="documentEdit"
+                size="l"
+                onClick={() => setOpenUpdate(true)}
+              />
+            </div>
+          )}
           {openUpdate && (
             <UpdateProfile
               setOpenUpdate={setOpenUpdate}

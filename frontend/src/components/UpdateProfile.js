@@ -146,6 +146,7 @@ const UpdateProfile = ({ setOpenUpdate, user, onUserUpdate }) => {
               >
                 <EuiFieldText
                   label="First Name"
+                  title="First Name"
                   value={userUpdate.first_name}
                   name="first_name"
                   onChange={handleUserChange}
@@ -156,6 +157,7 @@ const UpdateProfile = ({ setOpenUpdate, user, onUserUpdate }) => {
                 />
                 <EuiFieldText
                   label="Last Name"
+                  title="Last Name"
                   value={userUpdate.last_name}
                   name="last_name"
                   onChange={handleUserChange}
@@ -166,6 +168,7 @@ const UpdateProfile = ({ setOpenUpdate, user, onUserUpdate }) => {
                 />
                 <EuiFieldText
                   label="Email"
+                  title="Email"
                   value={userUpdate.email}
                   name="email"
                   onChange={handleUserChange}
@@ -176,6 +179,7 @@ const UpdateProfile = ({ setOpenUpdate, user, onUserUpdate }) => {
                 />
                 <EuiFieldText
                   label="Location"
+                  title="Location"
                   value={userUpdate.location}
                   name="location"
                   onChange={handleUserChange}
@@ -186,6 +190,7 @@ const UpdateProfile = ({ setOpenUpdate, user, onUserUpdate }) => {
                 />
                 <EuiFieldText
                   label="Availability"
+                  title="Availability"
                   value={profileUpdate.availability}
                   name="availability"
                   onChange={handleProfileChange}
@@ -272,6 +277,7 @@ const UpdateProfile = ({ setOpenUpdate, user, onUserUpdate }) => {
                 <EuiTextArea
                   id="euiTextArea"
                   label="About"
+                  title="About You"
                   value={profileUpdate.info}
                   name="info"
                   onChange={handleProfileChange}
@@ -283,6 +289,7 @@ const UpdateProfile = ({ setOpenUpdate, user, onUserUpdate }) => {
                 <EuiTextArea
                   id="euiTextArea"
                   label="Goals"
+                  title="Goals"
                   value={profileUpdate.goals}
                   name="goals"
                   onChange={handleProfileChange}
