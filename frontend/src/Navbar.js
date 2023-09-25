@@ -277,7 +277,7 @@ import {
 } from '@elastic/eui';
 import logo from "./logo.png";
 
-// import HeaderAppMenu from './HeaderAppMenu'; 
+// import HeaderAppMenu from './HeaderAppMenu';
 import HeaderUserMenu from './HeaderUserMenu';
 // import HeaderSpacesMenu from './HeaderSpacesMenu';
 
