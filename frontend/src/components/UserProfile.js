@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { EuiFlexGroup, EuiPage, EuiButton } from "@elastic/eui";
+import { EuiFlexGroup, EuiPage, EuiIcon } from "@elastic/eui";
 import UserProfilePanel from "./UserProfilePanel";
 import UserInfo from "./UserInfo";
 import UserProfileLoader from "./UserProfileLoader";
 import UpdateProfile from "./UpdateProfile";
+import { useUser } from "./UserContext";
 
 const UserProfile = () => {
   const { id } = useParams();
   const [profileData, setProfileData] = useState([]);
   const [openUpdate, setOpenUpdate] = useState(false);
+
+  const { user } = useUser();
 
   const handleUserUpdate = (updatedUserData) => {
     setProfileData(updatedUserData);
@@ -27,25 +30,34 @@ const UserProfile = () => {
   } else {
     return (
       <EuiPage
-        style={{ height: "100vh", paddingLeft: "5px", paddingRight: "5px" }}
+        style={{ height: "100vh", paddingLeft: "30px", paddingRight: "30px" }}
       >
+        {console.log(parseInt(id))}
         <EuiFlexGroup>
           <UserProfilePanel data={profileData} />
           <UserInfo data={profileData} />
-          <EuiButton
-            color="secondary"
-            size="xs"
-            paddingSize="m"
-            onClick={() => setOpenUpdate(true)}
-            iconType="documentEdit"
-          >
-            Update
-          </EuiButton>
+          {user.id === parseInt(id) && (
+            <div
+              style={{
+                height: "fit-content",
+                padding: "5px",
+                opacity: ".6",
+                cursor: "pointer",
+              }}
+            >
+              <EuiIcon
+                color="secondary"
+                type="documentEdit"
+                size="l"
+                onClick={() => setOpenUpdate(true)}
+              />
+            </div>
+          )}
           {openUpdate && (
             <UpdateProfile
               setOpenUpdate={setOpenUpdate}
               user={profileData}
-              onUserUpdate={handleUserUpdate} 
+              onUserUpdate={handleUserUpdate}
             />
           )}
         </EuiFlexGroup>

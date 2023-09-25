@@ -13,7 +13,7 @@ const UserInfo = ({ data }) => (
     <EuiText>
       <h1>#About Me</h1>
       <p>{data.info}</p>
-      <EuiHorizontalRule margin="m" />
+      <EuiHorizontalRule margin="m" size="l" />
       <h1>#Goals</h1>
       <p>{data.goals}</p>
     </EuiText>

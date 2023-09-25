@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { EuiButton, EuiTextArea, EuiFormRow } from "@elastic/eui";
 
-
-const Post = ({ onNewPost, data }) => {
-    console.log("Info: ", data)
+function Post({ onNewPost, data }) {
     const [newPostContent, setNewPostContent] = useState('');
 
     const handleNewPost = async () => {
         console.log("Attempting to create a new post");
+        console.log("Profile ID being passed:", data.profile_id);
+
+        const date_created = new Date().toISOString().slice(0, 10); // Current date in 'YYYY-MM-DD' format
         try {
             const response = await fetch('http://localhost:8080/posts', {
                 method: 'POST',
@@ -16,20 +17,21 @@ const Post = ({ onNewPost, data }) => {
                 },
                 body: JSON.stringify({
                     body: newPostContent,
+
                     profile_id: data.id, // This is a placeholder. Will replace it with the actual user's profile_id
                     date_created: new Date().toISOString().slice(0, 10) // Current date in 'YYYY-MM-DD' format
+
                 }),
             });
 
-            const newPost = await response.json();
-            console.log("Received response:", newPost);
+            const result = await response.json();
 
             if (response.ok) {
-                console.log('Post created:', newPost);
-                onNewPost(newPost);
+                console.log('Post created:', result);
+                onNewPost(result);
                 setNewPostContent('');
             } else {
-                console.error('Error creating post:', newPost.message);
+                console.error('Error creating post:', result.error);
             }
         } catch (error) {
             console.error('Error creating post:', error);
@@ -47,7 +49,8 @@ const Post = ({ onNewPost, data }) => {
             <EuiButton className="post-button" onClick={handleNewPost}>Post</EuiButton>
         </div>
     );
-
-};
+}
 
 export default Post;
+
+

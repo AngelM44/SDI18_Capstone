@@ -4,23 +4,69 @@ const knex = require("knex")(
   require("../knexfile.js")[process.env.NODE_ENV || "development"]
 );
 
+// router.post("/", async (req, res) => {
+//   const { user_id, availability, info, goals } = req.body;
+//   try {
+//     const newProfile = await knex("profile")
+//       .insert({
+//         user_id,
+//         availability,
+//         info,
+//         goals,
+//       })
+//       .returning("*");
+//     res.status(201).json(newProfile[0]);
+//   } catch (err) {
+//     console.error("Error creating profile:", err.message);
+//     res.status(400).json("Error creating profile.");
+//   }
+// });
+
 router.post("/", async (req, res) => {
-  const { user_id, availability, info, goals } = req.body;
+  const { profile_id, date_created, body, first_name, last_name } = req.body;
+
   try {
-    const newProfile = await knex("profile")
+
+    const newPost = await knex("posts")
       .insert({
-        user_id,
-        availability,
-        info,
-        goals,
+        profile_id,
+        date_created,
+        body,
       })
       .returning("*");
-    res.status(201).json(newProfile[0]);
+
+
+    const updatedProfile = await knex("profile")
+      .where({ user_id: profile_id })
+      .update({
+
+      })
+      .returning("*");
+
+    if (newPost[0] && updatedProfile[0]) {
+
+      res.status(201).json({
+        newPost: {
+          id: newPost[0].id,
+          profile_id: newPost[0].profile_id,
+          date_created: newPost[0].date_created,
+          body: newPost[0].body,
+          first_name,
+          last_name,
+        },
+        updatedProfile: updatedProfile[0],
+      });
+    } else {
+      res.status(400).json("Error creating post or updating profile.");
+    }
   } catch (err) {
-    console.error("Error creating profile:", err.message);
-    res.status(400).json("Error creating profile.");
+    console.error("Error creating post and updating profile:", err.message);
+    res.status(400).json("Error creating post and updating profile.");
   }
 });
+
+
+
 
 router.get("/:profileId", async (req, res) => {
   try {
