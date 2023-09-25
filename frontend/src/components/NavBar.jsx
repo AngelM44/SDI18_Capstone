@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import {
   EuiHeader,
   EuiHeaderSection,
@@ -10,24 +11,49 @@ import {
   EuiKeyPadMenu,
   EuiKeyPadMenuItem,
   EuiFieldSearch,
+  EuiToolTip,
 } from "@elastic/eui";
 import logo from "../logo.png";
 import { useUser } from "./UserContext";
 import InterestMenu from "../InterestMenu";
 import { useNavigate, Link } from "react-router-dom";
+import SearchResults from "./SearchResults";
 
-export const NavBar = () => {
+export const NavBar = (props) => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState({
+    locations: [],
+    users: [],
+    interests: [],
+  });
+  const [isResultsVisible, setIsResultsVisible] = useState(false); // New state variable to control visibility
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
   const { isAuthenticated, logout, user } = useUser();
   const navigate = useNavigate();
+
+  const styles = {
+    searchResultsContainer: {
+      position: "absolute",
+      top: "100%",
+      width: "100%",
+      backgroundColor: "white",
+      zIndex: 1,
+    },
+  };
 
   const togglePopover = () => {
     setIsPopoverOpen(!isPopoverOpen);
   };
 
   const toggleSearch = () => {
-    setIsSearchOpen(!isSearchOpen);
+    setIsSearchOpen((prevIsSearchOpen) => {
+      const newIsSearchOpen = !prevIsSearchOpen;
+      setIsResultsVisible(newIsSearchOpen); 
+      return newIsSearchOpen;
+    });
   };
 
   const closePopover = () => {
@@ -39,10 +65,41 @@ export const NavBar = () => {
     navigate("/login");
   };
 
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleSearchSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/search?query=${searchQuery}`
+      );
+      setSearchResults({
+        locations: response.data.locations || [],
+        users: response.data.users || [],
+        interests: response.data.interests || [],
+      });
+      setIsResultsVisible(true); 
+      props.onSearch(response.data);
+      setIsSearchOpen(true);
+    } catch (error) {
+      console.error("Error performing search:", error);
+      setError("Error performing search. Please try again later.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+
   const renderLogo = () => (
-    <a href="/home">
-      <img src={logo} className="App-logo" alt="logo" />
-    </a>
+    <EuiToolTip position="bottom" content="Home">
+      <a href="/home">
+        <img src={logo} className="App-logo" alt="logo" />
+      </a>
+    </EuiToolTip>
   );
 
   const breadcrumbs = [
@@ -161,7 +218,7 @@ export const NavBar = () => {
   };
 
   return (
-    <EuiHeader theme="dark">
+    <EuiHeader theme="dark" style={{ position: "relative" }}>
       <EuiHeaderSection style={{ alignItems: "center" }}>
         <EuiHeaderSectionItem>{renderLogo()}</EuiHeaderSectionItem>
         <InterestMenu />
@@ -171,12 +228,15 @@ export const NavBar = () => {
       </div>
       <EuiHeaderSection side="right">
         {isAuthenticated && isSearchOpen && (
-          <EuiFieldSearch
-            placeholder="Search..."
-            compressed
-            onClick={toggleSearch}
-            style={customStyles.searchInput}
-          />
+          <form onSubmit={handleSearchSubmit}>
+            <EuiFieldSearch
+              placeholder="Search..."
+              compressed
+              value={searchQuery}
+              onChange={handleSearchChange}
+              style={customStyles.searchInput}
+            />
+          </form>
         )}
         {isAuthenticated && (
           <EuiHeaderSectionItem style={{ marginRight: "16px" }}>
@@ -207,50 +267,65 @@ export const NavBar = () => {
             <EuiKeyPadMenu style={{ listStyleType: "none" }}>
               {!isAuthenticated ? (
                 <>
-                  <EuiKeyPadMenuItem
-                    label="Register"
-                    href="/register"
-                    style={customStyles.menuItem}
-                  >
-                    <EuiIcon type="notebookApp" size="l" />
-                  </EuiKeyPadMenuItem>
-                  <EuiKeyPadMenuItem
-                    label="Login"
-                    href="/login"
-                    style={customStyles.menuItem}
-                  >
-                    <EuiIcon type="agentApp" size="l" />
-                  </EuiKeyPadMenuItem>
+                  <EuiToolTip content="Register">
+                    <EuiKeyPadMenuItem
+                      label="Register"
+                      href="/register"
+                      style={customStyles.menuItem}
+                    >
+                      <EuiIcon type="notebookApp" size="l" />
+                    </EuiKeyPadMenuItem>
+                  </EuiToolTip>
+                  <EuiToolTip content="Login">
+                    <EuiKeyPadMenuItem
+                      label="Login"
+                      href="/login"
+                      style={customStyles.menuItem}
+                    >
+                      <EuiIcon type="agentApp" size="l" />
+                    </EuiKeyPadMenuItem>
+                  </EuiToolTip>
                 </>
               ) : (
                 <>
-                  <EuiKeyPadMenuItem
-                    label="Profile"
-                    href={user ? `/profile/${user.id}` : "#"}
-                    style={customStyles.menuItem}
-                  >
-                    <EuiIcon type="user" size="l" />
-                  </EuiKeyPadMenuItem>
-                  <EuiKeyPadMenuItem
-                    label="Home"
-                    href="/home"
-                    style={customStyles.menuItem}
-                  >
-                    <EuiIcon type="home" size="l" />
-                  </EuiKeyPadMenuItem>
-                  <EuiKeyPadMenuItem
-                    label="Logout"
-                    onClick={handleLogout}
-                    style={customStyles.menuItem}
-                  >
-                    <EuiIcon type="exit" size="l" />
-                  </EuiKeyPadMenuItem>
+                  <EuiToolTip content="Profile">
+                    <EuiKeyPadMenuItem
+                      label="Profile"
+                      href={user ? `/profile/${user.id}` : "#"}
+                      style={customStyles.menuItem}
+                    >
+                      <EuiIcon type="user" size="l" />
+                    </EuiKeyPadMenuItem>
+                  </EuiToolTip>
+                  <EuiToolTip content="Home">
+                    <EuiKeyPadMenuItem
+                      label="Home"
+                      href="/home"
+                      style={customStyles.menuItem}
+                    >
+                      <EuiIcon type="home" size="l" />
+                    </EuiKeyPadMenuItem>
+                  </EuiToolTip>
+                  <EuiToolTip content="Logout">
+                    <EuiKeyPadMenuItem
+                      label="Logout"
+                      onClick={handleLogout}
+                      style={customStyles.menuItem}
+                    >
+                      <EuiIcon type="exit" size="l" />
+                    </EuiKeyPadMenuItem>
+                  </EuiToolTip>
                 </>
               )}
             </EuiKeyPadMenu>
           </EuiPopover>
         </EuiHeaderSectionItem>
       </EuiHeaderSection>
+      {isResultsVisible && (
+        <div style={styles.searchResultsContainer}>
+          <SearchResults results={searchResults} />
+        </div>
+      )}
     </EuiHeader>
   );
 };

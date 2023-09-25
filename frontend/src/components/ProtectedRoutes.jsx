@@ -6,7 +6,7 @@ function ProtectedRoute(props) {
   const { isAuthenticated, isLoading } = useUser();
 
   if (isLoading) {
-    return null; // Render a loading indicator while the authentication state is being initialized
+    return null; 
   }
 
   return (
