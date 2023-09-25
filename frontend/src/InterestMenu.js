@@ -35,7 +35,25 @@ export default function InterestMenu() {
             .catch(error => console.error("Error fetching interests:", error));
     }, []);
 
-    const interestsList = interests.map(interest => ({
+    let newNavbar = [
+          {
+            name: 'cardio'
+          },
+          {
+            name: 'strength'
+          },
+          {
+            name: 'profile'
+          },
+          {
+            name: 'posts'
+          },
+          {
+            name: 'home'
+          },
+
+    ]
+    const interestsList = newNavbar.map(interest => ({
         ...interest,
         draggableId: makeId(),
     }));
@@ -64,7 +82,7 @@ export default function InterestMenu() {
                             <EuiDraggable spacing="m" key={draggableId} index={idx} draggableId={draggableId}>
                                 {(provided, state) => (
                                     <Link
-                                        to={`/interest/${name}`}
+                                        to={`/${name}`}
                                         style={{ textDecoration: 'none', color: 'black' }}>
                                         <EuiPanel
                                             hasShadow={state.isDragging}
@@ -90,4 +108,4 @@ export default function InterestMenu() {
             </EuiCollapsibleNav>
         </div>
     );
-}    
+}

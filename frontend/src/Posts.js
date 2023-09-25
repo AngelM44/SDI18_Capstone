@@ -7,20 +7,36 @@ import { useSearchContext } from './components/SearchContext'
 
 function Posts() {
   const [Posts, setPosts] = useState([]);
+  const [Users, setUsers] = useState([]);
 
 useEffect(() => {
- const fetchposts = async (interestIds) => {
+ const fetchposts = async () => {
       const posts = await fetch(`http://localhost:8080/posts`)
       .then((res) => res.json())
 
        setPosts(posts)
     }
+  const fetchUsers = async () => {
+    const users = await fetch(`http://localhost:8080/users`)
+    .then((res) => res.json())
+
+    setUsers(users)
+  }
 
   fetchposts()
+  fetchUsers()
 })
 
+const fetchProfileName = (id) => {
+  //console.log('id', id)
+  if (id >= 1 && id <= Users.length) {
+    const user = Users[id - 1];
+    return (`${user.first_name} ${user.last_name}`)
+  }
+}
 
-  console.log('posts: ', Posts)
+  //console.log('posts: ', Posts)
+  //console.log('users: ', Users)
 
 
   return (
@@ -41,9 +57,9 @@ useEffect(() => {
                 className="euiCard"
                 style={{
                   marginTop: "10px",
-                  minWidth: "300px",
-                  maxWidth: "400px",
-                  minHeight: "450px",
+                  minWidth: "1000px",
+                  maxWidth: "800px",
+                  minHeight: "200px",
                   backgroundColor: "#4267B2",
                   color: "white",
                   borderColor: "grey",
@@ -77,7 +93,7 @@ useEffect(() => {
                 >
                   <h3>{"Date Created: "}{post.date_created}</h3>
                   <h2>{post.body}</h2>
-                  <h4>{"User: "}{post.profile_id}</h4>
+                  <h4>{"User: "}{fetchProfileName(post.profile_id)}</h4>
                   <div
                     style={{
                       textAlign: "left",
