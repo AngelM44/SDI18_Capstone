@@ -87,27 +87,24 @@
   position: relative;
 }
 
-.euiCard__content {
-  display: flex;
-  max-height: min-content;
-  align-items: center;
-  max-height: 50px;
-}
-
 /* hover effect for the card */
 .custom-flex-item:hover .euiCard {
   transform: scale(1.05);
   transition: transform 0.3s ease;
 }
 
-.euiCard {
+.euiCard-profile {
   transition: transform 0.3s ease;
+  background: linear-gradient(#3b3c42a5, #3a8fd7);
+}
+
+.euiCard-content {
+  padding: none;
 }
 
 .custom-flex-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
   justify-content: center;
   max-width: 1400px;
   margin: 0 auto;
@@ -115,23 +112,19 @@
 
 .custom-flex-item h2 {
   transition: font-size 0.3s ease;
-  font-size: 16px;
+  font-size: 3rem;
+  margin-top: 0;
   /*  preferred default size */
 }
 
 .card-content div {
   transition: font-size 0.3s ease;
-  font-size: 30px;
+  font-size: 1rem;
   /*  preferred default size */
 }
 
-.custom-flex-item:hover h2 {
-  font-size: 30px;
-  /*hovered size */
-}
-
 .custom-flex-item:hover .card-content div {
-  font-size: 50px;
+  font-size: 1.5rem;
   /* hovered size */
 }
 
