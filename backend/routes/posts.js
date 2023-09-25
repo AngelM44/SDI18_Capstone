@@ -4,15 +4,51 @@ const knex = require("knex")(
   require("../knexfile.js")[process.env.NODE_ENV || "development"]
 );
 
+// router.post("/", async (req, res) => {
+//   try {
+//     const newPost = await knex("posts").insert(req.body).returning("*");
+//     res.status(201).json(newPost[0]);
+//   } catch (err) {
+//     console.error("Error creating post:", err.message);
+//     res.status(400).json("Error creating post.");
+//   }
+// });
+
 router.post("/", async (req, res) => {
   try {
-    const newPost = await knex("posts").insert(req.body).returning("*");
-    res.status(201).json(newPost[0]);
+    const { profile_id, date_created, body } = req.body;
+
+
+    const profileExists = await knex('profile').where({ id: profile_id }).first();
+    if (!profileExists) {
+      return res.status(400).json({ error: "Invalid profile_id." });
+    }
+
+    const newPost = await knex("posts").insert({
+      profile_id,
+      date_created,
+      body
+    }).returning("*");
+
+
+    const userProfile = await knex('profile').where({ id: profile_id }).first();
+
+    console.log(newPost[0], userProfile);
+
+
+    res.status(201).json({
+      post: newPost[0],
+      profile: userProfile
+    });
   } catch (err) {
     console.error("Error creating post:", err.message);
-    res.status(400).json("Error creating post.");
+    res.status(400).json({ error: err.message });
   }
 });
+
+
+
+
 
 router.get("/", async (req, res) => {
   try {

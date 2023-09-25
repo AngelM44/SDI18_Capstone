@@ -1,3 +1,5 @@
+
+
 import { EuiComment, EuiAvatar, EuiButton, EuiIcon } from "@elastic/eui";
 import React, { Fragment, useState, useEffect } from "react";
 import EditPost from "../EditPost";
@@ -5,6 +7,8 @@ import Post from "../Post";
 import "../Post.css";
 
 const UserPosts = ({ data }) => {
+  console.log("UserPosts data:", data);
+
   const [isEditing, setIsEditing] = useState(false);
   const [postData, setPostData] = useState(data);
 
@@ -18,8 +22,9 @@ const UserPosts = ({ data }) => {
     setPostData(newPostData);
   };
 
-  const onNewPost = (newPost) => {
-    setPostData(newPost);
+  const onNewPost = (responseData) => {
+    const { post, profile } = responseData;
+    setPostData(prevData => ({ ...prevData, ...post, ...profile }));
   };
 
   const handleEditClick = (event) => {
@@ -29,9 +34,9 @@ const UserPosts = ({ data }) => {
 
   return (
     <div>
-      {/* New Post */}
       <h1>#What's on Your Mind</h1>
-      <Post data={data} onNewPost={onNewPost} />
+      <Post data={{ profile_id: data.profile_id, first_name: data.first_name, last_name: data.last_name }} onNewPost={onNewPost} />
+
 
       <h1>#My Posts</h1>
       <div className={`custom-comment-container ${isEditing ? "editing" : ""}`}>
@@ -40,11 +45,11 @@ const UserPosts = ({ data }) => {
         ) : (
           <Fragment>
             <EuiComment
-              username={`${postData.first_name} ${postData.last_name}`}
+              username={`${postData.first_name || data.first_name} ${postData.last_name || data.last_name}`}
               event="posted at"
-              timestamp={postData.date_created}
+              timestamp={postData.date_created || data.date_created}
             >
-              {postData.body}
+              {postData.body || data.body}
             </EuiComment>
             <div className="edit-icon-container">
               <EuiIcon
@@ -61,3 +66,4 @@ const UserPosts = ({ data }) => {
 };
 
 export default UserPosts;
+
