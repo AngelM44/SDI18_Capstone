@@ -4,6 +4,15 @@ import { EuiBadge, EuiFlexGroup, EuiFlexItem } from "@elastic/eui";
 const UserInterests = ({ data }) => {
   const [interestNames, setInterestNames] = useState([]);
 
+  function generateRandomColor() {
+    const hexDigits = "0123456789ABCDEF";
+    let randColor = "#";
+    for (let i = 0; i < 6; i++) {
+      randColor += hexDigits[Math.floor(Math.random() * 16)];
+    }
+    return randColor;
+  }
+
   useEffect(() => {
     if (data.interests) {
       Promise.all(
@@ -26,7 +35,12 @@ const UserInterests = ({ data }) => {
       <EuiFlexGroup wrap responsive={false} gutterSize="xs">
         {interestNames.map((interestName, index) => (
           <EuiFlexItem key={index} grow={false}>
-            <EuiBadge color="#BADA55">{interestName}</EuiBadge>
+            <EuiBadge
+              style={{ fontSize: "1rem", padding: "5px" }}
+              color={generateRandomColor()}
+            >
+              {interestName}
+            </EuiBadge>
           </EuiFlexItem>
         ))}
       </EuiFlexGroup>

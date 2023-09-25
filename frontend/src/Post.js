@@ -1,5 +1,3 @@
-
-
 import React, { useState } from 'react';
 import { EuiButton, EuiTextArea, EuiFormRow } from "@elastic/eui";
 
