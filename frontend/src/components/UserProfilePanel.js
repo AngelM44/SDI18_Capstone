@@ -1,24 +1,41 @@
 import { EuiCard, EuiDescriptionList, EuiIcon, EuiButton } from "@elastic/eui";
 import React, { useState } from "react";
 import UpdateProfile from "./UpdateProfile";
+import "./UserProfilePanel.css";
 
 const UserProfilePanel = ({ data }) => {
   const cardFooterContent = (
     <EuiDescriptionList
-      type="row"
+      type="responsiveColumn"
       listItems={[
         {
-          title: "Location:",
+          title: (
+            <EuiIcon
+              title="Location"
+              color="secondary"
+              type="mapMarker"
+              size="l"
+            />
+          ),
           description: `${data.location}`,
         },
         {
-          title: "Availibility:",
+          title: (
+            <EuiIcon
+              title="Availability"
+              color="secondary"
+              type="clock"
+              size="l"
+            />
+          ),
           description: `${data.availability}`,
         },
-        // {
-        //   title: "Contact Info:",
-        //   description: `${data.email}`,
-        // },
+        {
+          title: (
+            <EuiIcon title="Email" color="secondary" type="email" size="l" />
+          ),
+          description: `${data.email}`,
+        },
       ]}
     />
   );
@@ -30,8 +47,8 @@ const UserProfilePanel = ({ data }) => {
           marginTop: "10px",
           minWidth: "300px",
           maxWidth: "500px",
-          maxHeight: "60%",
-          minHeight: "650px",
+          maxHeight: "50%",
+          minHeight: "600px",
         }}
         textAlign="left"
         // href="https://elastic.github.io/eui/"
@@ -50,7 +67,7 @@ const UserProfilePanel = ({ data }) => {
               }}
             >
               <a href={`mailto:${data.email}`}>
-                <EuiIcon type="logoGmail" size="xl" />
+                <EuiIcon type="logoTwitter" size="xl" />
               </a>
               <span>
                 <EuiIcon type="logoSlack" size="xl" />
