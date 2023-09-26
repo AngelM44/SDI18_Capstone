@@ -84,7 +84,7 @@ export const NavBar = (props) => {
         interests: response.data.interests || [],
       });
       setIsResultsVisible(true);
-      props.onSearch(response.data);
+      props.onSearch?.(response.data);
       setIsSearchOpen(true);
     } catch (error) {
       console.error("Error performing search:", error);

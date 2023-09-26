@@ -30,6 +30,8 @@ const SearchResults = ({ results }) => {
       const response = await axios.get(
         `http://localhost:8080/interests/${interestId}/users`
       );
+      console.log(response.data);
+
       setFilteredUsers(response.data.users);
     } catch (error) {
       console.error("Error fetching users by interest:", error);
