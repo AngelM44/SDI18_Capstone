@@ -12,10 +12,25 @@ const UserPosts = ({ data }) => {
 
   const [isEditing, setIsEditing] = useState(false);
   const [postData, setPostData] = useState(data);
+  const [Posts, setPosts] = useState([]);
 
   useEffect(() => {
     setPostData(data);
+   const fetchposts = async () => {
+        const posts = await fetch(`http://localhost:8080/posts`)
+        .then((res) => res.json())
+
+        let filterposts = posts.filter((post) => {
+          if (post.profile_id == data.user_id){
+            return post
+          }
+        })
+        setPosts(filterposts)
+      }
+    fetchposts()
   }, [data]);
+  console.log('posts: ', Posts)
+  console.log('Data: ', postData)
 
   const handleUpdate = (updatedPost) => {
     setIsEditing(false);
@@ -35,6 +50,29 @@ const UserPosts = ({ data }) => {
 
   const { user } = useUser();
 
+  function formatTimeSinceLastPosted(date_created) {
+    const now = new Date();
+    const createdDate = new Date(date_created);
+
+    const timeDifferenceMilliseconds = now - createdDate;
+    const timeDifferenceSeconds = timeDifferenceMilliseconds / 1000;
+    const timeDifferenceMinutes = timeDifferenceSeconds / 60;
+    const timeDifferenceHours = timeDifferenceMinutes / 60;
+    const timeDifferenceDays = timeDifferenceHours / 24;
+    const timeDifferenceWeeks = timeDifferenceDays / 7;
+    const timeDifferenceMonths = timeDifferenceDays / 30; // Using a rough estimate for months
+
+    if (timeDifferenceHours < 48) {
+      return Math.round(timeDifferenceHours) + " hours ago";
+    } else if (timeDifferenceDays < 7) {
+      return Math.round(timeDifferenceDays) + " days ago";
+    } else if (timeDifferenceWeeks < 4) {
+      return Math.round(timeDifferenceWeeks) + " weeks ago";
+    } else {
+      return Math.round(timeDifferenceMonths) + " months ago";
+    }
+  }
+
   return (
     <div>
       {user.id === parseInt(data.id) && (
@@ -50,15 +88,16 @@ const UserPosts = ({ data }) => {
         {isEditing ? (
           <EditPost post={postData} onUpdate={handleUpdate} />
         ) : (
-          <Fragment>
+          Posts.map((post) => (
+            <Fragment>
             <EuiComment
-              username={`${postData.first_name || data.first_name} ${postData.last_name || data.last_name}`}
+              username={`${data.first_name || data.first_name} ${data.last_name || data.last_name}`}
               event="posted at"
-              timestamp={postData.date_created || data.date_created}
+              timestamp={formatTimeSinceLastPosted(post.date_created) || formatTimeSinceLastPosted(post.date_created)}
             >
-              {postData.body || data.body}
+              {post.body || post.body}
             </EuiComment>
-            {user.id === parseInt(data.id) && (
+            {user.id === parseInt(post.id) && (
               <div className="edit-icon-container">
                 <EuiIcon
                   type="pencil"
@@ -66,8 +105,10 @@ const UserPosts = ({ data }) => {
                   style={{ cursor: "pointer" }}
                 />
               </div>
+
             )}
           </Fragment>
+          ))
         )}
       </div>
     </div>
