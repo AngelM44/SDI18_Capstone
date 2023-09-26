@@ -1,7 +1,19 @@
-import { EuiCard, EuiDescriptionList, EuiIcon, EuiButton } from "@elastic/eui";
+import {
+  EuiCard,
+  EuiDescriptionList,
+  EuiIcon,
+  EuiFlexGroup,
+} from "@elastic/eui";
 import React, { useState } from "react";
 import UpdateProfile from "./UpdateProfile";
 import "./UserProfilePanel.css";
+import {
+  FaGithubSquare,
+  FaTwitter,
+  FaLinkedin,
+  FaInstagramSquare,
+  FaYoutubeSquare,
+} from "react-icons/fa";
 
 const UserProfilePanel = ({ data }) => {
   const cardFooterContent = (
@@ -48,7 +60,7 @@ const UserProfilePanel = ({ data }) => {
           minWidth: "300px",
           maxWidth: "500px",
           maxHeight: "50%",
-          minHeight: "600px",
+          minHeight: "630px",
         }}
         textAlign="left"
         // href="https://elastic.github.io/eui/"
@@ -65,17 +77,22 @@ const UserProfilePanel = ({ data }) => {
                 gap: "10px",
                 paddingTop: "20px",
               }}
+            ></div>
+            <EuiFlexGroup
+              style={{
+                width: "100%",
+                justifyContent: "center",
+                gap: "20px",
+              }}
             >
-              <a href={`mailto:${data.email}`}>
-                <EuiIcon type="logoTwitter" size="xl" />
-              </a>
-              <span>
-                <EuiIcon type="logoSlack" size="xl" />
-              </span>
-            </div>
+              <FaGithubSquare size={"1.5rem"} />
+              <FaInstagramSquare size={"1.5rem"} />
+              <FaLinkedin size={"1.5rem"} />
+              <FaTwitter size={"1.5rem"} />
+              <FaYoutubeSquare size={"1.5rem"} />
+            </EuiFlexGroup>
           </div>
         }
-        // description={cardFooterContent}
       />
     </>
   );
