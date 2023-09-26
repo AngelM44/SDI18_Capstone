@@ -1,10 +1,4 @@
-import {
-  EuiComment,
-  EuiAvatar,
-  EuiButton,
-  EuiIcon,
-  EuiCommentList,
-} from "@elastic/eui";
+import { EuiComment, EuiIcon } from "@elastic/eui";
 import React, { Fragment, useState, useEffect, useContext } from "react";
 import EditPost from "../EditPost";
 import Post from "../Post";
@@ -96,35 +90,42 @@ const UserPosts = ({ data }) => {
       )}
       <h1>#My Posts</h1>
       <div className={`custom-comment-container ${isEditing ? "editing" : ""}`}>
-        {isEditing ? (
-          <EditPost post={postData} onUpdate={handleUpdate} />
+        {postData.body === null ? (
+          <h1 style={{ paddingLeft: "30px" }}>Make Your First Post!</h1>
         ) : (
-          Posts.map((post) => (
-            <Fragment>
-              <EuiComment
-                timelineAvatar={<span></span>}
-                username={`${data.first_name || data.first_name} ${
-                  data.last_name || data.last_name
-                }`}
-                event="posted"
-                timestamp={
-                  formatTimeSinceLastPosted(post.date_created) ||
-                  formatTimeSinceLastPosted(post.date_created)
-                }
-              >
-                {post.body || post.body}
-              </EuiComment>
-              {user.id === parseInt(post.id) && (
-                <div className="edit-icon-container">
-                  <EuiIcon
-                    type="pencil"
-                    onClick={handleEditClick}
-                    style={{ cursor: "pointer" }}
-                  />
-                </div>
-              )}
-            </Fragment>
-          ))
+          <>
+            {" "}
+            {isEditing ? (
+              <EditPost post={postData} onUpdate={handleUpdate} />
+            ) : (
+              Posts.map((post) => (
+                <Fragment>
+                  <EuiComment
+                    timelineAvatar={<span></span>}
+                    username={`${data.first_name || data.first_name} ${
+                      data.last_name || data.last_name
+                    }`}
+                    event="posted"
+                    timestamp={
+                      formatTimeSinceLastPosted(post.date_created) ||
+                      formatTimeSinceLastPosted(post.date_created)
+                    }
+                  >
+                    {post.body || post.body}
+                  </EuiComment>
+                  {user.id === parseInt(post.id) && (
+                    <div className="edit-icon-container">
+                      <EuiIcon
+                        type="pencil"
+                        onClick={handleEditClick}
+                        style={{ cursor: "pointer" }}
+                      />
+                    </div>
+                  )}
+                </Fragment>
+              ))
+            )}
+          </>
         )}
       </div>
     </div>
