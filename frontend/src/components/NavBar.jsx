@@ -59,7 +59,7 @@ export const NavBar = (props) => {
       transition: "color 0.3s",
     },
     menuIcon: {
-      color: isMenuIconHovered ? "#4b6cb7" : "white",
+      color: isMenuIconHovered ? "#4b6cb7" : "black",
       transition: "color 0.3s",
     },
   };
