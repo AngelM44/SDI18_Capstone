@@ -30,17 +30,21 @@ const UserProfile = () => {
   } else {
     return (
       <EuiPage
-        style={{ height: "100vh", paddingLeft: "30px", paddingRight: "30px" }}
+        style={{
+          height: "100%",
+          paddingTop: "10px",
+          paddingLeft: "30px",
+          paddingRight: "30px",
+        }}
       >
-        {console.log(parseInt(id))}
         <EuiFlexGroup>
           <UserProfilePanel data={profileData} />
+
           <UserInfo data={profileData} />
           {user.id === parseInt(id) && (
             <div
               style={{
                 height: "fit-content",
-                padding: "5px",
                 opacity: ".6",
                 cursor: "pointer",
               }}

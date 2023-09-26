@@ -3,6 +3,7 @@ import {
   EuiDescriptionList,
   EuiIcon,
   EuiFlexGroup,
+  EuiPage,
 } from "@elastic/eui";
 import React, { useState } from "react";
 import UpdateProfile from "./UpdateProfile";
@@ -53,14 +54,13 @@ const UserProfilePanel = ({ data }) => {
   );
 
   return (
-    <>
+    <EuiPage minHeight="fit-content">
       <EuiCard
         style={{
-          marginTop: "10px",
           minWidth: "300px",
-          maxWidth: "500px",
+          maxWidth: "400px",
           maxHeight: "50%",
-          minHeight: "630px",
+          minHeight: "700px",
         }}
         textAlign="left"
         image={
@@ -71,7 +71,7 @@ const UserProfilePanel = ({ data }) => {
         title={`${data.first_name} ${data.last_name}`}
         titleElement="h2"
         footer={
-          <div style={{}}>
+          <div>
             {cardFooterContent}
             <div
               style={{
@@ -96,7 +96,7 @@ const UserProfilePanel = ({ data }) => {
           </div>
         }
       />
-    </>
+    </EuiPage>
   );
 };
 

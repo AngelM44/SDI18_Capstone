@@ -46,9 +46,9 @@ const UserInterests = ({ data }) => {
           <EuiTitle>
             <h1>Interests</h1>
           </EuiTitle>
-          <EuiSpacer size="m" />
         </EuiFlexItem>
       </EuiFlexGroup>
+      <EuiSpacer size="m" />
       <EuiFlexGroup wrap responsive={false} gutterSize="xs">
         {interestNames.map((interestName, index) => (
           <EuiFlexItem key={index} grow={false}>
