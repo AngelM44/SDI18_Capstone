@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from "react";
 import { EuiFlexGrid, EuiFlexItem } from "@elastic/eui";
 import { useSearchContext } from "./components/SearchContext";
@@ -59,8 +57,14 @@ function Strength() {
           })
         );
 
-        const StrengthPeople = dataWithInterests.filter(item => {
-          return ["Weightlifting", "Crossfit", "Olympic Lifting", "Squats", "Deadlift"].some(interest => item.interests.includes(interest));
+        const StrengthPeople = dataWithInterests.filter((item) => {
+          return [
+            "Weightlifting",
+            "Crossfit",
+            "Olympic Lifting",
+            "Squats",
+            "Deadlift",
+          ].some((interest) => item.interests.includes(interest));
         });
 
         setCombinedData(StrengthPeople);
@@ -73,12 +77,15 @@ function Strength() {
   }, []);
 
   return (
-    <div style={{ height: "100vh", width: "100vw", minHeight: "100vh" }}>
+    <div>
       <StrengthBanner />
       <div className="cards-banner">
         <EuiFlexGrid className="custom-flex-grid" columns={4} gap="">
           {combinedData.map((user) => (
-            <EuiFlexItem className="custom-flex-item" key={`${user.id}-${user.profile_id}`}>
+            <EuiFlexItem
+              className="custom-flex-item"
+              key={`${user.id}-${user.profile_id}`}
+            >
               <ProfileCard user={user} />
             </EuiFlexItem>
           ))}
@@ -89,4 +96,3 @@ function Strength() {
 }
 
 export default Strength;
-

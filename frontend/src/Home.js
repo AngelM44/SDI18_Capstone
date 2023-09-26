@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { EuiFlexGrid, EuiFlexItem } from "@elastic/eui";
@@ -85,14 +83,17 @@ function Home() {
   }
 
   return (
-    <div style={{ height: "100vh", width: "100vw", minHeight: "100vh" }}>
+    <div>
       <Banner />
       <DescriptionBanner />
 
       <div className="cards-banner">
         <EuiFlexGrid className="custom-flex-grid" columns={4} gap="">
           {combinedData.map((user) => (
-            <EuiFlexItem className="custom-flex-item" key={`${user.id}-${user.profile_id}`}>
+            <EuiFlexItem
+              className="custom-flex-item"
+              key={`${user.id}-${user.profile_id}`}
+            >
               <ProfileCard user={user} />
             </EuiFlexItem>
           ))}
@@ -103,4 +104,3 @@ function Home() {
 }
 
 export default Home;
-

@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from "react";
 import { EuiFlexGrid, EuiFlexItem } from "@elastic/eui";
 import { useSearchContext } from "./components/SearchContext";
@@ -59,8 +57,15 @@ function Cardio() {
           })
         );
 
-        const CardioPeople = dataWithInterests.filter(item => {
-          return ["Dance Classes", "Swimming", "Olympic Lifting", "High-Intensity Interval Training", "Running", "Crossfit"].some(interest => item.interests.includes(interest));
+        const CardioPeople = dataWithInterests.filter((item) => {
+          return [
+            "Dance Classes",
+            "Swimming",
+            "Olympic Lifting",
+            "High-Intensity Interval Training",
+            "Running",
+            "Crossfit",
+          ].some((interest) => item.interests.includes(interest));
         });
 
         setCombinedData(CardioPeople);
@@ -73,12 +78,15 @@ function Cardio() {
   }, []);
 
   return (
-    <div style={{ height: "100vh", width: "100vw", minHeight: "100vh" }}>
+    <div>
       <CardioBanner />
       <div className="cards-banner">
         <EuiFlexGrid className="custom-flex-grid" columns={4} gap="">
           {combinedData.map((user) => (
-            <EuiFlexItem className="custom-flex-item" key={`${user.id}-${user.profile_id}`}>
+            <EuiFlexItem
+              className="custom-flex-item"
+              key={`${user.id}-${user.profile_id}`}
+            >
               <ProfileCard user={user} />
             </EuiFlexItem>
           ))}
