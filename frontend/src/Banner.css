@@ -95,7 +95,7 @@
 
 .euiCard-profile {
   transition: transform 0.3s ease;
-  background: linear-gradient(#3b3c42a5, #3a8fd7);
+  background: linear-gradient(#000000a5, #155fa0);
 }
 
 .euiCard-content {
