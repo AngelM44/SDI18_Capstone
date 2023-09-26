@@ -63,10 +63,7 @@ const UserProfilePanel = ({ data }) => {
           minHeight: "700px",
         }}
         textAlign="left"
-        image={
-          data.profile_pic ||
-          `https://source.unsplash.com/400x200/?person,portrait&${data.id}`
-        }
+        image={data.profile_pic || `../profile_pics/profile-pic${data.id}.png`}
         paddingSize="xl"
         title={`${data.first_name} ${data.last_name}`}
         titleElement="h2"
@@ -80,6 +77,7 @@ const UserProfilePanel = ({ data }) => {
                 paddingTop: "20px",
               }}
             ></div>
+            {console.log(data.profile_pic)}
             <EuiFlexGroup
               style={{
                 width: "100%",
