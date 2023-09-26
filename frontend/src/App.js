@@ -24,7 +24,7 @@ function App() {
   return (
     <UserProvider>
       <SearchProvider>
-        <div className="App" style={{ height: "calc(100vh - 72px)" }}>
+        <div className="App" style={{ height: "calc(100vh - 82px)" }}>
           <Router>
             <NavBar onSearch={handleSearch} />
             <Routes>
