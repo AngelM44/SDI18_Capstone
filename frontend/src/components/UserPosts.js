@@ -14,19 +14,26 @@ const UserPosts = ({ data }) => {
 
   useEffect(() => {
     setPostData(data);
-    const fetchposts = async () => {
-      const posts = await fetch(`http://localhost:8080/posts`).then((res) =>
-        res.json()
-      );
 
-      let filterposts = posts.filter((post) => {
-        if (post.profile_id == data.user_id) {
-          return post;
-        }
-      });
-      setPosts(filterposts);
-    };
-    fetchposts();
+   const fetchposts = async () => {
+        const posts = await fetch(`http://localhost:8080/posts`)
+        .then((res) => res.json())
+
+        let filterposts = posts.filter((post) => {
+          if (post.profile_id == data.user_id){
+            return post
+          }
+        })
+        filterposts.sort((a, b) => {
+          const dateA = new Date(a.date_created);
+          const dateB = new Date(b.date_created);
+          return dateB - dateA;
+        });
+
+        setPosts(filterposts)
+      }
+    fetchposts()
+
   }, [data]);
   console.log("posts: ", Posts);
   console.log("Data: ", postData);
@@ -93,37 +100,27 @@ const UserPosts = ({ data }) => {
         {postData.body === null ? (
           <h1 style={{ paddingLeft: "30px" }}>Make Your First Post!</h1>
         ) : (
-          <>
-            {" "}
-            {isEditing ? (
-              <EditPost post={postData} onUpdate={handleUpdate} />
-            ) : (
-              Posts.map((post) => (
-                <Fragment>
-                  <EuiComment
-                    timelineAvatar={<span></span>}
-                    username={`${data.first_name || data.first_name} ${
-                      data.last_name || data.last_name
-                    }`}
-                    event="posted"
-                    timestamp={
-                      formatTimeSinceLastPosted(post.date_created) ||
-                      formatTimeSinceLastPosted(post.date_created)
-                    }
-                  >
-                    {post.body || post.body}
-                  </EuiComment>
-                  {user.id === parseInt(post.id) && (
-                    <div className="edit-icon-container">
-                      <EuiIcon
-                        type="pencil"
-                        onClick={handleEditClick}
-                        style={{ cursor: "pointer" }}
-                      />
-                    </div>
-                  )}
-                </Fragment>
-              ))
+
+          Posts.map((post) => (
+            <Fragment>
+            <EuiComment
+              timelineIcon='none'
+              username={`${data.first_name || data.first_name} ${data.last_name || data.last_name}`}
+              event="posted at"
+              timestamp={formatTimeSinceLastPosted(post.date_created) || formatTimeSinceLastPosted(post.date_created)}
+            >
+              {post.body || post.body}
+            </EuiComment>
+            {user.id === parseInt(post.id) && (
+              <div className="edit-icon-container">
+                <EuiIcon
+                  type="pencil"
+                  onClick={handleEditClick}
+                  style={{ cursor: "pointer" }}
+                />
+              </div>
+
+
             )}
           </>
         )}

@@ -6,6 +6,7 @@ import { useSearchContext } from "./components/SearchContext";
 import UserProfileLoader from "./components/UserProfileLoader";
 // import { post } from "../../backend/routes/profile";
 
+
 function Posts() {
   const [posts, setPosts] = useState([]);
   const [users, setUsers] = useState([]);
@@ -17,12 +18,21 @@ function Posts() {
         res.json()
       );
 
-      setPosts(posts);
-    };
-    const fetchUsers = async () => {
-      const users = await fetch(`http://localhost:8080/users`).then((res) =>
-        res.json()
-      );
+
+
+      posts.sort((a, b) => {
+        const dateA = new Date(a.date_created);
+        const dateB = new Date(b.date_created);
+        return dateB - dateA;
+      });
+
+      setPosts(posts)
+
+    }
+  const fetchUsers = async () => {
+    const users = await fetch(`http://localhost:8080/users`)
+    .then((res) => res.json())
+
 
       setUsers(users);
     };
@@ -79,8 +89,42 @@ function Posts() {
     }
   };
 
-  //console.log('posts: ', Posts)
-  //console.log('users: ', Users)
+
+function formatTimeSinceLastPosted(date_created) {
+const now = new Date();
+const createdDate = new Date(date_created);
+
+const timeDifferenceMilliseconds = now - createdDate;
+const timeDifferenceSeconds = timeDifferenceMilliseconds / 1000;
+const timeDifferenceMinutes = timeDifferenceSeconds / 60;
+const timeDifferenceHours = timeDifferenceMinutes / 60;
+const timeDifferenceDays = timeDifferenceHours / 24;
+const timeDifferenceWeeks = timeDifferenceDays / 7;
+const timeDifferenceMonths = timeDifferenceDays / 30; // Using a rough estimate for months
+
+if (timeDifferenceHours < 48) {
+  return Math.round(timeDifferenceHours) + " hours ago";
+} else if (timeDifferenceDays < 7) {
+  return Math.round(timeDifferenceDays) + " days ago";
+} else if (timeDifferenceWeeks < 4) {
+  return Math.round(timeDifferenceWeeks) + " weeks ago";
+} else {
+  return Math.round(timeDifferenceMonths) + " months ago";
+}
+}
+
+  return (
+    <div style={{ height: "100vh", width: "100vw", minHeight: "100vh" }} align={'center'}>
+      <h1>Posts</h1>
+      <EuiFlexGrid className="custom-flex-grid" columns={1} grow={true}>
+        {Posts.map((post) => (
+          <EuiFlexItem
+            className="custom-flex-item"
+            key={`${post.id}`}
+            style={{ padding: "5px" }}
+          >
+            <Link
+
 
   if (posts.length === 0 || profiles.length === 0 || users.length === 0) {
     return UserProfileLoader;
@@ -117,15 +161,29 @@ function Posts() {
                     formatTimeSinceLastPosted(post.date_created)
                   }
                 >
-                  {post.body || post.body}
-                </EuiComment>
-              </Link>
-            </EuiFlexItem>
-          ))}
-        </EuiFlexGrid>
-      </div>
-    );
-  }
+
+                  <h3>{"Date Created: "}{formatTimeSinceLastPosted(post.date_created)}</h3>
+                  <h2>{post.body}</h2>
+                  <h4>{"User: "}{fetchProfileName(post.profile_id)}</h4>
+                  <div
+                    style={{
+                      textAlign: "left",
+                      flexGrow: 1,
+                      marginBottom: "15px",
+                    }}
+                  >
+                  </div>
+                </div>
+              </EuiCard>
+            </Link>
+          </EuiFlexItem>
+        ))}
+      </EuiFlexGrid>
+
+    </div>
+
+  );
+
 }
 
 export default Posts;
