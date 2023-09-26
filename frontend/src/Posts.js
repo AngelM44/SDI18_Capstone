@@ -17,6 +17,12 @@ function Posts() {
         res.json()
       );
 
+      posts.sort((a, b) => {
+        const dateA = new Date(a.date_created);
+        const dateB = new Date(b.date_created);
+        return dateB - dateA;
+      });
+
       setPosts(posts);
     };
     const fetchUsers = async () => {
