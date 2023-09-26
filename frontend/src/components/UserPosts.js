@@ -84,7 +84,16 @@ const UserPosts = ({ data }) => {
       {user.id === parseInt(data.id) && (
         <>
           {/* New Post */}
-          <h1>#What's on Your Mind</h1>
+          <EuiFlexGroup alignItems="center">
+            <EuiFlexItem grow={false}>
+              <EuiIcon type="pencil" size="xl" />
+            </EuiFlexItem>
+            <EuiFlexItem>
+              <EuiTitle>
+                <h1>What's On Your Mind?</h1>
+              </EuiTitle>
+            </EuiFlexItem>
+          </EuiFlexGroup>
           <Post
             data={{
               profile_id: data.profile_id,
@@ -102,7 +111,7 @@ const UserPosts = ({ data }) => {
           <>
             <EuiFlexGroup alignItems="center">
               <EuiFlexItem grow={false}>
-                <EuiIcon type="pencil" size="xl" />
+                <EuiIcon type="visText" size="xl" />
               </EuiFlexItem>
               <EuiFlexItem>
                 <EuiTitle>

@@ -14,7 +14,7 @@ import UserInterests from "./UserInterests";
 import UserPosts from "./UserPosts";
 
 const UserInfo = ({ data }) => (
-  <EuiPageBody style={{ marginTop: "10px", height: "fit-content" }}>
+  <EuiPageBody style={{ height: "fit-content" }}>
     <EuiPanel paddingSize="l" hasShadow>
       <EuiFlexGroup alignItems="center">
         <EuiFlexItem grow={false}>
