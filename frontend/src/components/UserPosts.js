@@ -1,6 +1,10 @@
-
-
-import { EuiComment, EuiAvatar, EuiButton, EuiIcon } from "@elastic/eui";
+import {
+  EuiComment,
+  EuiAvatar,
+  EuiButton,
+  EuiIcon,
+  EuiCommentList,
+} from "@elastic/eui";
 import React, { Fragment, useState, useEffect, useContext } from "react";
 import EditPost from "../EditPost";
 import Post from "../Post";
@@ -16,21 +20,22 @@ const UserPosts = ({ data }) => {
 
   useEffect(() => {
     setPostData(data);
-   const fetchposts = async () => {
-        const posts = await fetch(`http://localhost:8080/posts`)
-        .then((res) => res.json())
+    const fetchposts = async () => {
+      const posts = await fetch(`http://localhost:8080/posts`).then((res) =>
+        res.json()
+      );
 
-        let filterposts = posts.filter((post) => {
-          if (post.profile_id == data.user_id){
-            return post
-          }
-        })
-        setPosts(filterposts)
-      }
-    fetchposts()
+      let filterposts = posts.filter((post) => {
+        if (post.profile_id == data.user_id) {
+          return post;
+        }
+      });
+      setPosts(filterposts);
+    };
+    fetchposts();
   }, [data]);
-  console.log('posts: ', Posts)
-  console.log('Data: ', postData)
+  console.log("posts: ", Posts);
+  console.log("Data: ", postData);
 
   const handleUpdate = (updatedPost) => {
     setIsEditing(false);
@@ -40,7 +45,7 @@ const UserPosts = ({ data }) => {
 
   const onNewPost = (responseData) => {
     const { post, profile } = responseData;
-    setPostData(prevData => ({ ...prevData, ...post, ...profile }));
+    setPostData((prevData) => ({ ...prevData, ...post, ...profile }));
   };
 
   const handleEditClick = (event) => {
@@ -79,10 +84,16 @@ const UserPosts = ({ data }) => {
         <>
           {/* New Post */}
           <h1>#What's on Your Mind</h1>
-          <Post data={{ profile_id: data.profile_id, first_name: data.first_name, last_name: data.last_name }} onNewPost={onNewPost} />
+          <Post
+            data={{
+              profile_id: data.profile_id,
+              first_name: data.first_name,
+              last_name: data.last_name,
+            }}
+            onNewPost={onNewPost}
+          />
         </>
       )}
-
       <h1>#My Posts</h1>
       <div className={`custom-comment-container ${isEditing ? "editing" : ""}`}>
         {isEditing ? (
@@ -90,24 +101,29 @@ const UserPosts = ({ data }) => {
         ) : (
           Posts.map((post) => (
             <Fragment>
-            <EuiComment
-              username={`${data.first_name || data.first_name} ${data.last_name || data.last_name}`}
-              event="posted at"
-              timestamp={formatTimeSinceLastPosted(post.date_created) || formatTimeSinceLastPosted(post.date_created)}
-            >
-              {post.body || post.body}
-            </EuiComment>
-            {user.id === parseInt(post.id) && (
-              <div className="edit-icon-container">
-                <EuiIcon
-                  type="pencil"
-                  onClick={handleEditClick}
-                  style={{ cursor: "pointer" }}
-                />
-              </div>
-
-            )}
-          </Fragment>
+              <EuiComment
+                timelineAvatar={<span></span>}
+                username={`${data.first_name || data.first_name} ${
+                  data.last_name || data.last_name
+                }`}
+                event="posted"
+                timestamp={
+                  formatTimeSinceLastPosted(post.date_created) ||
+                  formatTimeSinceLastPosted(post.date_created)
+                }
+              >
+                {post.body || post.body}
+              </EuiComment>
+              {user.id === parseInt(post.id) && (
+                <div className="edit-icon-container">
+                  <EuiIcon
+                    type="pencil"
+                    onClick={handleEditClick}
+                    style={{ cursor: "pointer" }}
+                  />
+                </div>
+              )}
+            </Fragment>
           ))
         )}
       </div>
@@ -116,4 +132,3 @@ const UserPosts = ({ data }) => {
 };
 
 export default UserPosts;
-
