@@ -63,9 +63,11 @@ const UserProfilePanel = ({ data }) => {
           minHeight: "630px",
         }}
         textAlign="left"
-        // href="https://elastic.github.io/eui/"
-        image={`${data.profile_pic}`}
-        paddingSize="l"
+        image={
+          data.profile_pic ||
+          `https://source.unsplash.com/400x200/?person,portrait&${data.id}`
+        }
+        paddingSize="xl"
         title={`${data.first_name} ${data.last_name}`}
         titleElement="h2"
         footer={

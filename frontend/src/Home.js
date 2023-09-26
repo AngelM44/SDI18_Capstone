@@ -88,7 +88,7 @@ function Home() {
       <DescriptionBanner />
 
       <div className="cards-banner">
-        <EuiFlexGrid className="custom-flex-grid" columns={4} gap="">
+        <EuiFlexGrid className="custom-flex-grid" columns={4}>
           {combinedData.map((user) => (
             <EuiFlexItem
               className="custom-flex-item"
