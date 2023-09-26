@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
   EuiHeader,
@@ -12,6 +12,7 @@ import {
   EuiKeyPadMenuItem,
   EuiFieldSearch,
   EuiToolTip,
+  EuiSpacer,
 } from "@elastic/eui";
 import logo from "../logo.png";
 import { useUser } from "./UserContext";
@@ -34,7 +35,7 @@ export const NavBar = (props) => {
   const [error, setError] = useState(null);
   const { isAuthenticated, logout, user } = useUser();
   const navigate = useNavigate();
-
+  const [isMenuIconHovered, setIsMenuIconHovered] = useState(false);
   const styles = {
     searchResultsContainer: {
       position: "absolute",
@@ -42,6 +43,24 @@ export const NavBar = (props) => {
       width: "100%",
       backgroundColor: "white",
       zIndex: 1,
+    },
+    header: {
+      boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+      padding: "12px 24px",
+      borderRadius: "8px",
+      background: "linear-gradient(90deg, #4b6cb7, #182848)",
+    },
+    logo: {
+      height: "48px",
+      width: "48px",
+    },
+    menuItem: {
+      color: "black",
+      transition: "color 0.3s",
+    },
+    menuIcon: {
+      color: isMenuIconHovered ? "#4b6cb7" : "white",
+      transition: "color 0.3s",
     },
   };
 
@@ -84,7 +103,7 @@ export const NavBar = (props) => {
         interests: response.data.interests || [],
       });
       setIsResultsVisible(true);
-      props.onSearch(response.data);
+      props.onSearch?.(response.data);
       setIsSearchOpen(true);
     } catch (error) {
       console.error("Error performing search:", error);
@@ -97,107 +116,120 @@ export const NavBar = (props) => {
   const renderLogo = () => (
     <EuiToolTip position="bottom" content="Home">
       <a href="/home">
-        <img src={logo} className="App-logo" alt="logo" />
+        <img src={logo} className="App-logo" alt="logo" style={styles.logo} />{" "}
       </a>
     </EuiToolTip>
   );
+  useEffect(() => {
+    const escapeListener = (e) => {
+      if (e.key === "Escape") {
+        setIsSearchOpen(false);
+        setIsResultsVisible(false);
+      }
+    };
 
-  const breadcrumbs = [
-    {
-      text: (
-        <Link
-          to="/cardio"
-          style={{
-            textDecoration: "none",
-            color: "white",
-            backgroundColor: "transparent",
-          }}
-        >
-          Cardio
-        </Link>
-      ),
-      onClick: (e) => e.preventDefault(),
-    },
-    {
-      text: (
-        <Link
-          to="/strength"
-          style={{
-            textDecoration: "none",
-            color: "white",
-            backgroundColor: "transparent",
-          }}
-        >
-          Strength
-        </Link>
-      ),
-      onClick: (e) => e.preventDefault(),
-    },
-    {
-      text: (
-        <Link
-          to="/nutrition"
-          style={{
-            textDecoration: "none",
-            color: "white",
-            backgroundColor: "transparent",
-          }}
-        >
-          Nutrition
-        </Link>
-      ),
-      onClick: (e) => e.preventDefault(),
-    },
-    {
-      text: (
-        <Link
-          to="/wellness"
-          style={{
-            textDecoration: "none",
-            color: "white",
-            backgroundColor: "transparent",
-          }}
-        >
-          Wellness
-        </Link>
-      ),
-      onClick: (e) => e.preventDefault(),
-    },
-    {
-      text: (
-        <Link
-          to={isAuthenticated && user ? `/profile/${user.id}` : "#"}
-          style={{
-            textDecoration: "none",
-            color: "white",
-            backgroundColor: "transparent",
-          }}
-        >
-          Profile
-        </Link>
-      ),
-      onClick: (e) => {
-        if (!isAuthenticated || !user) {
-          e.preventDefault();
-        }
-      },
-    },
-    {
-      text: (
-        <Link
-          to="/home"
-          style={{
-            textDecoration: "none",
-            color: "white",
-            backgroundColor: "transparent",
-          }}
-        >
-          Home
-        </Link>
-      ),
-      onClick: (e) => e.preventDefault(),
-    },
-  ];
+    document.addEventListener("keydown", escapeListener, false);
+    return () => {
+      document.removeEventListener("keydown", escapeListener, false);
+    };
+  }, []);
+
+  // const breadcrumbs = [
+  //   {
+  //     text: (
+  //       <Link
+  //         to="/cardio"
+  //         style={{
+  //           textDecoration: "none",
+  //           color: "white",
+  //           backgroundColor: "transparent",
+  //         }}
+  //       >
+  //         Cardio
+  //       </Link>
+  //     ),
+  //     onClick: (e) => e.preventDefault(),
+  //   },
+  //   {
+  //     text: (
+  //       <Link
+  //         to="/strength"
+  //         style={{
+  //           textDecoration: "none",
+  //           color: "white",
+  //           backgroundColor: "transparent",
+  //         }}
+  //       >
+  //         Strength
+  //       </Link>
+  //     ),
+  //     onClick: (e) => e.preventDefault(),
+  //   },
+  //   {
+  //     text: (
+  //       <Link
+  //         to="/nutrition"
+  //         style={{
+  //           textDecoration: "none",
+  //           color: "white",
+  //           backgroundColor: "transparent",
+  //         }}
+  //       >
+  //         Nutrition
+  //       </Link>
+  //     ),
+  //     onClick: (e) => e.preventDefault(),
+  //   },
+  //   {
+  //     text: (
+  //       <Link
+  //         to="/wellness"
+  //         style={{
+  //           textDecoration: "none",
+  //           color: "white",
+  //           backgroundColor: "transparent",
+  //         }}
+  //       >
+  //         Wellness
+  //       </Link>
+  //     ),
+  //     onClick: (e) => e.preventDefault(),
+  //   },
+  //   {
+  //     text: (
+  //       <Link
+  //         to={isAuthenticated && user ? `/profile/${user.id}` : "#"}
+  //         style={{
+  //           textDecoration: "none",
+  //           color: "white",
+  //           backgroundColor: "transparent",
+  //         }}
+  //       >
+  //         Profile
+  //       </Link>
+  //     ),
+  //     onClick: (e) => {
+  //       if (!isAuthenticated || !user) {
+  //         e.preventDefault();
+  //       }
+  //     },
+  //   },
+  //   {
+  //     text: (
+  //       <Link
+  //         to="/home"
+  //         style={{
+  //           textDecoration: "none",
+  //           color: "white",
+  //           backgroundColor: "transparent",
+  //         }}
+  //       >
+  //         Home
+  //       </Link>
+  //     ),
+  //     onClick: (e) => e.preventDefault(),
+  //   },
+  // ];
 
   const customStyles = {
     menuIcon: {
@@ -218,13 +250,14 @@ export const NavBar = (props) => {
   };
 
   return (
-    <EuiHeader theme="dark" style={{ position: "relative" }}>
+    <EuiHeader theme="dark" style={{ ...styles.header, position: "relative" }}>
       <EuiHeaderSection style={{ alignItems: "center" }}>
         <EuiHeaderSectionItem>{renderLogo()}</EuiHeaderSectionItem>
+        <EuiSpacer size="m" />
         <InterestMenu />
       </EuiHeaderSection>
       <div>
-        <EuiHeaderBreadcrumbs max={6} breadcrumbs={breadcrumbs} />
+        {/* <EuiHeaderBreadcrumbs max={6} breadcrumbs={breadcrumbs} /> */}
       </div>
       <EuiHeaderSection
         style={{
@@ -262,7 +295,9 @@ export const NavBar = (props) => {
               <EuiHeaderSectionItemButton
                 aria-label="Apps menu"
                 onClick={togglePopover}
-                style={customStyles.menuIcon}
+                style={styles.menuIcon}
+                onMouseOver={() => setIsMenuIconHovered(true)}
+                onMouseOut={() => setIsMenuIconHovered(false)}
               >
                 <EuiIcon type="apps" size="m" />
               </EuiHeaderSectionItemButton>
@@ -329,8 +364,21 @@ export const NavBar = (props) => {
         </EuiHeaderSectionItem>
       </EuiHeaderSection>
       {isResultsVisible && (
-        <div style={styles.searchResultsContainer}>
-          <SearchResults results={searchResults} />
+        <div
+          style={{
+            position: "absolute",
+            top: "100%",
+            left: 0,
+            width: "100%",
+            boxSizing: "border-box",
+            backgroundColor: "white",
+            zIndex: 1,
+          }}
+        >
+          <SearchResults
+            results={searchResults}
+            onClose={() => setIsResultsVisible(false)}
+          />
         </div>
       )}
     </EuiHeader>

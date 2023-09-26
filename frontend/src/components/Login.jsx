@@ -51,10 +51,15 @@ function Login() {
 
   return (
     <EuiPage style={{ ...styles.page, backgroundColor: "transparent" }}>
-      <EuiPageBody style={{ ...styles.page, backgroundColor: "transparent" }}>
+      <EuiPageBody
+        style={{
+          ...styles.page,
+          backgroundColor: "transparent",
+        }}
+      >
         <div style={styles.formContainer}>
           <EuiTitle size="l">
-            <h2>Login</h2>
+            <h2 style={{ fontSize: "4rem" }}>Login</h2>
           </EuiTitle>
           <EuiSpacer size="l" />
           <EuiForm component="form" onSubmit={handleSubmit} style={styles.form}>
@@ -77,7 +82,9 @@ function Login() {
             </EuiFormRow>
             <EuiSpacer />
             <div style={styles.buttonContainer}>
-              <EuiButton type="submit">Login</EuiButton>
+              <EuiButton type="submit" color="secondary">
+                Login
+              </EuiButton>
             </div>
             {error && (
               <EuiCallOut title="Error" color="danger">
@@ -97,10 +104,10 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: "60px",
   },
   formContainer: {
     width: "80%",
+    height: "80%",
     maxWidth: "600px",
     padding: "20px",
     borderRadius: "10px",
@@ -108,21 +115,29 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    backgroundImage:
+      "linear-gradient(#CCCCFF73, #9198e573), url(https://images.pexels.com/photos/3764014/pexels-photo-3764014.jpeg)",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+    backgroundSize: "cover",
   },
   form: {
+    display: "flex",
+    flexDirection: "column",
     width: "100%",
+    gap: "40px",
   },
   formRow: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     width: "100%",
+    gap: "10px",
   },
   buttonContainer: {
     display: "flex",
     justifyContent: "center",
     width: "100%",
-    marginTop: "20px",
   },
 };
 

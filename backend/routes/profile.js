@@ -4,29 +4,28 @@ const knex = require("knex")(
   require("../knexfile.js")[process.env.NODE_ENV || "development"]
 );
 
-// router.post("/", async (req, res) => {
-//   const { user_id, availability, info, goals } = req.body;
-//   try {
-//     const newProfile = await knex("profile")
-//       .insert({
-//         user_id,
-//         availability,
-//         info,
-//         goals,
-//       })
-//       .returning("*");
-//     res.status(201).json(newProfile[0]);
-//   } catch (err) {
-//     console.error("Error creating profile:", err.message);
-//     res.status(400).json("Error creating profile.");
-//   }
-// });
+router.post("/", async (req, res) => {
+  const { user_id, availability, info, goals } = req.body;
+  try {
+    const newProfile = await knex("profile")
+      .insert({
+        user_id,
+        availability,
+        info,
+        goals,
+      })
+      .returning("*");
+    res.status(201).json(newProfile[0]);
+  } catch (err) {
+    console.error("Error creating profile:", err.message);
+    res.status(400).json("Error creating profile.");
+  }
+});
 
 router.post("/", async (req, res) => {
   const { profile_id, date_created, body, first_name, last_name } = req.body;
 
   try {
-
     const newPost = await knex("posts")
       .insert({
         profile_id,
@@ -35,16 +34,12 @@ router.post("/", async (req, res) => {
       })
       .returning("*");
 
-
     const updatedProfile = await knex("profile")
       .where({ user_id: profile_id })
-      .update({
-
-      })
+      .update({})
       .returning("*");
 
     if (newPost[0] && updatedProfile[0]) {
-
       res.status(201).json({
         newPost: {
           id: newPost[0].id,
@@ -65,9 +60,6 @@ router.post("/", async (req, res) => {
   }
 });
 
-
-
-
 router.get("/:profileId", async (req, res) => {
   try {
     const profile = await knex
@@ -86,6 +78,16 @@ router.get("/:profileId", async (req, res) => {
   } catch (err) {
     console.error("Error fetching profile:", err.message);
     res.status(400).json("Error fetching profile.");
+  }
+});
+
+router.get("/", async (req, res) => {
+  try {
+    const profiles = await knex("profile").select();
+    res.json(profiles);
+  } catch (err) {
+    console.error("Error fetching users:", err.message);
+    res.status(400).json("Error fetching profiles.");
   }
 });
 

@@ -1,28 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { EuiCard, EuiFlexGroup, EuiFlexItem, EuiFlexGrid } from "@elastic/eui";
+import { EuiFlexItem, EuiFlexGrid, EuiComment, EuiAvatar } from "@elastic/eui";
 import "./App.css";
-import { useSearchContext } from './components/SearchContext'
-// import Pagination from '@mui/material/Pagination';
-// import Stack from '@mui/material/Stack';
-
-// <Stack spacing={2}>
-//       <Pagination count={10} />
-//       <Pagination count={10} color="primary" />
-//       <Pagination count={10} color="secondary" />
-//       <Pagination count={10} disabled />
-//     </Stack>
-
+import { useSearchContext } from "./components/SearchContext";
+import UserProfileLoader from "./components/UserProfileLoader";
+// import { post } from "../../backend/routes/profile";
 
 
 function Posts() {
-  const [Posts, setPosts] = useState([]);
-  const [Users, setUsers] = useState([]);
+  const [posts, setPosts] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [profiles, setProfiles] = useState([]);
 
-useEffect(() => {
- const fetchposts = async () => {
-      const posts = await fetch(`http://localhost:8080/posts`)
-      .then((res) => res.json())
+  useEffect(() => {
+    const fetchposts = async () => {
+      const posts = await fetch(`http://localhost:8080/posts`).then((res) =>
+        res.json()
+      );
+
 
 
       posts.sort((a, b) => {
@@ -38,23 +33,61 @@ useEffect(() => {
     const users = await fetch(`http://localhost:8080/users`)
     .then((res) => res.json())
 
-    setUsers(users)
+
+      setUsers(users);
+    };
+
+    const fetchProfile = async (id) => {
+      const profiles = await fetch(`http://localhost:8080/profile`).then(
+        (res) => res.json()
+      );
+
+      setProfiles(profiles);
+    };
+
+    fetchProfile();
+    fetchposts();
+    fetchUsers();
+  }, []);
+
+  function formatTimeSinceLastPosted(date_created) {
+    const now = new Date();
+    const createdDate = new Date(date_created);
+
+    const timeDifferenceMilliseconds = now - createdDate;
+    const timeDifferenceSeconds = timeDifferenceMilliseconds / 1000;
+    const timeDifferenceMinutes = timeDifferenceSeconds / 60;
+    const timeDifferenceHours = timeDifferenceMinutes / 60;
+    const timeDifferenceDays = timeDifferenceHours / 24;
+    const timeDifferenceWeeks = timeDifferenceDays / 7;
+    const timeDifferenceMonths = timeDifferenceDays / 30; // Using a rough estimate for months
+
+    if (timeDifferenceHours < 48) {
+      return Math.round(timeDifferenceHours) + " hours ago";
+    } else if (timeDifferenceDays < 7) {
+      return Math.round(timeDifferenceDays) + " days ago";
+    } else if (timeDifferenceWeeks < 4) {
+      return Math.round(timeDifferenceWeeks) + " weeks ago";
+    } else {
+      return Math.round(timeDifferenceMonths) + " months ago";
+    }
   }
 
-  fetchposts()
-  fetchUsers()
-})
+  const fetchProfileName = (id) => {
+    //console.log('id', id)
+    if (id >= 1 && id <= users.length) {
+      const user = users.filter((user) => user.id === id);
+      return `${user[0].first_name} ${user[0].last_name}`;
+    }
+  };
 
-const fetchProfileName = (id) => {
-  //console.log('id', id)
-  if (id >= 1 && id <= Users.length) {
-    const user = Users[id - 1];
-    return (`${user.first_name} ${user.last_name}`)
-  }
-}
-
-  //console.log('posts: ', Posts)
-  //console.log('users: ', Users)
+  const fetchProfilePic = (id) => {
+    //console.log('id', id)
+    if (id >= 1 && id <= profiles.length) {
+      const profile = profiles.filter((profile) => profile.id === id);
+      return profile[0].profile_pic;
+    }
+  };
 
 
 function formatTimeSinceLastPosted(date_created) {
@@ -92,46 +125,43 @@ if (timeDifferenceHours < 48) {
           >
             <Link
 
-              style={{ textDecoration: "none", color: "inherit" }}
+
+  if (posts.length === 0 || profiles.length === 0 || users.length === 0) {
+    return UserProfileLoader;
+  } else {
+    return (
+      <div align={"center"}>
+        <h1 style={{ fontSize: "4rem" }}>Community Posts</h1>
+        <EuiFlexGrid className="custom-flex-grid" columns={1} grow={true}>
+          {posts.map((post) => (
+            <EuiFlexItem
+              className="custom-flex-item"
+              key={`${post.id}`}
+              style={{ padding: "5px" }}
             >
-              <EuiCard
-                className="euiCard"
-                style={{
-                  marginTop: "10px",
-                  minWidth: "1000px",
-                  maxWidth: "800px",
-                  minHeight: "200px",
-                  backgroundColor: "#4267B2",
-                  color: "white",
-                  borderColor: "grey",
-                  borderWidth: "1px",
-                  borderStyle: "solid",
-                }}
-                textAlign="left"
-                // image={
-                //   <div
-                //     style={{
-                //       height: "300px",
-                //       backgroundSize: "contain",
-                //       backgroundImage: `url(${
-                //         user.profile_pic ||
-                //         `https://source.unsplash.com/400x200/?person,portrait&${user.id}`
-                //       })`,
-                //       backgroundPosition: "center center",
-                //       backgroundRepeat: "no-repeat",
-                //     }}
-                //   ></div>
-                //}
-                paddingSize="l"
+              {console.log(fetchProfilePic(post.profile_id))}
+              <Link
+                to={`/profile/${post.profile_id}`}
+                style={{ textDecoration: "none", color: "inherit" }}
               >
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    height: "100%",
-                    marginTop: "80px",
-                  }}
+                <EuiComment
+                  align="left"
+                  timelineAvatar={
+                    <EuiAvatar
+                      style={{ marginTop: "25px" }}
+                      imageUrl={fetchProfilePic(post.profile_id)}
+                      size="xl"
+                      name={fetchProfileName(post.profile_id)}
+                    />
+                  }
+                  username={fetchProfileName(post.profile_id)}
+                  event="posted"
+                  timestamp={
+                    formatTimeSinceLastPosted(post.date_created) ||
+                    formatTimeSinceLastPosted(post.date_created)
+                  }
                 >
+
                   <h3>{"Date Created: "}{formatTimeSinceLastPosted(post.date_created)}</h3>
                   <h2>{post.body}</h2>
                   <h4>{"User: "}{fetchProfileName(post.profile_id)}</h4>
@@ -153,6 +183,7 @@ if (timeDifferenceHours < 48) {
     </div>
 
   );
+
 }
 
 export default Posts;

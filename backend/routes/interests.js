@@ -72,7 +72,6 @@ router.delete("/:interestId", async (req, res) => {
     res.status(400).json("Error deleting interest.");
   }
 });
-// In your interests.js file, you can add the following route:
 router.get("/:interestId/users", async (req, res) => {
   const { interestId } = req.params;
   if (!interestId) {
@@ -80,16 +79,13 @@ router.get("/:interestId/users", async (req, res) => {
   }
 
   try {
-    // Fetch the profiles that have the given interestId in their interests array
     const profiles = await knex("profile")
       .whereRaw("? = ANY (interests)", [interestId])
       .select("user_id");
 
-    // Extract user_ids from the profiles
     const userIds = profiles.map((profile) => profile.user_id);
 
-    // Fetch the corresponding users
-    const users = await knex("users").whereIn("id", userIds).select("*"); // Select the columns you need from the users table
+    const users = await knex("users").whereIn("id", userIds).select("*"); 
 
     res.json({ users });
   } catch (err) {

@@ -1,6 +1,4 @@
-
-
-import { EuiComment, EuiAvatar, EuiButton, EuiIcon } from "@elastic/eui";
+import { EuiComment, EuiIcon } from "@elastic/eui";
 import React, { Fragment, useState, useEffect, useContext } from "react";
 import EditPost from "../EditPost";
 import Post from "../Post";
@@ -16,6 +14,7 @@ const UserPosts = ({ data }) => {
 
   useEffect(() => {
     setPostData(data);
+
    const fetchposts = async () => {
         const posts = await fetch(`http://localhost:8080/posts`)
         .then((res) => res.json())
@@ -34,9 +33,10 @@ const UserPosts = ({ data }) => {
         setPosts(filterposts)
       }
     fetchposts()
+
   }, [data]);
-  console.log('posts: ', Posts)
-  console.log('Data: ', postData)
+  console.log("posts: ", Posts);
+  console.log("Data: ", postData);
 
   const handleUpdate = (updatedPost) => {
     setIsEditing(false);
@@ -46,7 +46,7 @@ const UserPosts = ({ data }) => {
 
   const onNewPost = (responseData) => {
     const { post, profile } = responseData;
-    setPostData(prevData => ({ ...prevData, ...post, ...profile }));
+    setPostData((prevData) => ({ ...prevData, ...post, ...profile }));
   };
 
   const handleEditClick = (event) => {
@@ -85,15 +85,22 @@ const UserPosts = ({ data }) => {
         <>
           {/* New Post */}
           <h1>#What's on Your Mind</h1>
-          <Post data={{ profile_id: data.profile_id, first_name: data.first_name, last_name: data.last_name }} onNewPost={onNewPost} />
+          <Post
+            data={{
+              profile_id: data.profile_id,
+              first_name: data.first_name,
+              last_name: data.last_name,
+            }}
+            onNewPost={onNewPost}
+          />
         </>
       )}
-
       <h1>#My Posts</h1>
       <div className={`custom-comment-container ${isEditing ? "editing" : ""}`}>
-        {isEditing ? (
-          <EditPost post={postData} onUpdate={handleUpdate} />
+        {postData.body === null ? (
+          <h1 style={{ paddingLeft: "30px" }}>Make Your First Post!</h1>
         ) : (
+
           Posts.map((post) => (
             <Fragment>
             <EuiComment
@@ -113,9 +120,9 @@ const UserPosts = ({ data }) => {
                 />
               </div>
 
+
             )}
-          </Fragment>
-          ))
+          </>
         )}
       </div>
     </div>
@@ -123,4 +130,3 @@ const UserPosts = ({ data }) => {
 };
 
 export default UserPosts;
-
