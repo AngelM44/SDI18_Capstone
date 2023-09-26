@@ -4,23 +4,23 @@ const knex = require("knex")(
   require("../knexfile.js")[process.env.NODE_ENV || "development"]
 );
 
-// router.post("/", async (req, res) => {
-//   const { user_id, availability, info, goals } = req.body;
-//   try {
-//     const newProfile = await knex("profile")
-//       .insert({
-//         user_id,
-//         availability,
-//         info,
-//         goals,
-//       })
-//       .returning("*");
-//     res.status(201).json(newProfile[0]);
-//   } catch (err) {
-//     console.error("Error creating profile:", err.message);
-//     res.status(400).json("Error creating profile.");
-//   }
-// });
+router.post("/", async (req, res) => {
+  const { user_id, availability, info, goals } = req.body;
+  try {
+    const newProfile = await knex("profile")
+      .insert({
+        user_id,
+        availability,
+        info,
+        goals,
+      })
+      .returning("*");
+    res.status(201).json(newProfile[0]);
+  } catch (err) {
+    console.error("Error creating profile:", err.message);
+    res.status(400).json("Error creating profile.");
+  }
+});
 
 router.post("/", async (req, res) => {
   const { profile_id, date_created, body, first_name, last_name } = req.body;

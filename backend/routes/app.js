@@ -11,13 +11,11 @@ app.use(cors());
 const usersRoutes = require("./users");
 const interestRoutes = require("./interests.js");
 const profileRoutes = require("./profile.js");
-// const userInterestsRoutes = require("./user_interests");
 const postsRoutes = require("./posts");
 
 app.use("/", usersRoutes);
 app.use("/interests", interestRoutes);
 app.use("/profile", profileRoutes);
-// app.use("/user-interests", userInterestsRoutes);
 app.use("/posts", postsRoutes);
 
 app.get("/search", async (req, res) => {
@@ -43,7 +41,21 @@ app.get("/search", async (req, res) => {
       .distinct("location")
       .select("location");
 
-    res.json({ users, interests, locations });
+    // Fetch users associated with the matching interests
+    const interestIds = interests.map((interest) => interest.id);
+    const profiles = await knex("profile")
+      .modify((queryBuilder) => {
+        interestIds.forEach((id) => {
+          queryBuilder.orWhereRaw("?? = ANY(interests)", [id]);
+        });
+      })
+      .select("user_id");
+    const userIds = profiles.map((profile) => profile.user_id);
+    const interestUsers = await knex("users")
+      .whereIn("id", userIds)
+      .select("*");
+
+    res.json({ users, interests, locations, interestUsers });
   } catch (err) {
     console.error("Error performing search:", err.message);
     return res

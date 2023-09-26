@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -11,12 +11,17 @@ const SearchResults = ({ results }) => {
   const [activeInterest, setActiveInterest] = useState(null);
   const [activeLocation, setActiveLocation] = useState(null);
 
+  useEffect(() => {
+    console.log("Filtered Users:", filteredUsers);
+  }, [filteredUsers]);
+
   const filterByLocation = useCallback(async (locationName) => {
     setActiveLocation(locationName);
     try {
       const response = await axios.get(
         `http://localhost:8080/search?query=${locationName}`
       );
+      console.log("Response from server:", response.data);
       setFilteredUsers(response.data.users);
       setCurrentPage(1);
     } catch (error) {
@@ -27,12 +32,19 @@ const SearchResults = ({ results }) => {
   const filterByInterest = useCallback(async (interestId) => {
     setActiveInterest(interestId);
     try {
-      const response = await axios.get(
-        `http://localhost:8080/interests/${interestId}/users`
+      // Fetch the interest name by interestId
+      const interestResponse = await axios.get(
+        `http://localhost:8080/interests/${interestId}`
       );
-      console.log(response.data);
+      const interestName = interestResponse.data.name;
 
-      setFilteredUsers(response.data.users);
+      const response = await axios.get(
+        `http://localhost:8080/search?query=${interestName}`
+      );
+      console.log("Response from server:", response.data);
+
+      setFilteredUsers(response.data.interestUsers);
+      setCurrentPage(1);
     } catch (error) {
       console.error("Error fetching users by interest:", error);
     }
@@ -43,12 +55,14 @@ const SearchResults = ({ results }) => {
   }, []);
 
   const displayedUsers = filteredUsers.length > 0 ? filteredUsers : users || [];
+  console.log("Displayed Users:", displayedUsers);
+
   const endIndex = currentPage * itemsPerPage;
   const showLoadMore = endIndex < displayedUsers.length;
 
   return (
     <div>
-      {users && users.length > 0 && (
+      {displayedUsers && displayedUsers.length > 0 && (
         <>
           <h2>Users</h2>
           {displayedUsers.slice(0, endIndex).map((user) => (
