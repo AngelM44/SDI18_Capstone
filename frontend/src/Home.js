@@ -1,17 +1,12 @@
+
+
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import {
-  EuiCard,
-  EuiFlexGroup,
-  EuiFlexItem,
-  EuiFlexGrid,
-  EuiAvatar,
-  EuiIcon,
-} from "@elastic/eui";
-
+import { EuiFlexGrid, EuiFlexItem } from "@elastic/eui";
 import { useSearchContext } from "./components/SearchContext";
 import Banner from "./Banner";
 import DescriptionBanner from "./DescriptionBanner";
+import ProfileCard from "./ProfileCard"; // Make sure to correctly path to the ProfileCard
 
 function Home() {
   const [combinedData, setCombinedData] = useState([]);
@@ -77,7 +72,7 @@ function Home() {
     fetchData();
   }, []);
 
-  //modify the combined data ONLY if the searchValue is not ''
+  // Modify the combined data ONLY if the searchValue is not ''
   if (searchValue !== "") {
     let searchedProfiles = combinedData.filter((user) => {
       return (
@@ -97,53 +92,8 @@ function Home() {
       <div className="cards-banner">
         <EuiFlexGrid className="custom-flex-grid" columns={4} gap="">
           {combinedData.map((user) => (
-            <EuiFlexItem
-              className="custom-flex-item"
-              key={`${user.id}-${user.profile_id}`}
-            >
-              <Link
-                to={`/profile/${user.user_id}`}
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
-                <EuiCard
-                  className="euiCard-profile"
-                  title={
-                    <h2
-                      style={{
-                        fontSize: "3rem",
-                        color: "white",
-                        lineHeight: "3rem",
-                      }}
-                    >{`${user.first_name} ${user.last_name}`}</h2>
-                  }
-                  style={{
-                    width: "100%",
-                    height: "500px",
-                    color: "white",
-                    borderColor: "grey",
-                    borderWidth: "1px",
-                    borderStyle: "solid",
-                    padding: "5px",
-                  }}
-                  image={
-                    <EuiAvatar
-                      style={{
-                        height: "250px",
-                        width: "250px",
-                      }}
-                      name="Profile Pic"
-                      imageUrl={
-                        user.profile_pic ||
-                        `https://source.unsplash.com/400x200/?person,portrait&${user.id}`
-                      }
-                    />
-                  }
-                >
-                  <EuiIcon color="secondary" type="mapMarker" size="l" />
-                  {user.location} <br />
-                  <strong>Interests:</strong> {user.interests.join(", ")}
-                </EuiCard>
-              </Link>
+            <EuiFlexItem className="custom-flex-item" key={`${user.id}-${user.profile_id}`}>
+              <ProfileCard user={user} />
             </EuiFlexItem>
           ))}
         </EuiFlexGrid>
@@ -153,3 +103,4 @@ function Home() {
 }
 
 export default Home;
+
