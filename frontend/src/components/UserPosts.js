@@ -25,6 +25,12 @@ const UserPosts = ({ data }) => {
             return post
           }
         })
+        filterposts.sort((a, b) => {
+          const dateA = new Date(a.date_created);
+          const dateB = new Date(b.date_created);
+          return dateB - dateA;
+        });
+
         setPosts(filterposts)
       }
     fetchposts()
@@ -91,6 +97,7 @@ const UserPosts = ({ data }) => {
           Posts.map((post) => (
             <Fragment>
             <EuiComment
+              timelineIcon='none'
               username={`${data.first_name || data.first_name} ${data.last_name || data.last_name}`}
               event="posted at"
               timestamp={formatTimeSinceLastPosted(post.date_created) || formatTimeSinceLastPosted(post.date_created)}
