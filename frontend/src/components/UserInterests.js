@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { EuiBadge, EuiFlexGroup, EuiFlexItem } from "@elastic/eui";
+import {
+  EuiBadge,
+  EuiFlexGroup,
+  EuiFlexItem,
+  EuiIcon,
+  EuiTitle,
+  EuiSpacer,
+} from "@elastic/eui";
 
 const UserInterests = ({ data }) => {
   const [interestNames, setInterestNames] = useState([]);
@@ -31,7 +38,17 @@ const UserInterests = ({ data }) => {
 
   return (
     <div textAlign="left">
-      <h1>#Interests</h1>
+      <EuiFlexGroup alignItems="center">
+        <EuiFlexItem grow={false}>
+          <EuiIcon type="heart" size="xl" />
+        </EuiFlexItem>
+        <EuiFlexItem>
+          <EuiTitle>
+            <h1>Interests</h1>
+          </EuiTitle>
+          <EuiSpacer size="m" />
+        </EuiFlexItem>
+      </EuiFlexGroup>
       <EuiFlexGroup wrap responsive={false} gutterSize="xs">
         {interestNames.map((interestName, index) => (
           <EuiFlexItem key={index} grow={false}>

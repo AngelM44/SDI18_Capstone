@@ -14,7 +14,7 @@ import UserInterests from "./UserInterests";
 import UserPosts from "./UserPosts";
 
 const UserInfo = ({ data }) => (
-  <EuiPageBody>
+  <EuiPageBody style={{ marginTop: "10px", height: "fit-content" }}>
     <EuiPanel paddingSize="l" hasShadow>
       <EuiFlexGroup alignItems="center">
         <EuiFlexItem grow={false}>
@@ -43,12 +43,13 @@ const UserInfo = ({ data }) => (
       <EuiText>
         <p>{data.goals}</p>
       </EuiText>
+      <EuiHorizontalRule margin="m" />
+      <EuiSpacer size="m" />
+      <UserInterests data={data} />
+      <EuiHorizontalRule margin="m" />
+      <UserPosts data={data} />
+      <EuiSpacer size="m" />
     </EuiPanel>
-    <EuiSpacer size="m" />
-    <UserInterests data={data} />
-    <EuiHorizontalRule margin="m" />
-    <UserPosts data={data} />
-    <EuiSpacer size="m" />
   </EuiPageBody>
 );
 
