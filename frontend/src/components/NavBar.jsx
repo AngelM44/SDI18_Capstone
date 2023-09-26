@@ -48,7 +48,7 @@ export const NavBar = (props) => {
       boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
       padding: "12px 24px",
       borderRadius: "8px",
-      background: "linear-gradient(90deg, #4b6cb7, #182848)", 
+      background: "linear-gradient(90deg, #4b6cb7, #182848)",
     },
     logo: {
       height: "48px",
@@ -56,11 +56,11 @@ export const NavBar = (props) => {
     },
     menuItem: {
       color: "black",
-      transition: "color 0.3s", 
+      transition: "color 0.3s",
     },
     menuIcon: {
       color: isMenuIconHovered ? "#4b6cb7" : "white",
-      transition: "color 0.3s", 
+      transition: "color 0.3s",
     },
   };
 
@@ -297,7 +297,7 @@ export const NavBar = (props) => {
                 onClick={togglePopover}
                 style={styles.menuIcon}
                 onMouseOver={() => setIsMenuIconHovered(true)}
-              onMouseOut={() => setIsMenuIconHovered(false)}
+                onMouseOut={() => setIsMenuIconHovered(false)}
               >
                 <EuiIcon type="apps" size="m" />
               </EuiHeaderSectionItemButton>
@@ -364,7 +364,17 @@ export const NavBar = (props) => {
         </EuiHeaderSectionItem>
       </EuiHeaderSection>
       {isResultsVisible && (
-        <div style={styles.searchResultsContainer}>
+        <div
+          style={{
+            position: "absolute",
+            top: "100%",
+            left: 0,
+            width: "100%",
+            boxSizing: "border-box",
+            backgroundColor: "white",
+            zIndex: 1,
+          }}
+        >
           <SearchResults
             results={searchResults}
             onClose={() => setIsResultsVisible(false)}
