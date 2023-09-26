@@ -1,4 +1,11 @@
-import { EuiComment, EuiIcon } from "@elastic/eui";
+import {
+  EuiComment,
+  EuiIcon,
+  EuiFlexItem,
+  EuiFlexGroup,
+  EuiSpacer,
+  EuiTitle,
+} from "@elastic/eui";
 import React, { Fragment, useState, useEffect, useContext } from "react";
 import EditPost from "../EditPost";
 import Post from "../Post";
@@ -88,13 +95,21 @@ const UserPosts = ({ data }) => {
           />
         </>
       )}
-      <h1>#My Posts</h1>
       <div className={`custom-comment-container ${isEditing ? "editing" : ""}`}>
         {postData.body === null ? (
           <h1 style={{ paddingLeft: "30px" }}>Make Your First Post!</h1>
         ) : (
           <>
-            {" "}
+            <EuiFlexGroup alignItems="center">
+              <EuiFlexItem grow={false}>
+                <EuiIcon type="pencil" size="xl" />
+              </EuiFlexItem>
+              <EuiFlexItem>
+                <EuiTitle>
+                  <h1>User Posts</h1>
+                </EuiTitle>
+              </EuiFlexItem>
+            </EuiFlexGroup>
             {isEditing ? (
               <EditPost post={postData} onUpdate={handleUpdate} />
             ) : (
