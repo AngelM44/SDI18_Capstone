@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { EuiButton, EuiTextArea, EuiFormRow } from "@elastic/eui";
+import { EuiButton, EuiTextArea, EuiFormRow, EuiFlexItem } from "@elastic/eui";
 
 function Post({ onNewPost, data }) {
   const [newPostContent, setNewPostContent] = useState("");
@@ -9,7 +9,7 @@ function Post({ onNewPost, data }) {
     console.log("Profile ID being passed:", data.profile_id);
 
     //const date_created = new Date().toISOString().slice(0, 10); // Current date in 'YYYY-MM-DD' format
-    const date_created = new Date()
+    const date_created = new Date();
     try {
       const response = await fetch("http://localhost:8080/posts", {
         method: "POST",
@@ -41,7 +41,6 @@ function Post({ onNewPost, data }) {
   return (
     <div className="post-container">
       <textarea
-        style={{ minHeight: "70px" }}
         className="post-textarea"
         value={newPostContent}
         onChange={(e) => setNewPostContent(e.target.value)}
