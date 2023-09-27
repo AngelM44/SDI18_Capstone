@@ -70,7 +70,10 @@ function Posts() {
 
     if (timeDifferenceHours < 48) {
       if (timeDifferenceHours < 1) {
-        return Math.round(timeDifferenceMinutes) + " minutes ago";
+        if (timeDifferenceMinutes < 10){
+          return "Just Now";
+        }
+        else return Math.round(timeDifferenceMinutes) + " minutes ago";
       }
       return Math.round(timeDifferenceHours) + " hours ago";
     } else if (timeDifferenceDays < 7) {
