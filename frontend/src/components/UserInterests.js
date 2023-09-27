@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
   EuiBadge,
   EuiFlexGroup,
@@ -10,6 +11,7 @@ import {
 
 const UserInterests = ({ data }) => {
   const [interestNames, setInterestNames] = useState([]);
+  const [interestCat, setInterestCat] = useState([]);
 
   function generateRandomColor() {
     const hexDigits = "0123456789ABCDEF";
@@ -31,10 +33,16 @@ const UserInterests = ({ data }) => {
       )
         .then((fetchedInterests) => {
           setInterestNames(fetchedInterests.map((interest) => interest.name));
+          setInterestCat(fetchedInterests.map((category) => category.category));
         })
         .catch((error) => console.error(error));
     }
   }, [data.interests]);
+
+  const interestCatName = (index) => {
+    let catName = interestCat[index];
+    return `/${catName}`;
+  };
 
   return (
     <div textAlign="left">
@@ -52,12 +60,21 @@ const UserInterests = ({ data }) => {
       <EuiFlexGroup wrap responsive={false} gutterSize="xs">
         {interestNames.map((interestName, index) => (
           <EuiFlexItem key={index} grow={false}>
-            <EuiBadge
-              style={{ fontSize: "1rem", padding: "5px" }}
-              color={generateRandomColor()}
+            {console.log(index)}
+            <Link
+              to={interestCatName(index)}
+              style={{
+                textDecoration: "none",
+                color: "inherit",
+              }}
             >
-              {interestName}
-            </EuiBadge>
+              <EuiBadge
+                style={{ cursor: "pointer", fontSize: "1rem", padding: "5px" }}
+                color={generateRandomColor()}
+              >
+                {interestName}
+              </EuiBadge>
+            </Link>
           </EuiFlexItem>
         ))}
       </EuiFlexGroup>
