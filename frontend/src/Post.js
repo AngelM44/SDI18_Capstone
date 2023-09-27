@@ -6,7 +6,7 @@ function Post({ onNewPost, data }) {
 
   const handleNewPost = async () => {
     console.log("Attempting to create a new post");
-    console.log("Profile ID being passed:", data.profile_id);
+    console.log("Profile Data being passed:", data);
 
     const date_created = new Date().toISOString().slice(0, 10); // Current date in 'YYYY-MM-DD' format
     try {
