@@ -69,7 +69,7 @@ function Posts() {
     const timeDifferenceMonths = timeDifferenceDays / 30; // Using a rough estimate for months
 
     if (timeDifferenceHours < 48) {
-      if (timeDifferenceHours < 1){
+      if (timeDifferenceHours < 1) {
         return Math.round(timeDifferenceMinutes) + " minutes ago";
       }
       return Math.round(timeDifferenceHours) + " hours ago";
@@ -109,7 +109,7 @@ function Posts() {
         <EuiPanel paddingSize="l" hasShadow>
           <EuiFlexGroup justifyContent="center">
             <EuiFlexItem grow={false}>
-              <EuiFlexGroup alignItems="center" style={{ textAlign: "center" }}>
+              <EuiFlexGroup alignItems="center">
                 <EuiFlexItem grow={false}>
                   <EuiIcon type="globe" size="xxl" />
                 </EuiFlexItem>
