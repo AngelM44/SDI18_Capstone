@@ -26,6 +26,12 @@ const UserPosts = ({ data }) => {
       let filterposts = posts.filter(
         (post) => post.profile_id === data.user_id
       );
+      //order posts by newest to oldest
+      posts.sort((a, b) => {
+        const dateA = new Date(a.date_created);
+        const dateB = new Date(b.date_created);
+        return dateB - dateA;
+      });
       setPosts(filterposts);
     };
     fetchposts();
@@ -73,6 +79,7 @@ const UserPosts = ({ data }) => {
       }
     }
   };
+
   function formatTimeSinceLastPosted(date_created) {
     const now = new Date();
     const createdDate = new Date(date_created);
@@ -86,6 +93,12 @@ const UserPosts = ({ data }) => {
     const timeDifferenceMonths = timeDifferenceDays / 30; // Using a rough estimate for months
 
     if (timeDifferenceHours < 48) {
+      if (timeDifferenceHours < 1) {
+        if (timeDifferenceMinutes < 10){
+          return "Just Now";
+        }
+        else return Math.round(timeDifferenceMinutes) + " minutes ago";
+      }
       return Math.round(timeDifferenceHours) + " hours ago";
     } else if (timeDifferenceDays < 7) {
       return Math.round(timeDifferenceDays) + " days ago";
