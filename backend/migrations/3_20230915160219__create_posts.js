@@ -7,7 +7,7 @@ exports.up = function(knex) {
     table.increments('id')
     table.integer('profile_id', 255).notNullable()
     table.foreign('profile_id').references('profile.id')
-    table.date('date_created').notNullable()
+    table.timestamp('date_created').notNullable()
     table.string('body').notNullable()
   })
 };
