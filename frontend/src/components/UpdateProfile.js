@@ -128,7 +128,6 @@ const UpdateProfile = ({ setOpenUpdate, user, onUserUpdate }) => {
       }}
       onClose={() => setOpenUpdate(false)}
     >
-      {console.log(user)}
       <EuiModalBody>
         <div>
           <h1
