@@ -31,7 +31,7 @@ const UserProfile = () => {
     return (
       <EuiPage
         style={{
-          height: "100%",
+          background: "transparent",
           paddingTop: "10px",
           paddingLeft: "30px",
           paddingRight: "30px",

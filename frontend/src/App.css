@@ -1,6 +1,12 @@
 /* .App {
-  text-align: center;
+  background-color: whitesmoke;
+  height: 100vh;
 } */
+
+body {
+  height: 100%;
+  background-color: whitesmoke;
+}
 
 /* .App-logo {
   height: 40vmin;
