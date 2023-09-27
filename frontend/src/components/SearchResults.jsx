@@ -126,7 +126,12 @@ const SearchResults = ({ results, onClose }) => {
               </EuiText>
             ))}
             {showLoadMore && (
-              <EuiButton size="s" onClick={loadMore}>
+              <EuiButton
+                color="secondary"
+                size="xxs"
+                style={{ width: "20%" }}
+                onClick={loadMore}
+              >
                 Load More
               </EuiButton>
             )}
