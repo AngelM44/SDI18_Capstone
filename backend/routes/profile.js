@@ -22,43 +22,43 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
-  const { profile_id, date_created, body, first_name, last_name } = req.body;
+// router.post("/", async (req, res) => {
+//   const { profile_id, date_created, body, first_name, last_name } = req.body;
 
-  try {
-    const newPost = await knex("posts")
-      .insert({
-        profile_id,
-        date_created,
-        body,
-      })
-      .returning("*");
+//   try {
+//     const newPost = await knex("posts")
+//       .insert({
+//         profile_id,
+//         date_created,
+//         body,
+//       })
+//       .returning("*");
 
-    const updatedProfile = await knex("profile")
-      .where({ user_id: profile_id })
-      .update({})
-      .returning("*");
+//     const updatedProfile = await knex("profile")
+//       .where({ user_id: profile_id })
+//       .update({})
+//       .returning("*");
 
-    if (newPost[0] && updatedProfile[0]) {
-      res.status(201).json({
-        newPost: {
-          id: newPost[0].id,
-          profile_id: newPost[0].profile_id,
-          date_created: newPost[0].date_created,
-          body: newPost[0].body,
-          first_name,
-          last_name,
-        },
-        updatedProfile: updatedProfile[0],
-      });
-    } else {
-      res.status(400).json("Error creating post or updating profile.");
-    }
-  } catch (err) {
-    console.error("Error creating post and updating profile:", err.message);
-    res.status(400).json("Error creating post and updating profile.");
-  }
-});
+//     if (newPost[0] && updatedProfile[0]) {
+//       res.status(201).json({
+//         newPost: {
+//           id: newPost[0].id,
+//           profile_id: newPost[0].profile_id,
+//           date_created: newPost[0].date_created,
+//           body: newPost[0].body,
+//           first_name,
+//           last_name,
+//         },
+//         updatedProfile: updatedProfile[0],
+//       });
+//     } else {
+//       res.status(400).json("Error creating post or updating profile.");
+//     }
+//   } catch (err) {
+//     console.error("Error creating post and updating profile:", err.message);
+//     res.status(400).json("Error creating post and updating profile.");
+//   }
+// });
 
 router.get("/:profileId", async (req, res) => {
   try {
