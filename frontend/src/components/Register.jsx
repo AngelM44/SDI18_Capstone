@@ -43,7 +43,7 @@ function Register() {
     setIsLoading(true);
 
     if (formData.dod_id.length !== 10) {
-      setError("DOD ID must be 10 characters long.");
+      setError("DoD ID must be 10 characters long.");
       setIsLoading(false);
       return;
     }
@@ -64,103 +64,112 @@ function Register() {
   };
 
   return (
-    <EuiPage style={{ ...styles.page, backgroundColor: "transparent" }}>
-      <EuiPageBody style={{ ...styles.page, backgroundColor: "transparent" }}>
-        <div style={styles.formContainer}>
-          <EuiTitle size="l">
-            <h2>Register</h2>
-          </EuiTitle>
-          <EuiSpacer size="l" />
-          <EuiForm component="form" onSubmit={handleSubmit} style={styles.form}>
-            <EuiFormRow style={styles.formRow} label="First Name">
-              <EuiFieldText
-                name="first_name"
-                value={formData.first_name}
-                onChange={handleChange}
-                required
-              />
-            </EuiFormRow>
-            <EuiFormRow style={styles.formRow} label="Last Name">
-              <EuiFieldText
-                name="last_name"
-                value={formData.last_name}
-                onChange={handleChange}
-                required
-              />
-            </EuiFormRow>
-            <EuiFormRow style={styles.formRow} label="DOD ID">
-              <EuiFieldText
-                name="dod_id"
-                value={formData.dod_id}
-                onChange={handleChange}
-                required
-              />
-            </EuiFormRow>
-            <EuiFormRow style={styles.formRow} label="Username">
-              <EuiFieldText
-                name="username"
-                value={formData.username}
-                onChange={handleChange}
-                required
-              />
-            </EuiFormRow>
-            <EuiFormRow style={styles.formRow} label="Password">
-              <EuiFieldPassword
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
-            </EuiFormRow>
-            <EuiFormRow style={styles.formRow} label="Email">
-              <EuiFieldText
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </EuiFormRow>
-            <EuiFormRow style={styles.formRow} label="Location">
-              <EuiFieldText
-                name="location"
-                value={formData.location}
-                onChange={handleChange}
-                required
-              />
-            </EuiFormRow>
-            <EuiSpacer />
-            <div style={styles.buttonContainer}>
-              <EuiButton type="submit" isLoading={isLoading}>
-                Register
-              </EuiButton>
-            </div>
-            {successMessage && (
-              <EuiCallOut title={successMessage} color="success" />
-            )}
-            {error && (
-              <EuiCallOut title="Error" color="danger">
-                {error}
-              </EuiCallOut>
-            )}
-          </EuiForm>
-        </div>
-      </EuiPageBody>
-    </EuiPage>
+    <div style={{ paddingTop: "30px" }}>
+      <EuiPage style={{ ...styles.page, backgroundColor: "transparent" }}>
+        <EuiPageBody style={{ ...styles.page, backgroundColor: "transparent" }}>
+          <div style={styles.formContainer}>
+            <EuiTitle size="l">
+              <h2 style={{ color: "white", fontSize: "4rem" }}>Register</h2>
+            </EuiTitle>
+            <EuiSpacer size="l" />
+            <EuiForm
+              component="form"
+              onSubmit={handleSubmit}
+              style={styles.form}
+            >
+              <EuiFormRow style={styles.formRow} label="First Name">
+                <EuiFieldText
+                  name="first_name"
+                  value={formData.first_name}
+                  onChange={handleChange}
+                  required
+                />
+              </EuiFormRow>
+              <EuiFormRow style={styles.formRow} label="Last Name">
+                <EuiFieldText
+                  name="last_name"
+                  value={formData.last_name}
+                  onChange={handleChange}
+                  required
+                />
+              </EuiFormRow>
+              <EuiFormRow style={styles.formRow} label="DoD ID">
+                <EuiFieldText
+                  name="dod_id"
+                  value={formData.dod_id}
+                  onChange={handleChange}
+                  required
+                />
+              </EuiFormRow>
+              <EuiFormRow style={styles.formRow} label="Username">
+                <EuiFieldText
+                  name="username"
+                  value={formData.username}
+                  onChange={handleChange}
+                  required
+                />
+              </EuiFormRow>
+              <EuiFormRow style={styles.formRow} label="Password">
+                <EuiFieldPassword
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+              </EuiFormRow>
+              <EuiFormRow style={styles.formRow} label="Email">
+                <EuiFieldText
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+              </EuiFormRow>
+              <EuiFormRow style={styles.formRow} label="Location">
+                <EuiFieldText
+                  name="location"
+                  value={formData.location}
+                  onChange={handleChange}
+                  required
+                />
+              </EuiFormRow>
+              <EuiSpacer />
+              <div style={styles.buttonContainer}>
+                <EuiButton
+                  color="secondary"
+                  type="submit"
+                  isLoading={isLoading}
+                >
+                  Register
+                </EuiButton>
+              </div>
+              {successMessage && (
+                <EuiCallOut title={successMessage} color="success" />
+              )}
+              {error && (
+                <EuiCallOut title="Error" color="danger">
+                  {error}
+                </EuiCallOut>
+              )}
+            </EuiForm>
+          </div>
+        </EuiPageBody>
+      </EuiPage>
+    </div>
   );
 }
 
 const styles = {
   page: {
-    height: "100vh",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "transparent",
-    marginTop: "60px",
   },
   formContainer: {
-    width: "80%",
-    maxWidth: "600px",
+    color: "white",
+    width: "100%",
+    maxWidth: "1000px",
     padding: "20px",
     borderRadius: "10px",
     boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)",
@@ -168,21 +177,30 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    backgroundImage:
+      "linear-gradient(90deg, #4b6cb770, #18284870), url(https://images.pexels.com/photos/7099138/pexels-photo-7099138.png)",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+    backgroundSize: "cover",
   },
   form: {
+    display: "flex",
+    flexDirection: "column",
     width: "100%",
+    gap: "40px",
   },
   formRow: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     width: "100%",
+    gap: "10px",
   },
   buttonContainer: {
     display: "flex",
     justifyContent: "center",
     width: "100%",
-    marginTop: "20px",
+    paddingBottom: "20px",
   },
 };
 
