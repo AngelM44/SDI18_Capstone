@@ -134,7 +134,10 @@ function Posts() {
                         timelineAvatar={
                           <EuiAvatar
                             style={{ marginTop: "25px" }}
-                            imageUrl={fetchProfilePic(post.profile_id)}
+                            imageUrl={
+                              fetchProfilePic(post.profile_id) ||
+                              `../profile_pics/profile-pic${post.profile_id}.png`
+                            }
                             size="xl"
                             name={fetchProfileName(post.profile_id)}
                           />
