@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { EuiFlexItem, EuiFlexGrid, EuiComment, EuiAvatar } from "@elastic/eui";
+import {
+  EuiFlexItem,
+  EuiFlexGrid,
+  EuiComment,
+  EuiAvatar,
+  EuiIcon,
+  EuiPageBody,
+  EuiPanel,
+  EuiFlexGroup,
+  EuiTitle,
+} from "@elastic/eui";
 import "./App.css";
 import { useSearchContext } from "./components/SearchContext";
 import UserProfileLoader from "./components/UserProfileLoader";
@@ -86,44 +96,60 @@ function Posts() {
     return UserProfileLoader;
   } else {
     return (
-      <div align={"center"}>
-        <h1 style={{ fontSize: "4rem" }}>Community Posts</h1>
-        <EuiFlexGrid className="custom-flex-grid" columns={1} grow={true}>
-          {posts.map((post) => (
-            <EuiFlexItem
-              className="custom-flex-item"
-              key={`${post.id}`}
-              style={{ padding: "5px" }}
-            >
-              {console.log(fetchProfilePic(post.profile_id))}
-              <Link
-                to={`/profile/${post.profile_id}`}
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
-                <EuiComment
-                  align="left"
-                  timelineAvatar={
-                    <EuiAvatar
-                      style={{ marginTop: "25px" }}
-                      imageUrl={fetchProfilePic(post.profile_id)}
-                      size="xl"
-                      name={fetchProfileName(post.profile_id)}
-                    />
-                  }
-                  username={fetchProfileName(post.profile_id)}
-                  event="posted"
-                  timestamp={
-                    formatTimeSinceLastPosted(post.date_created) ||
-                    formatTimeSinceLastPosted(post.date_created)
-                  }
-                >
-                  {post.body || post.body}
-                </EuiComment>
-              </Link>
+      <EuiPageBody style={{ height: "fit-content" }}>
+        <EuiPanel paddingSize="l" hasShadow>
+          <EuiFlexGroup justifyContent="center">
+            <EuiFlexItem grow={false}>
+              <EuiFlexGroup alignItems="center" style={{ textAlign: "center" }}>
+                <EuiFlexItem grow={false}>
+                  <EuiIcon type="globe" size="xxl" />
+                </EuiFlexItem>
+                <EuiFlexItem>
+                  <EuiTitle>
+                    <h1 style={{ fontSize: "4rem" }}>Community Posts</h1>
+                  </EuiTitle>
+                </EuiFlexItem>
+              </EuiFlexGroup>
+
+              <EuiFlexGrid className="custom-flex-grid" columns={1} grow={true}>
+                {posts.map((post) => (
+                  <EuiFlexItem
+                    className="custom-flex-item"
+                    key={`${post.id}`}
+                    style={{ padding: "5px" }}
+                  >
+                    {console.log(fetchProfilePic(post.profile_id))}
+                    <Link
+                      to={`/profile/${post.profile_id}`}
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      <EuiComment
+                        align="left"
+                        timelineAvatar={
+                          <EuiAvatar
+                            style={{ marginTop: "25px" }}
+                            imageUrl={fetchProfilePic(post.profile_id)}
+                            size="xl"
+                            name={fetchProfileName(post.profile_id)}
+                          />
+                        }
+                        username={fetchProfileName(post.profile_id)}
+                        event="posted"
+                        timestamp={
+                          formatTimeSinceLastPosted(post.date_created) ||
+                          formatTimeSinceLastPosted(post.date_created)
+                        }
+                      >
+                        {post.body || post.body}
+                      </EuiComment>
+                    </Link>
+                  </EuiFlexItem>
+                ))}
+              </EuiFlexGrid>
             </EuiFlexItem>
-          ))}
-        </EuiFlexGrid>
-      </div>
+          </EuiFlexGroup>
+        </EuiPanel>
+      </EuiPageBody>
     );
   }
 }

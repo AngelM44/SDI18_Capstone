@@ -54,7 +54,7 @@ const UserProfilePanel = ({ data }) => {
   );
 
   return (
-    <EuiPage minHeight="fit-content">
+    <EuiPage minHeight="fit-content" style={{ background: "transparent" }}>
       <EuiCard
         style={{
           minWidth: "300px",
