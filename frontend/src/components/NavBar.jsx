@@ -47,7 +47,7 @@ export const NavBar = (props) => {
     header: {
       boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
       padding: "12px 24px",
-      borderRadius: "8px",
+      // borderRadius: "8px",
       background: "linear-gradient(90deg, #4b6cb7, #182848)",
     },
     logo: {
