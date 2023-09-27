@@ -134,21 +134,21 @@ const UserPosts = ({ data }) => {
                     }`}
                     event="posted"
                     timestamp={
-                      formatTimeSinceLastPosted(post.date_created) ||
+                      formatTimeSinceLastPosted(post.date_created) &&
                       formatTimeSinceLastPosted(post.date_created)
                     }
                   >
-                    {post.body || post.body}
+                    {post.body && post.body}
+                    {user.id === parseInt(data.user_id) && (
+                      <span className="edit-icon-container">
+                        <EuiIcon
+                          type="pencil"
+                          onClick={handleEditClick}
+                          style={{ cursor: "pointer" }}
+                        />
+                      </span>
+                    )}
                   </EuiComment>
-                  {user.id === parseInt(data.user_id) && (
-                    <div className="edit-icon-container">
-                      <EuiIcon
-                        type="pencil"
-                        onClick={handleEditClick}
-                        style={{ cursor: "pointer" }}
-                      />
-                    </div>
-                  )}
                 </Fragment>
               ))
             )}
