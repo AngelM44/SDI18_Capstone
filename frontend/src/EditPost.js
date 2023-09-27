@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
+import { EuiFlexItem } from "@elastic/eui";
 
 function EditPost({ post, onUpdate }) {
   const [editedPost, setEditedPost] = useState(post.body);

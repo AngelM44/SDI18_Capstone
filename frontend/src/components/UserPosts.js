@@ -55,18 +55,22 @@ const UserPosts = ({ data }) => {
   const { user } = useUser();
 
   const handleDelete = async (postId) => {
-    try {
-      const response = await axios.delete(
-        `http://localhost:8080/posts/${postId}`
-      );
+    if (window.confirm("Are you sure you want to delete this post?")) {
+      try {
+        const response = await axios.delete(
+          `http://localhost:8080/posts/${postId}`
+        );
 
-      if (response.status === 200) {
-        setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
-      } else {
-        console.error("Failed to delete post:", response.statusText);
+        if (response.status === 200) {
+          setPosts((prevPosts) =>
+            prevPosts.filter((post) => post.id !== postId)
+          );
+        } else {
+          console.error("Failed to delete post:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error deleting post:", error);
       }
-    } catch (error) {
-      console.error("Error deleting post:", error);
     }
   };
   function formatTimeSinceLastPosted(date_created) {
@@ -134,7 +138,7 @@ const UserPosts = ({ data }) => {
               </EuiFlexItem>
             </EuiFlexGroup>
             {posts.map((post) => (
-              <Fragment key={post.id}>
+              <EuiFlexItem style={{ width: "97%" }} key={post.id}>
                 {editingPostId === post.id ? (
                   <EditPost post={post} onUpdate={handleUpdate} />
                 ) : (
@@ -151,11 +155,13 @@ const UserPosts = ({ data }) => {
                       <span className="edit-icon-container">
                         <EuiIcon
                           type="pencil"
+                          title="Edit Post"
                           onClick={() => handleEditClick(post.id)}
                           style={{ cursor: "pointer" }}
                         />
                         <EuiIcon
                           type="trash"
+                          title="Delete Post"
                           onClick={() => handleDelete(post.id)}
                           style={{ cursor: "pointer", marginLeft: "8px" }}
                         />
@@ -163,7 +169,7 @@ const UserPosts = ({ data }) => {
                     )}
                   </EuiComment>
                 )}
-              </Fragment>
+              </EuiFlexItem>
             ))}
           </>
         )}
