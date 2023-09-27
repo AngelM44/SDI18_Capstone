@@ -95,7 +95,7 @@ const UserPosts = ({ data }) => {
     if (timeDifferenceHours < 48) {
       if (timeDifferenceHours < 1) {
         if (timeDifferenceMinutes < 10){
-          return "Just Now";
+          return "just now";
         }
         else return Math.round(timeDifferenceMinutes) + " minutes ago";
       }
