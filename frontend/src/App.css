@@ -60,6 +60,7 @@ textarea,
   font-size: 1rem;
   resize: none;
 }
+
 .edit-post-container {
   padding: 10px;
   border: 1px solid #ccc;
@@ -77,7 +78,6 @@ textarea,
 }
 
 .edit-post-button {
-  background-color: #4caf50;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -88,3 +88,12 @@ textarea,
 .edit-post-button:hover {
   background-color: #45a049;
 }
+
+
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
