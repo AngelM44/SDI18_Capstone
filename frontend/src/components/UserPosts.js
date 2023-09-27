@@ -44,11 +44,14 @@ const UserPosts = ({ data }) => {
     setPostData(newPostData);
   };
 
-  const onNewPost = (responseData) => {
-    const { post, profile } = responseData;
-    setPostData((prevData) => ({ ...prevData, ...post, ...profile }));
-    console.log("onNewPost Data: ", postData);
-  };
+const onNewPost = (responseData) => {
+  const { post } = responseData;
+  setPosts((prevPosts) => [post, ...prevPosts]);
+  if (postData.body === null) {
+    setPostData(post);
+  }
+};
+
 
   const handleEditClick = (event) => {
     event.preventDefault();
