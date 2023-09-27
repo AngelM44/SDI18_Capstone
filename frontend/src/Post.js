@@ -40,6 +40,7 @@ function Post({ onNewPost, data }) {
   return (
     <div className="post-container">
       <textarea
+        style={{ minHeight: "70px" }}
         className="post-textarea"
         value={newPostContent}
         onChange={(e) => setNewPostContent(e.target.value)}
