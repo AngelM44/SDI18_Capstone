@@ -59,8 +59,7 @@ const UserProfilePanel = ({ data }) => {
         style={{
           minWidth: "300px",
           maxWidth: "400px",
-          maxHeight: "50%",
-          minHeight: "700px",
+          height: "700px",
         }}
         textAlign="left"
         image={
