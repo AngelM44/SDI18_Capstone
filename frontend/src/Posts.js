@@ -105,63 +105,69 @@ function Posts() {
     return UserProfileLoader;
   } else {
     return (
-      <EuiPageBody style={{ height: "fit-content" }}>
-        <EuiPanel paddingSize="l" hasShadow>
-          <EuiFlexGroup justifyContent="center">
-            <EuiFlexItem grow={false}>
-              <EuiFlexGroup alignItems="center">
-                <EuiFlexItem grow={false}>
-                  <EuiIcon type="globe" size="xxl" />
-                </EuiFlexItem>
-                <EuiFlexItem>
-                  <EuiTitle>
-                    <h1 style={{ fontSize: "4rem" }}>Community Posts</h1>
-                  </EuiTitle>
-                </EuiFlexItem>
-              </EuiFlexGroup>
-
-              <EuiFlexGrid className="custom-flex-grid" columns={1} grow={true}>
-                {posts.map((post) => (
-                  <EuiFlexItem
-                    className="custom-flex-item"
-                    key={`${post.id}`}
-                    style={{ padding: "5px" }}
-                  >
-                    {console.log(fetchProfilePic(post.profile_id))}
-                    <Link
-                      to={`/profile/${post.profile_id}`}
-                      style={{ textDecoration: "none", color: "inherit" }}
-                    >
-                      <EuiComment
-                        align="left"
-                        timelineAvatar={
-                          <EuiAvatar
-                            style={{ marginTop: "25px" }}
-                            imageUrl={
-                              fetchProfilePic(post.profile_id) ||
-                              `../profile_pics/profile-pic${post.profile_id}.png`
-                            }
-                            size="xl"
-                            name={fetchProfileName(post.profile_id)}
-                          />
-                        }
-                        username={fetchProfileName(post.profile_id)}
-                        event="posted"
-                        timestamp={
-                          formatTimeSinceLastPosted(post.date_created) ||
-                          formatTimeSinceLastPosted(post.date_created)
-                        }
-                      >
-                        {post.body || post.body}
-                      </EuiComment>
-                    </Link>
+      <div style={{ paddingLeft: "40px", paddingRight: "40px" }}>
+        <EuiPageBody style={{ height: "fit-content" }}>
+          <EuiPanel paddingSize="l" hasShadow>
+            <EuiFlexGroup justifyContent="center">
+              <EuiFlexItem grow={false}>
+                <EuiFlexGroup alignItems="center">
+                  <EuiFlexItem grow={false}>
+                    <EuiIcon type="globe" size="xxl" />
                   </EuiFlexItem>
-                ))}
-              </EuiFlexGrid>
-            </EuiFlexItem>
-          </EuiFlexGroup>
-        </EuiPanel>
-      </EuiPageBody>
+                  <EuiFlexItem>
+                    <EuiTitle>
+                      <h1 style={{ fontSize: "4rem" }}>Community Posts</h1>
+                    </EuiTitle>
+                  </EuiFlexItem>
+                </EuiFlexGroup>
+
+                <EuiFlexGrid
+                  className="custom-flex-grid"
+                  columns={1}
+                  grow={true}
+                >
+                  {posts.map((post) => (
+                    <EuiFlexItem
+                      className="custom-flex-item"
+                      key={`${post.id}`}
+                      style={{ padding: "5px" }}
+                    >
+                      {console.log(fetchProfilePic(post.profile_id))}
+                      <Link
+                        to={`/profile/${post.profile_id}`}
+                        style={{ textDecoration: "none", color: "inherit" }}
+                      >
+                        <EuiComment
+                          align="left"
+                          timelineAvatar={
+                            <EuiAvatar
+                              style={{ marginTop: "25px" }}
+                              imageUrl={
+                                fetchProfilePic(post.profile_id) ||
+                                `../profile_pics/profile-pic${post.profile_id}.png`
+                              }
+                              size="xl"
+                              name={fetchProfileName(post.profile_id)}
+                            />
+                          }
+                          username={fetchProfileName(post.profile_id)}
+                          event="posted"
+                          timestamp={
+                            formatTimeSinceLastPosted(post.date_created) ||
+                            formatTimeSinceLastPosted(post.date_created)
+                          }
+                        >
+                          {post.body || post.body}
+                        </EuiComment>
+                      </Link>
+                    </EuiFlexItem>
+                  ))}
+                </EuiFlexGrid>
+              </EuiFlexItem>
+            </EuiFlexGroup>
+          </EuiPanel>
+        </EuiPageBody>
+      </div>
     );
   }
 }
