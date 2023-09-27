@@ -38,7 +38,8 @@ function ProfileCard({ user }) {
             }}
             name="Profile Pic"
             imageUrl={
-              user.profile_pic || `../profile_pics/profile-pic${user.id}.png`
+              user.profile_pic ||
+              `../profile_pics/profile-pic${user.user_id}.png`
             }
           />
         }

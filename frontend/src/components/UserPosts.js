@@ -17,7 +17,7 @@ const UserPosts = ({ data }) => {
 
   const [isEditing, setIsEditing] = useState(false);
   const [postData, setPostData] = useState(data);
-  const [Posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     setPostData(data);
@@ -27,7 +27,7 @@ const UserPosts = ({ data }) => {
       );
 
       let filterposts = posts.filter((post) => {
-        if (post.profile_id == data.user_id) {
+        if (post.profile_id === data.user_id) {
           return post;
         }
       });
@@ -35,7 +35,7 @@ const UserPosts = ({ data }) => {
     };
     fetchposts();
   }, [data]);
-  console.log("posts: ", Posts);
+  console.log("posts: ", posts);
   console.log("Data: ", postData);
 
   const handleUpdate = (updatedPost) => {
@@ -47,7 +47,7 @@ const UserPosts = ({ data }) => {
   const onNewPost = (responseData) => {
     const { post, profile } = responseData;
     setPostData((prevData) => ({ ...prevData, ...post, ...profile }));
-    console.log('onNewPost Data: ', postData)
+    console.log("onNewPost Data: ", postData);
   };
 
   const handleEditClick = (event) => {
@@ -57,7 +57,7 @@ const UserPosts = ({ data }) => {
 
   const { user } = useUser();
 
-  console.log('user: ', user)
+  console.log("user: ", user);
 
   function formatTimeSinceLastPosted(date_created) {
     const now = new Date();
@@ -84,7 +84,7 @@ const UserPosts = ({ data }) => {
 
   return (
     <div>
-      {user.id === parseInt(data.id) && (
+      {user.id === parseInt(data.user_id) && (
         <>
           {/* New Post */}
           <EuiFlexGroup alignItems="center">
@@ -99,7 +99,7 @@ const UserPosts = ({ data }) => {
           </EuiFlexGroup>
           <Post
             data={{
-              profile_id: data.id,
+              profile_id: data.user_id,
               first_name: data.first_name,
               last_name: data.last_name,
             }}
@@ -125,7 +125,7 @@ const UserPosts = ({ data }) => {
             {isEditing ? (
               <EditPost post={postData} onUpdate={handleUpdate} />
             ) : (
-              Posts.map((post) => (
+              posts.map((post) => (
                 <Fragment>
                   <EuiComment
                     timelineAvatar={<span></span>}
@@ -140,7 +140,7 @@ const UserPosts = ({ data }) => {
                   >
                     {post.body || post.body}
                   </EuiComment>
-                  {user.id === parseInt(post.id) && (
+                  {user.id === parseInt(data.user_id) && (
                     <div className="edit-icon-container">
                       <EuiIcon
                         type="pencil"
