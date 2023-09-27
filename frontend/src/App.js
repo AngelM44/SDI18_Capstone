@@ -17,7 +17,8 @@ import { UserProvider, useUser } from "./components/UserContext";
 import { SearchProvider } from "./components/SearchContext";
 import NavBar from "./components/NavBar";
 import "./App.css";
-import Footer from './Footer';
+import InterestChart from "./components/InterestsChart";
+import Footer from "./Footer";
 
 function App() {
   const handleSearch = (data) => {
@@ -67,12 +68,19 @@ function App() {
                 }
               />
               <Route path="/posts" element={<Posts />} />
+              <Route
+                path="/interest-chart"
+                element={
+                  <ProtectedElement>
+                    <InterestChart />
+                  </ProtectedElement>
+                }
+              />
             </Routes>
           </Router>
           <div className="container">
             <Footer />
           </div>
-
         </div>
       </SearchProvider>
     </UserProvider>

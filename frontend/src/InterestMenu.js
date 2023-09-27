@@ -58,6 +58,10 @@ export default function InterestMenu() {
       label: "home",
       path: "/home",
     },
+    {
+      label: "interest-chart",
+      path: "/interest-chart",
+    },
   ];
 
   const interestsList = newNavbar.map((interest) => ({
