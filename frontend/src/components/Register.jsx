@@ -69,7 +69,15 @@ function Register() {
         <EuiPageBody style={{ ...styles.page, backgroundColor: "transparent" }}>
           <div style={styles.formContainer}>
             <EuiTitle size="l">
-              <h2 style={{ color: "white", fontSize: "4rem" }}>Register</h2>
+              <h2
+                style={{
+                  textShadow: "1px 1px 2px black",
+                  color: "whitesmoke",
+                  fontSize: "4rem",
+                }}
+              >
+                Register
+              </h2>
             </EuiTitle>
             <EuiSpacer size="l" />
             <EuiForm
@@ -101,6 +109,22 @@ function Register() {
                   required
                 />
               </EuiFormRow>
+              <EuiFormRow style={styles.formRow} label="Location">
+                <EuiFieldText
+                  name="location"
+                  value={formData.location}
+                  onChange={handleChange}
+                  required
+                />
+              </EuiFormRow>
+              <EuiFormRow style={styles.formRow} label="Email">
+                <EuiFieldText
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+              </EuiFormRow>
               <EuiFormRow style={styles.formRow} label="Username">
                 <EuiFieldText
                   name="username"
@@ -117,23 +141,6 @@ function Register() {
                   required
                 />
               </EuiFormRow>
-              <EuiFormRow style={styles.formRow} label="Email">
-                <EuiFieldText
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                />
-              </EuiFormRow>
-              <EuiFormRow style={styles.formRow} label="Location">
-                <EuiFieldText
-                  name="location"
-                  value={formData.location}
-                  onChange={handleChange}
-                  required
-                />
-              </EuiFormRow>
-              <EuiSpacer />
               <div style={styles.buttonContainer}>
                 <EuiButton
                   color="secondary"
@@ -182,6 +189,7 @@ const styles = {
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
     backgroundSize: "cover",
+    textShadow: "1px 1px 2px black",
   },
   form: {
     display: "flex",

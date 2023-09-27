@@ -62,7 +62,7 @@ function Login() {
             <EuiTitle size="l">
               <h2 style={{ fontSize: "4rem" }}>Login</h2>
             </EuiTitle>
-            <EuiSpacer size="l" />
+            <EuiSpacer size="s" />
             <EuiForm
               component="form"
               onSubmit={handleSubmit}
@@ -85,7 +85,7 @@ function Login() {
                   required
                 />
               </EuiFormRow>
-              <EuiSpacer />
+
               <div style={styles.buttonContainer}>
                 <EuiButton type="submit" color="secondary">
                   Login
@@ -109,6 +109,7 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    height: "800px",
   },
   formContainer: {
     width: "80%",

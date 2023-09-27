@@ -118,7 +118,11 @@ const UpdateProfile = ({ setOpenUpdate, user, onUserUpdate }) => {
         minWidth: "800px",
         display: "flex",
         fontFamily: "inherit",
-        background: "#CCCCFF",
+        backgroundImage:
+          "linear-gradient(90deg, #4b6cb780, #18284890), url(https://images.pexels.com/photos/4555371/pexels-photo-4555371.jpeg)",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        backgroundSize: "cover",
         padding: "30px",
         gap: "20px",
       }}
@@ -127,7 +131,15 @@ const UpdateProfile = ({ setOpenUpdate, user, onUserUpdate }) => {
       {console.log(user)}
       <EuiModalBody>
         <div>
-          <h1>Update Your Profile</h1>
+          <h1
+            style={{
+              textShadow: "1px 1px 2px black",
+              color: "whitesmoke",
+              fontSize: "3rem",
+            }}
+          >
+            Update Your Profile
+          </h1>
           <EuiForm>
             <EuiFlexGroup
               gutterSize="xl"
@@ -141,7 +153,7 @@ const UpdateProfile = ({ setOpenUpdate, user, onUserUpdate }) => {
                 style={{
                   display: "flex",
                   gap: "20px",
-                  width: "50%",
+                  width: "33%",
                 }}
               >
                 <EuiFieldText
@@ -205,14 +217,14 @@ const UpdateProfile = ({ setOpenUpdate, user, onUserUpdate }) => {
                 style={{
                   display: "flex",
                   gap: "20px",
-                  width: "50%",
+                  width: "33%",
                 }}
               >
                 <div
                   style={{
-                    background: "white",
+                    background: "whitesmoke",
                     borderRadius: "3px",
-                    width: "100%",
+                    width: "90%",
                     padding: "2px",
                   }}
                 >
@@ -271,7 +283,7 @@ const UpdateProfile = ({ setOpenUpdate, user, onUserUpdate }) => {
                 style={{
                   display: "flex",
                   gap: "20px",
-                  width: "100%",
+                  width: "33%",
                 }}
               >
                 <EuiTextArea
