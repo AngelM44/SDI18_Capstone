@@ -40,9 +40,11 @@ const UserPosts = ({ data }) => {
   const onNewPost = (responseData) => {
     const { post } = responseData;
     setPosts((prevPosts) => [post, ...prevPosts]);
+    responseData.date_created = new Date();
     if (postData.body === null) {
       setPostData(post);
     }
+    console.log("onNewPost Data: ", postData);
   };
 
   const handleEditClick = (postId) => {

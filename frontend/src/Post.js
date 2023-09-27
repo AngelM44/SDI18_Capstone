@@ -8,7 +8,8 @@ function Post({ onNewPost, data }) {
     console.log("Attempting to create a new post");
     console.log("Profile ID being passed:", data.profile_id);
 
-    const date_created = new Date().toISOString().slice(0, 10); // Current date in 'YYYY-MM-DD' format
+    //const date_created = new Date().toISOString().slice(0, 10); // Current date in 'YYYY-MM-DD' format
+    const date_created = new Date()
     try {
       const response = await fetch("http://localhost:8080/posts", {
         method: "POST",

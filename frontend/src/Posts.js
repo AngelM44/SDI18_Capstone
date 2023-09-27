@@ -69,6 +69,9 @@ function Posts() {
     const timeDifferenceMonths = timeDifferenceDays / 30; // Using a rough estimate for months
 
     if (timeDifferenceHours < 48) {
+      if (timeDifferenceHours < 1){
+        return Math.round(timeDifferenceMinutes) + " minutes ago";
+      }
       return Math.round(timeDifferenceHours) + " hours ago";
     } else if (timeDifferenceDays < 7) {
       return Math.round(timeDifferenceDays) + " days ago";
