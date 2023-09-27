@@ -46,13 +46,13 @@ export const NavBar = (props) => {
     },
     header: {
       boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-      padding: "12px 24px",
+      padding: "22px 24px",
       // borderRadius: "8px",
       background: "linear-gradient(90deg, #4b6cb7, #182848)",
     },
     logo: {
-      height: "48px",
-      width: "48px",
+      height: "60px",
+      width: "60px",
     },
     menuItem: {
       color: "black",
@@ -255,6 +255,10 @@ export const NavBar = (props) => {
         <EuiHeaderSectionItem>{renderLogo()}</EuiHeaderSectionItem>
         <EuiSpacer size="m" />
         <InterestMenu />
+      </EuiHeaderSection>
+
+      <EuiHeaderSection grow={true} style={{ alignItems: "center", justifyContent: "center" }}>
+        <div style={{ color: "white", fontSize: "2.8rem", fontWeight: "bold" }}>MyFitConnect</div>
       </EuiHeaderSection>
       <div>
         {/* <EuiHeaderBreadcrumbs max={6} breadcrumbs={breadcrumbs} /> */}
