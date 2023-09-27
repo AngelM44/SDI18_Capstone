@@ -47,6 +47,7 @@ const UserPosts = ({ data }) => {
   const onNewPost = (responseData) => {
     const { post, profile } = responseData;
     setPostData((prevData) => ({ ...prevData, ...post, ...profile }));
+    console.log('onNewPost Data: ', postData)
   };
 
   const handleEditClick = (event) => {
@@ -55,6 +56,8 @@ const UserPosts = ({ data }) => {
   };
 
   const { user } = useUser();
+
+  console.log('user: ', user)
 
   function formatTimeSinceLastPosted(date_created) {
     const now = new Date();
@@ -96,7 +99,7 @@ const UserPosts = ({ data }) => {
           </EuiFlexGroup>
           <Post
             data={{
-              profile_id: data.profile_id,
+              profile_id: data.id,
               first_name: data.first_name,
               last_name: data.last_name,
             }}
