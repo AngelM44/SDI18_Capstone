@@ -119,6 +119,7 @@ const SearchResults = ({ results, onClose }) => {
               <EuiText key={user.id}>
                 <EuiBadge
                   onClick={() => navigate(`/profile/${user.id}`)}
+                  onClickAriaLabel={`Navigate to ${user.first_name} ${user.last_name}'s profile`}
                   style={{ cursor: "pointer" }}
                 >
                   {`${user.first_name} ${user.last_name}`}
@@ -148,6 +149,7 @@ const SearchResults = ({ results, onClose }) => {
                 <EuiBadge
                   color={activeInterest === interest.id ? "primary" : "hollow"}
                   onClick={() => filterByInterest(interest.id)}
+                  onClickAriaLabel={`Filter by interest: ${interest.name}`}
                 >
                   {interest.name}
                 </EuiBadge>
@@ -170,9 +172,10 @@ const SearchResults = ({ results, onClose }) => {
               <EuiText key={location.location}>
                 <EuiBadge
                   color={
-                    activeLocation === location.location ? "primary" : "hollow"
+                    activeLocation === location.location ? "primary" : "holt"
                   }
                   onClick={() => filterByLocation(location.location)}
+                  onClickAriaLabel={`Filter by location: ${location.location}`}
                 >
                   {location.location}
                 </EuiBadge>
