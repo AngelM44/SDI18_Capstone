@@ -46,6 +46,8 @@ const UserPosts = ({ data }) => {
 
   const onNewPost = (responseData) => {
     const { post, profile } = responseData;
+    responseData.date_created = new Date();
+    console.log('time pushed for new post: ', responseData.date_created)
     setPostData((prevData) => ({ ...prevData, ...post, ...profile }));
     console.log("onNewPost Data: ", postData);
   };
