@@ -10,6 +10,7 @@ import EditPost from "../EditPost";
 import Post from "../Post";
 import "../Post.css";
 import { useUser } from "./UserContext";
+import axios from "axios";
 
 const UserPosts = ({ data }) => {
   const [editingPostId, setEditingPostId] = useState(null);
@@ -53,8 +54,21 @@ const UserPosts = ({ data }) => {
 
   const { user } = useUser();
 
-  console.log("user: ", user);
+  const handleDelete = async (postId) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:8080/posts/${postId}`
+      );
 
+      if (response.status === 200) {
+        setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
+      } else {
+        console.error("Failed to delete post:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error deleting post:", error);
+    }
+  };
   function formatTimeSinceLastPosted(date_created) {
     const now = new Date();
     const createdDate = new Date(date_created);
@@ -139,6 +153,11 @@ const UserPosts = ({ data }) => {
                           type="pencil"
                           onClick={() => handleEditClick(post.id)}
                           style={{ cursor: "pointer" }}
+                        />
+                        <EuiIcon
+                          type="trash"
+                          onClick={() => handleDelete(post.id)}
+                          style={{ cursor: "pointer", marginLeft: "8px" }}
                         />
                       </span>
                     )}
