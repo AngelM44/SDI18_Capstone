@@ -26,6 +26,21 @@ const SearchResults = ({ results, onClose }) => {
   const [activeLocation, setActiveLocation] = useState(null);
 
   useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        !document.querySelector(".search-results-panel").contains(event.target)
+      ) {
+        onClose();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose]);
+
+  useEffect(() => {
     const escapeListener = (e) => {
       if (e.key === "Escape" && typeof onClose === "function") {
         onClose();
@@ -84,7 +99,11 @@ const SearchResults = ({ results, onClose }) => {
   const showLoadMore = endIndex < displayedUsers.length;
 
   return (
-    <EuiPanel paddingSize="l" style={{ overflowX: "auto" }}>
+    <EuiPanel
+      paddingSize="l"
+      style={{ overflowX: "auto" }}
+      className="search-results-panel"
+    >
       <EuiFlexGrid columns={3}>
         {displayedUsers && displayedUsers.length > 0 && (
           <EuiFlexItem>
