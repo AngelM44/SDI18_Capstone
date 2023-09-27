@@ -17,6 +17,8 @@ import { UserProvider, useUser } from "./components/UserContext";
 import { SearchProvider } from "./components/SearchContext";
 import NavBar from "./components/NavBar";
 import "./App.css";
+import Footer from './Footer';
+
 function App() {
   const handleSearch = (data) => {
     console.log(data);
@@ -67,6 +69,10 @@ function App() {
               <Route path="/posts" element={<Posts />} />
             </Routes>
           </Router>
+          <div className="container">
+            <Footer />
+          </div>
+
         </div>
       </SearchProvider>
     </UserProvider>
