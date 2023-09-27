@@ -1,21 +1,18 @@
+import React, { Fragment, useState, useEffect } from "react";
 import {
   EuiComment,
   EuiIcon,
   EuiFlexItem,
   EuiFlexGroup,
-  EuiSpacer,
   EuiTitle,
 } from "@elastic/eui";
-import React, { Fragment, useState, useEffect, useContext } from "react";
 import EditPost from "../EditPost";
 import Post from "../Post";
 import "../Post.css";
 import { useUser } from "./UserContext";
 
 const UserPosts = ({ data }) => {
-  console.log("UserPosts data:", data);
-
-  const [isEditing, setIsEditing] = useState(false);
+  const [editingPostId, setEditingPostId] = useState(null);
   const [postData, setPostData] = useState(data);
   const [posts, setPosts] = useState([]);
 
@@ -25,37 +22,31 @@ const UserPosts = ({ data }) => {
       const posts = await fetch(`http://localhost:8080/posts`).then((res) =>
         res.json()
       );
-
-      let filterposts = posts.filter((post) => {
-        if (post.profile_id === data.user_id) {
-          return post;
-        }
-      });
+      let filterposts = posts.filter(
+        (post) => post.profile_id === data.user_id
+      );
       setPosts(filterposts);
     };
     fetchposts();
   }, [data]);
-  console.log("posts: ", posts);
-  console.log("Data: ", postData);
 
   const handleUpdate = (updatedPost) => {
-    setIsEditing(false);
-    const newPostData = { ...postData, ...updatedPost };
-    setPostData(newPostData);
+    setPosts((prevPosts) =>
+      prevPosts.map((post) => (post.id === updatedPost.id ? updatedPost : post))
+    );
+    setEditingPostId(null);
   };
 
-const onNewPost = (responseData) => {
-  const { post } = responseData;
-  setPosts((prevPosts) => [post, ...prevPosts]);
-  if (postData.body === null) {
-    setPostData(post);
-  }
-};
+  const onNewPost = (responseData) => {
+    const { post } = responseData;
+    setPosts((prevPosts) => [post, ...prevPosts]);
+    if (postData.body === null) {
+      setPostData(post);
+    }
+  };
 
-
-  const handleEditClick = (event) => {
-    event.preventDefault();
-    setIsEditing(true);
+  const handleEditClick = (postId) => {
+    setEditingPostId(postId);
   };
 
   const { user } = useUser();
@@ -89,7 +80,6 @@ const onNewPost = (responseData) => {
     <div>
       {user.id === parseInt(data.user_id) && (
         <>
-          {/* New Post */}
           <EuiFlexGroup alignItems="center">
             <EuiFlexItem grow={false}>
               <EuiIcon type="pencil" size="xl" />
@@ -110,7 +100,9 @@ const onNewPost = (responseData) => {
           />
         </>
       )}
-      <div className={`custom-comment-container ${isEditing ? "editing" : ""}`}>
+      <div
+        className={`custom-comment-container ${editingPostId ? "editing" : ""}`}
+      >
         {postData.body === null ? (
           <h1 style={{ paddingLeft: "30px" }}>Make Your First Post!</h1>
         ) : (
@@ -125,36 +117,33 @@ const onNewPost = (responseData) => {
                 </EuiTitle>
               </EuiFlexItem>
             </EuiFlexGroup>
-            {isEditing ? (
-              <EditPost post={postData} onUpdate={handleUpdate} />
-            ) : (
-              posts.map((post) => (
-                <Fragment>
+            {posts.map((post) => (
+              <Fragment key={post.id}>
+                {editingPostId === post.id ? (
+                  <EditPost post={post} onUpdate={handleUpdate} />
+                ) : (
                   <EuiComment
                     timelineAvatar={<span></span>}
                     username={`${data.first_name || data.first_name} ${
                       data.last_name || data.last_name
                     }`}
                     event="posted"
-                    timestamp={
-                      formatTimeSinceLastPosted(post.date_created) &&
-                      formatTimeSinceLastPosted(post.date_created)
-                    }
+                    timestamp={formatTimeSinceLastPosted(post.date_created)}
                   >
                     {post.body && post.body}
                     {user.id === parseInt(data.user_id) && (
                       <span className="edit-icon-container">
                         <EuiIcon
                           type="pencil"
-                          onClick={handleEditClick}
+                          onClick={() => handleEditClick(post.id)}
                           style={{ cursor: "pointer" }}
                         />
                       </span>
                     )}
                   </EuiComment>
-                </Fragment>
-              ))
-            )}
+                )}
+              </Fragment>
+            ))}
           </>
         )}
       </div>
